@@ -1,0 +1,38 @@
+package reservas.logica;
+
+public class CursoExtension extends Reservable{
+    private String descripcion;
+    private int cantidadClases;
+    private float costo;
+
+    public CursoExtension(String codigoIdentificador, int cantidadInscriptos, int cantidadClases, String descripcion, float costo) {
+        super(codigoIdentificador, cantidadInscriptos);
+        this.cantidadClases = cantidadClases;
+        this.descripcion = descripcion;
+        this.costo = costo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public int getCantidadClases() {
+        return cantidadClases;
+    }
+
+    public void setCantidadClases(int cantidadClases) {
+        this.cantidadClases = cantidadClases;
+    }
+
+    public float getCosto() {
+        return costo;
+    }
+
+    public void setCosto(float costo) {
+        this.costo = costo;
+    }
+}
