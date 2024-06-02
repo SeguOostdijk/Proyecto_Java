@@ -4,16 +4,16 @@ import java.util.NoSuchElementException;
 import java.util.TreeSet;
 
 public class Universidad {
-    private TreeSet<Aula> ListaAulas = new TreeSet();
-    private HashMap<Asignatura> ListaAsignaturas = new HashMap();
-    private HashMap<CursoExtension> ListaCursos = new HashMap();
-    private HashMap<Evento> ListaEventos = new HashMap();
+    private TreeSet<Integer, Aula> ListaAulas = new TreeSet();
+    private HashMap<String, Asignatura> ListaAsignaturas = new HashMap();
+    private HashMap<String, CursoExtension> ListaCursos = new HashMap();
+    private HashMap<String, Evento> ListaEventos = new HashMap();
 
-    public Universidad(TreeSet listaAulas, HashMap<Asignatura> listaAsignaturas, HashMap<Asignatura> listaCursos, HashMap<Asignatura> listaEventos) {
+    public Universidad(TreeSet<Integer, Aula> listaAulas, HashMap<String, Evento> listaEventos, HashMap<String, CursoExtension> listaCursos, HashMap<String, Asignatura> listaAsignaturas) {
         ListaAulas = listaAulas;
-        ListaAsignaturas = listaAsignaturas;
-        ListaCursos = listaCursos;
         ListaEventos = listaEventos;
+        ListaCursos = listaCursos;
+        ListaAsignaturas = listaAsignaturas;
     }
 
     public Aula getAula(String codigoAula) {
@@ -58,7 +58,7 @@ public class Universidad {
         if(evento == null){
             throw new NoSuchElementException("Evento con codigo " + codEvento + "no encontrada");
         }
-        return Evento;
+        return evento;
     }
 
     public void poneEvento(Evento nuevoEvento){
