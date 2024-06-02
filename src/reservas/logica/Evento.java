@@ -1,17 +1,27 @@
 package reservas.logica;
 
 public class Evento extends Reservable{
+    private String fechaInicio;
     private String horaInicio;
     private String horaFin;
     private String descripcion;
     private boolean externo;
 
-    public Evento(String codigoIdentificador, int cantidadInscriptos, String horaInicio, String horaFin, String descripcion, boolean externo) {
+    public Evento(String codigoIdentificador, int cantidadInscriptos, String horaInicio, String horaFin, String descripcion, boolean externo,String fechaInicio) {
         super(codigoIdentificador, cantidadInscriptos);
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
         this.descripcion = descripcion;
         this.externo = externo;
+        this.fechaInicio= fechaInicio;
+    }
+
+    public String getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(String fechaInicio) {
+        fechaInicio = fechaInicio;
     }
 
     public String getHoraInicio() {
