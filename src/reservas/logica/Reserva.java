@@ -2,7 +2,7 @@ package reservas.logica;
 
 public class Reserva {
   private static int numCodigo=0;
-  private final int CODIGO=numCodigo;
+  private final Integer CODIGO=numCodigo;
   private String fecha;
   private String horaInicio;
   private String horaFin;
@@ -16,7 +16,7 @@ public class Reserva {
     this.reservable = reservable;
   }
 
-  public int getCODIGO() {
+  public Integer getCODIGO() {
     return CODIGO;
   }
 
