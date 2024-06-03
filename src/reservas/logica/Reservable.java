@@ -23,8 +23,8 @@ public abstract class Reservable {
 
     @Override
     public String toString() {
-        return "codigoIdentificador='" + codigoIdentificador + '\'' +
-                ", cantidadInscriptos=" + cantidadInscriptos +
+        return "codigo identificador='" + codigoIdentificador + '\'' +
+                ", cantidad de inscriptos=" + cantidadInscriptos +
                 '}';
     }
 }

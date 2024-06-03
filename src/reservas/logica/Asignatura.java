@@ -68,9 +68,9 @@ public class Asignatura extends Reservable{
     public String toString() {
         return "Asignatura{" +
                 "nombre='" + nombre + '\'' +
-                ", diaSemana='" + diaSemana + '\'' +
-                ", horaInicio='" + horaInicio + '\'' +
-                ", horaFin='" + horaFin + '\'' +
+                ", dia de la semana='" + diaSemana + '\'' +
+                ", hora de inicio='" + horaInicio + '\'' +
+                ", hora de finalizacion='" + horaFin + '\'' +
                   super.toString();
     }
 }

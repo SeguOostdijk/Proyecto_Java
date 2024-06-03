@@ -70,4 +70,14 @@ public class Aula {
             System.out.println(e.getMessage());
         }
     }
+
+    @Override
+    public String toString() {
+        return "Aula{" +
+                "numero de aula=" + numeroAula +
+                ", capacidad maxima=" + capacidadMaxima +
+                ", cantidad de reservas="+listaReservas.size()+
+                ", lista de Reservas=" + listaReservas +
+                '}';
+    }
 }

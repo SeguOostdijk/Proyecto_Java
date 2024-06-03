@@ -38,8 +38,8 @@ public class CursoExtension extends Reservable{
 
     @Override
     public String toString() {
-        return "CursoExtension{" +
-                "cantidadClases=" + cantidadClases +
+        return "Curso de Extension{" +
+                "cantidad de clases=" + cantidadClases +
                 ", costo=" + costo +
                 ", descripcion='" + descripcion + '\'' +
                  super.toString();

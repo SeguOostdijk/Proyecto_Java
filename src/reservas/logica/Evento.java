@@ -59,9 +59,9 @@ public class Evento extends Reservable{
     @Override
     public String toString() {
         return "Evento{" +
-                "fechaInicio='" + fechaInicio + '\'' +
-                ", horaInicio='" + horaInicio + '\'' +
-                ", horaFin='" + horaFin + '\'' +
+                "fecha de inicio='" + fechaInicio + '\'' +
+                ", hora de inicio='" + horaInicio + '\'' +
+                ", hora de finalizacion='" + horaFin + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 ", externo=" + externo +
                  super.toString();
