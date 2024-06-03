@@ -63,4 +63,14 @@ public class Asignatura extends Reservable{
     public void setHoraFin(String horaFin) {
         this.horaFin = horaFin;
     }
+
+    @Override
+    public String toString() {
+        return "Asignatura{" +
+                "nombre='" + nombre + '\'' +
+                ", diaSemana='" + diaSemana + '\'' +
+                ", horaInicio='" + horaInicio + '\'' +
+                ", horaFin='" + horaFin + '\'' +
+                  super.toString();
+    }
 }

@@ -20,4 +20,11 @@ public abstract class Reservable {
     public void setCantidadInscriptos(int cantidadInscriptos) {
         this.cantidadInscriptos = cantidadInscriptos;
     }
+
+    @Override
+    public String toString() {
+        return "codigoIdentificador='" + codigoIdentificador + '\'' +
+                ", cantidadInscriptos=" + cantidadInscriptos +
+                '}';
+    }
 }
