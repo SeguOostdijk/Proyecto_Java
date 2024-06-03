@@ -16,7 +16,7 @@ public class Universidad {
         ListaEventos = listaEventos;
     }
 
-    public Aula getAula(String codigoAula) {
+    public Aula getAula(Integer codigoAula) {
         for (Aula aula : ListaAulas) {
             if (aula.getNumero().equals(codigoAula)) {
                 return aula;
@@ -64,4 +64,14 @@ public class Universidad {
     public void poneEvento(Evento nuevoEvento){
         ListaEventos.put(nuevoEvento.getCodigoIdentificador(),nuevoEvento);
     }
+
+    public void cancelarReserva(Aula aula, Integer codReserva){
+        try{
+            Aula elimAula = getAula(aula.getNumero());
+            // elimAula.cancela reserva de la clase reserva
+        } catch (NoSuchElementException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
 }
