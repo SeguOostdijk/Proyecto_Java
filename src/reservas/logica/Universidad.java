@@ -6,15 +6,11 @@ import java.util.TreeSet;
 
 public class Universidad {
     private TreeSet<Aula> ListaAulas;
-    private HashMap<String, Asignatura> ListaAsignaturas;
-    private HashMap<String, CursoExtension> ListaCursos;
-    private HashMap<String, Evento> ListaEventos;
+    private HashMap<String, Reservable> listaReservables;
 
-    public Universidad(TreeSet<Aula> listaAulas, HashMap<String, Asignatura> listaAsignaturas, HashMap<String, CursoExtension> listaCursos, HashMap<String, Evento> listaEventos) {
+    public Universidad(TreeSet<Aula> listaAulas, HashMap<String, Reservable> listaReservables) {
         ListaAulas = listaAulas;
-        ListaAsignaturas = listaAsignaturas;
-        ListaCursos = listaCursos;
-        ListaEventos = listaEventos;
+        this.listaReservables = listaReservables;
     }
 
     public Aula getAula(Integer codigoAula) {
@@ -31,39 +27,30 @@ public class Universidad {
     }
 
     public Asignatura getAsignatura(String codAsignatura) {
-        Asignatura asignatura = ListaAsignaturas.get(codAsignatura);
-        if (asignatura == null) {
-            throw new NoSuchElementException("Asignatura con código " + codAsignatura + " no encontrada.");
-        }
+        Asignatura asignatura = (Asignatura) listaReservables.get(codAsignatura);
         return asignatura;
     }
 
     public void poneAsignatura(Asignatura nuevaAsignatura){
-        ListaAsignaturas.put(nuevaAsignatura.getCodigoIdentificador(), nuevaAsignatura);
+        listaReservables.put(nuevaAsignatura.getCodigoIdentificador(), nuevaAsignatura);
     }
 
     public CursoExtension getCursoExtension(String codCurso){
-        CursoExtension curso = ListaCursos.get(codCurso);
-        if(curso == null){
-            throw new NoSuchElementException("Curso con codigo " + codCurso + "no encontrada");
-        }
+        CursoExtension curso =(CursoExtension) listaReservables.get(codCurso);
         return curso;
     }
 
     public void poneCurso(CursoExtension nuevoCurso){
-        ListaCursos.put(nuevoCurso.getCodigoIdentificador(),nuevoCurso);
+        listaReservables.put(nuevoCurso.getCodigoIdentificador(),nuevoCurso);
     }
 
     public Evento getEvento(String codEvento){
-        Evento evento = ListaEventos.get(codEvento);
-        if(evento == null){
-            throw new NoSuchElementException("Evento con codigo " + codEvento + "no encontrada");
-        }
+        Evento evento = (Evento) listaReservables.get(codEvento);
         return evento;
     }
 
     public void poneEvento(Evento nuevoEvento){
-        ListaEventos.put(nuevoEvento.getCodigoIdentificador(),nuevoEvento);
+        listaReservables.put(nuevoEvento.getCodigoIdentificador(),nuevoEvento);
     }
 
     public void cancelarReserva(Aula aula, Integer codReserva){
