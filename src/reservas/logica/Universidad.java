@@ -1,5 +1,6 @@
 package reservas.logica;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.TreeSet;
 
@@ -71,6 +72,19 @@ public class Universidad {
             // elimAula.cancela reserva de la clase reserva
         } catch (NoSuchElementException e){
             System.out.println(e.getMessage());
+        }
+    }
+
+    public void consultarAula(Integer NumeroPiso){
+        Iterator<Aula> RecorreLista = ListaAulas.iterator();
+
+        while(RecorreLista.hasNext()){
+            Aula aula = RecorreLista.next();
+            if(aula.getNumero()/100 == NumeroPiso/100){
+                for(Aula aulaEnPiso : ListaAulas){
+                    System.out.println(aulaEnPiso);
+                }
+            }
         }
     }
 
