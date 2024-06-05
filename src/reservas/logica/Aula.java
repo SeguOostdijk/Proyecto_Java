@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.NoSuchElementException;
 
 public class Aula {
-    Integer numeroAula;
+    int numeroAula;
     int capacidadMaxima;
     HashMap <Integer,Reserva> listaReservas;
     Universidad universidad;
@@ -19,15 +19,15 @@ public class Aula {
         return capacidadMaxima;
     }
 
-    public Integer getNumero() {
+    public int getNumero() {
         return numeroAula;
     }
 
-    public Integer getPiso(){
+    public int getPiso(){
         return numeroAula/100;
     }
 
-    public void agregaReserva(String codigoAsignatura) {
+    public void agregaReservas(String codigoAsignatura) {
         try {
             Asignatura asignatura = universidad.getAsignatura(codigoAsignatura);
             Reserva nuevaReserva = new Reserva(Asignatura.getFechaInicioCursada(),asignatura.getHoraInicio(),asignatura.getHoraFin(),asignatura);
