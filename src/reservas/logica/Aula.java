@@ -21,8 +21,8 @@ public class Aula {
         return cantidadPersonas<=capacidadMaxima;
     }
 
-    public boolean estaDisponible(LocalTime hora, LocalTime dia){
-        if(hora.isBefore())
+    public boolean estaDisponible(LocalTime hora, LocalDate dia){
+        if(hora.isBefore()
     }
 
     public int getCapacidadmaxima() {
