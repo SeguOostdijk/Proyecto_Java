@@ -1,5 +1,6 @@
 package reservas.logica;
 
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
 
@@ -13,6 +14,14 @@ public class Aula {
         this.capacidadMaxima = capacidadMaxima;
         this.numeroAula = numeroAula;
         listaReservas = new HashMap();
+    }
+
+    public boolean superaCapacidad(int cantidadPersonas){
+        return cantidadPersonas<=capacidadMaxima;
+    }
+
+    public boolean estaDisponible(LocalTime hora, LocalTime dia){
+        if(hora.isBefore())
     }
 
     public int getCapacidadmaxima() {
@@ -49,16 +58,6 @@ public class Aula {
         }
     }
 
-    public void agregaReservas(String codigoEvento){
-        try{
-            Evento evento = universidad.getEvento(codigoEvento);
-            Reserva nuevaReserva = new Reserva(evento.getFechaInicio(),evento.getHoraInicio(),evento.getHoraFin(),evento);
-            listaReservas.put(nuevaReserva.getCODIGO(),nuevaReserva);
-            System.out.println("Reserva para evento " + " realizada con exito");
-        } catch(NoSuchElementException e){
-            System.out.println(e.getMessage());
-        }
-    }
 
     public void agregaReservas(String codigoEvento, String nombreOrganizacion, float costoAlquiler){
         try{
