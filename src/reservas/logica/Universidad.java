@@ -1,7 +1,8 @@
 package reservas.logica;
+import java.io.Serializable;
 import java.util.*;
 
-public class Universidad {
+public class Universidad implements Serializable {
     private TreeSet<Aula> ListaAulas;
     private HashMap<String, Reservable> listaReservables;
 

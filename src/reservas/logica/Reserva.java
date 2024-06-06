@@ -1,9 +1,10 @@
 package reservas.logica;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Reserva {
+public class Reserva implements Serializable {
   private static int numCodigo=0;
   private final int CODIGO=numCodigo;
   private LocalDate fecha;

@@ -1,6 +1,8 @@
 package reservas.logica;
 
-public abstract class Reservable {
+import java.io.Serializable;
+
+public abstract class Reservable implements Serializable {
     private final String codigoIdentificador;
     private int cantidadInscriptos;
 
