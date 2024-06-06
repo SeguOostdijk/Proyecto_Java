@@ -1,5 +1,7 @@
 package reservas.logica;
 
+import java.time.LocalTime;
+
 public class Evento extends Reservable{
     private String fechaInicio;
     private String horaInicio;
@@ -20,7 +22,7 @@ public class Evento extends Reservable{
         return fechaInicio;
     }
 
-    public void setFechaInicio(String fechaInicio) {
+    public void setFechaInicio(LocalTime fechaInicio) {
         fechaInicio = fechaInicio;
     }
 
@@ -28,7 +30,7 @@ public class Evento extends Reservable{
         return horaInicio;
     }
 
-    public void setHoraInicio(String horaInicio) {
+    public void setHoraInicio(LocalTime horaInicio) {
         this.horaInicio = horaInicio;
     }
 
@@ -36,7 +38,7 @@ public class Evento extends Reservable{
         return horaFin;
     }
 
-    public void setHoraFin(String horaFin) {
+    public void setHoraFin(LocalTime horaFin) {
         this.horaFin = horaFin;
     }
 
