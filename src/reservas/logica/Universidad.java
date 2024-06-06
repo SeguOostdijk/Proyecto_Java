@@ -85,30 +85,22 @@ public class Universidad {
             throw new NoSuchElementException();
         return aulasporcodigo;
     }
-    public String listaAsignaturas(){
+    public String listaEntidad(Class<? extends Reservable> tipoEntidad){
         StringBuilder sb=new StringBuilder();
         for (Reservable reservable : listaReservables.values()) {
-            if (reservable instanceof Asignatura)
+            if (tipoEntidad.isInstance(reservable))
                 sb.append(reservable).append('\n');
         }
         return sb.toString();
     }
-    public String listaEventos(){
-        StringBuilder sb=new StringBuilder();
-        for (Reservable reservable : listaReservables.values()) {
-            if (reservable instanceof Evento)
-                sb.append(reservable).append('\n');
+    public List<MontoPorAula> getMontoPorAula(){
+        ArrayList<MontoPorAula> listaMA=new ArrayList<>();
+        for (Aula aula : ListaAulas) {
+            listaMA.add(new MontoPorAula(aula.getmonto(),aula.getNumero()));
         }
-        return sb.toString();
+        return
     }
-    public String listaCursos(){
-        StringBuilder sb=new StringBuilder();
-        for (Reservable reservable : listaReservables.values()) {
-            if (reservable instanceof CursoExtension)
-                sb.append(reservable).append('\n');
-        }
-        return sb.toString();
-    }
+
 
 
 }
