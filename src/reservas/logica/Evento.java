@@ -1,15 +1,16 @@
 package reservas.logica;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Evento extends Reservable{
-    private String fechaInicio;
-    private String horaInicio;
-    private String horaFin;
+    private LocalDate fechaInicio;
+    private LocalTime horaInicio;
+    private LocalTime horaFin;
     private String descripcion;
     private boolean externo;
 
-    public Evento(String codigoIdentificador, int cantidadInscriptos, String horaInicio, String horaFin, String descripcion, boolean externo,String fechaInicio) {
+    public Evento(String codigoIdentificador, int cantidadInscriptos, LocalTime horaInicio, LocalTime horaFin, String descripcion, boolean externo,LocalDate fechaInicio) {
         super(codigoIdentificador, cantidadInscriptos);
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
@@ -18,15 +19,15 @@ public class Evento extends Reservable{
         this.fechaInicio= fechaInicio;
     }
 
-    public String getFechaInicio() {
+    public LocalDate getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(LocalTime fechaInicio) {
+    public void setFechaInicio(LocalDate fechaInicio) {
         fechaInicio = fechaInicio;
     }
 
-    public String getHoraInicio() {
+    public LocalTime getHoraInicio() {
         return horaInicio;
     }
 
@@ -34,7 +35,7 @@ public class Evento extends Reservable{
         this.horaInicio = horaInicio;
     }
 
-    public String getHoraFin() {
+    public LocalTime getHoraFin() {
         return horaFin;
     }
 

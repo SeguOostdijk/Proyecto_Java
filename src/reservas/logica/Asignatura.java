@@ -1,14 +1,17 @@
 package reservas.logica;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public class Asignatura extends Reservable{
     private String nombre;
-    private static String fechaInicioCursada;
-    private static String fechaFinCursada;
+    private static LocalDate fechaInicioCursada;
+    private static LocalDate fechaFinCursada;
     private String diaSemana;
-    private String horaInicio;
-    private String horaFin;
+    private LocalTime horaInicio;
+    private LocalTime horaFin;
 
-    public Asignatura(String codigoIdentificador, int cantidadInscriptos, String horaFin, String nombre, String diaSemana, String horaInicio) {
+    public Asignatura(String codigoIdentificador, int cantidadInscriptos, LocalTime horaFin, String nombre, String diaSemana, LocalTime horaInicio) {
         super(codigoIdentificador, cantidadInscriptos);
         this.horaFin = horaFin;
         this.nombre = nombre;
@@ -24,19 +27,19 @@ public class Asignatura extends Reservable{
         this.nombre = nombre;
     }
 
-    public static String getFechaInicioCursada() {
+    public static LocalDate getFechaInicioCursada() {
         return fechaInicioCursada;
     }
 
-    public static void setFechaInicioCursada(String fechaInicioCursada) {
+    public static void setFechaInicioCursada(LocalDate fechaInicioCursada) {
         Asignatura.fechaInicioCursada = fechaInicioCursada;
     }
 
-    public static String getFechaFinCursada() {
+    public static LocalDate getFechaFinCursada() {
         return fechaFinCursada;
     }
 
-    public static void setFechaFinCursada(String fechaFinCursada) {
+    public static void setFechaFinCursada(LocalDate fechaFinCursada) {
         Asignatura.fechaFinCursada = fechaFinCursada;
     }
 
@@ -48,19 +51,19 @@ public class Asignatura extends Reservable{
         this.diaSemana = diaSemana;
     }
 
-    public String getHoraInicio() {
+    public LocalTime getHoraInicio() {
         return horaInicio;
     }
 
-    public void setHoraInicio(String horaInicio) {
+    public void setHoraInicio(LocalTime horaInicio) {
         this.horaInicio = horaInicio;
     }
 
-    public String getHoraFin() {
+    public LocalTime getHoraFin() {
         return horaFin;
     }
 
-    public void setHoraFin(String horaFin) {
+    public void setHoraFin(LocalTime horaFin) {
         this.horaFin = horaFin;
     }
 

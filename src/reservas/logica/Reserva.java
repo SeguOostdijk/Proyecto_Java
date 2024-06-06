@@ -1,14 +1,17 @@
 package reservas.logica;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public class Reserva {
   private static int numCodigo=0;
   private final int CODIGO=numCodigo;
-  private String fecha;
-  private String horaInicio;
-  private String horaFin;
+  private LocalDate fecha;
+  private LocalTime horaInicio;
+  private LocalTime horaFin;
   private Reservable reservable;
 
-  public Reserva(String fecha, String horaInicio, String horaFin, Reservable reservable) {
+  public Reserva(LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, Reservable reservable) {
     numCodigo++;
     this.fecha = fecha;
     this.horaInicio = horaInicio;
@@ -20,27 +23,27 @@ public class Reserva {
     return CODIGO;
   }
 
-  public String getFecha() {
+  public LocalDate getFecha() {
     return fecha;
   }
 
-  public void setFecha(String fecha) {
+  public void setFecha(LocalDate fecha) {
     this.fecha = fecha;
   }
 
-  public String getHoraInicio() {
+  public LocalTime getHoraInicio() {
     return horaInicio;
   }
 
-  public void setHoraInicio(String horaInicio) {
+  public void setHoraInicio(LocalTime horaInicio) {
     this.horaInicio = horaInicio;
   }
 
-  public String getHoraFin() {
+  public LocalTime getHoraFin() {
     return horaFin;
   }
 
-  public void setHoraFin(String horaFin) {
+  public void setHoraFin(LocalTime horaFin) {
     this.horaFin = horaFin;
   }
 

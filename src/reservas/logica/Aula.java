@@ -1,5 +1,6 @@
 package reservas.logica;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
@@ -47,7 +48,7 @@ public class Aula {
         }
     }
 
-    public void agregaReservas(String codigoCurso,String fechaInicio,String horaInicio,String horaFin){
+    public void agregaReservas(String codigoCurso, LocalDate fechaInicio, LocalTime horaInicio, LocalTime horaFin){
         try{
             CursoExtension curso = universidad.getCursoExtension(codigoCurso);
             Reserva nuevaReserva = new Reserva(fechaInicio,horaInicio,horaFin,curso);
