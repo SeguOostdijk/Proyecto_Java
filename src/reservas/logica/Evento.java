@@ -55,4 +55,15 @@ public class Evento extends Reservable{
     public void setExterno(boolean externo) {
         this.externo = externo;
     }
+
+    @Override
+    public String toString() {
+        return "Evento{" +
+                "fecha de inicio='" + fechaInicio + '\'' +
+                ", hora de inicio='" + horaInicio + '\'' +
+                ", hora de finalizacion='" + horaFin + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", externo=" + externo +
+                 super.toString();
+    }
 }

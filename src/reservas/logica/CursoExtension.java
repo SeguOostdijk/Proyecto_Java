@@ -35,4 +35,13 @@ public class CursoExtension extends Reservable{
     public void setCosto(float costo) {
         this.costo = costo;
     }
+
+    @Override
+    public String toString() {
+        return "Curso de Extension{" +
+                "cantidad de clases=" + cantidadClases +
+                ", costo=" + costo +
+                ", descripcion='" + descripcion + '\'' +
+                 super.toString();
+    }
 }

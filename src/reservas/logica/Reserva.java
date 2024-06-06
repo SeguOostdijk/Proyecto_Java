@@ -51,4 +51,15 @@ public class Reserva {
   public void setReservable(Reservable reservable) {
     this.reservable = reservable;
   }
+
+  @Override
+  public String toString() {
+    return "Reserva{" +
+            "Codigo de reserva=" + CODIGO +
+            ", fecha='" + fecha + '\'' +
+            ", hora de inicio='" + horaInicio + '\'' +
+            ", hora de finalizacion='" + horaFin + '\'' +
+            ", tipo=" + reservable.getClass().getSimpleName() +
+            '}';
+  }
 }
