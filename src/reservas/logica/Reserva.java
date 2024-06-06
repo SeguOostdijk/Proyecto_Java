@@ -1,11 +1,12 @@
 package reservas.logica;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Reserva {
+public class Reserva implements Serializable {
   private static int numCodigo=0;
-  private final int CODIGO=numCodigo;
+  private int CODIGO;
   private LocalDate fecha;
   private LocalTime horaInicio;
   private LocalTime horaFin;
@@ -13,6 +14,7 @@ public class Reserva {
 
   public Reserva(LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, Reservable reservable) {
     numCodigo++;
+    CODIGO = numCodigo;
     this.fecha = fecha;
     this.horaInicio = horaInicio;
     this.horaFin = horaFin;

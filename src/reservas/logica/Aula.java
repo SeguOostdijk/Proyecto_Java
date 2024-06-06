@@ -1,11 +1,12 @@
 package reservas.logica;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
 
-public class Aula {
+public class Aula implements Serializable {
     int numeroAula;
     int capacidadMaxima;
     HashMap <Integer,Reserva> listaReservas;
