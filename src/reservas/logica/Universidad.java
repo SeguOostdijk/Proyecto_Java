@@ -99,8 +99,27 @@ public class Universidad implements Serializable {
         for (Aula aula : ListaAulas) {
             listaMA.add(new MontoPorAula(aula.getmonto(),aula.getNumero()));
         }
-        return
+        return listaMA;
     }
+    public Montos getMontos(){
+        int pisoActual;
+        Montos m=new Montos();
+        Iterator<Aula> it=ListaAulas.iterator();
+        while(it.hasNext()){
+            Aula a=it.next();
+            m.getMontosAula().add(a.getMonto());
+            pisoActual=a.getPiso();
+            while(it.hasNext()&&a.getPiso()==pisoActual){
+               m.getMontosPiso().add(getMonto)
+
+            }
+        }
+
+
+
+
+    }
+
 
 
 
