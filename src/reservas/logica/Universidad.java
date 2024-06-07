@@ -6,8 +6,13 @@ public class Universidad implements Serializable {
     private TreeSet<Aula> ListaAulas;
     private HashMap<String, Reservable> listaReservables;
 
-    public Universidad(TreeSet<Aula> listaAulas, HashMap<String, Reservable> listaReservables) {
-        ListaAulas = listaAulas;
+    public Universidad( HashMap<String, Reservable> listaReservables) {
+        ListaAulas=new TreeSet<>(new Comparator<Aula>() {
+            @Override
+            public int compare(Aula o1, Aula o2) {
+                return o1.getNumero()-o2.getNumero();
+            }
+        });
         this.listaReservables = listaReservables;
     }
 
@@ -25,8 +30,7 @@ public class Universidad implements Serializable {
     }
 
     public Asignatura getAsignatura(String codAsignatura) {
-        Asignatura asignatura = (Asignatura) listaReservables.get(codAsignatura);
-        return asignatura;
+        return (Asignatura) listaReservables.get(codAsignatura);
     }
 
     public void poneAsignatura(Asignatura nuevaAsignatura){
@@ -34,8 +38,7 @@ public class Universidad implements Serializable {
     }
 
     public CursoExtension getCursoExtension(String codCurso){
-        CursoExtension curso =(CursoExtension) listaReservables.get(codCurso);
-        return curso;
+        return  (CursoExtension) listaReservables.get(codCurso);
     }
 
     public void poneCurso(CursoExtension nuevoCurso){
@@ -43,8 +46,7 @@ public class Universidad implements Serializable {
     }
 
     public Evento getEvento(String codEvento){
-        Evento evento = (Evento) listaReservables.get(codEvento);
-        return evento;
+        return (Evento) listaReservables.get(codEvento);
     }
 
     public void poneEvento(Evento nuevoEvento){
@@ -114,10 +116,19 @@ public class Universidad implements Serializable {
 
             }
         }
-
-
-
-
+    }
+    public ReporteAulasReserva getReporteReservas(){
+        float sumaTotal=0;
+        ReporteAulasReserva reporte=new ReporteAulasReserva();
+        for (Aula aula : ListaAulas) {
+            reporte.agregarAula(aula);
+            sumaTotal+=aula.cantidadReservas();
+        }
+        if(!ListaAulas.isEmpty())
+          reporte.setPromReservasAula(sumaTotal/ListaAulas.size());
+        else
+            reporte.setPromReservasAula(0);
+        return  reporte;
     }
 
 
