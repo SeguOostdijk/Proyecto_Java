@@ -6,7 +6,12 @@ public class Universidad implements Serializable{
     private TreeSet<Aula> ListaAulas;
     private HashMap<String, Reservable> listaReservables;
 
-    public Universidad( HashMap<String, Reservable> listaReservables) {
+    public Universidad() {
+        ListaAulas = new TreeSet<>();
+        listaReservables = new HashMap<>();
+    }
+
+    public Universidad(HashMap<String, Reservable> listaReservables) {
         ListaAulas=new TreeSet<>(new Comparator<Aula>() {
             @Override
             public int compare(Aula o1, Aula o2) {

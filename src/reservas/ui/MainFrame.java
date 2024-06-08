@@ -12,6 +12,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.TreeSet;
 import reservas.logica.*;
@@ -153,24 +155,48 @@ public class MainFrame extends JFrame {
                 }
 
                 // Repite el proceso para elementos 'evento'
-                NodeList eventosList = doc.getElementsByTagName("evento");
-                for (int i = 0; i < eventosList.getLength(); i++) {
-                    Node node = eventosList.item(i);
+                NodeList eventoInternoList = doc.getElementsByTagName("evento interno");
+                for (int i = 0; i < eventoInternoList.getLength(); i++) {
+                    Node node = eventoInternoList.item(i);
                     if (node.getNodeType() == Node.ELEMENT_NODE) {
                         Element element = (Element) node;
 
                         // Obtiene los datos del evento
                         String codigo = element.getElementsByTagName("codigo").item(0).getTextContent();
                         String descripcion = element.getElementsByTagName("descripcion").item(0).getTextContent();
-                        String fecha = element.getElementsByTagName("fecha").item(0).getTextContent();
-                        String inicio = element.getElementsByTagName("inicio").item(0).getTextContent();
-                        String fin = element.getElementsByTagName("fin").item(0).getTextContent();
+                        LocalDate fecha = LocalDate.parse(element.getElementsByTagName("fecha").item(0).getTextContent());
+                        LocalTime inicio = LocalTime.parse(element.getElementsByTagName("inicio").item(0).getTextContent());
+                        LocalTime fin = LocalTime.parse(element.getElementsByTagName("fin").item(0).getTextContent());
                         int participantes = Integer.parseInt(element.getElementsByTagName("participantes").item(0).getTextContent());
-                        boolean externo = Boolean.parseBoolean(element.getElementsByTagName("externo").item(0).getTextContent());
+                        // Crea un objeto Evento con los datos obtenidos y lo agrega a la universidad
+                        EventoInterno evento = new EventoInterno(codigo, participantes, inicio, fin, descripcion, fecha);
+                        universidad.poneEventoInterno(evento);
 
                         // Crea un objeto Evento con los datos obtenidos y lo agrega a la universidad
-                        Evento evento = new Evento(codigo, participantes, inicio, fin, descripcion, externo, fecha);
-                        universidad.poneEvento(evento);
+                        Evento eventoInterno = new EventoInterno(codigo, participantes, inicio, fin, descripcion, fecha);
+                        universidad.poneEventoInterno(evento);
+                    }
+                }
+                JOptionPane.showMessageDialog(this, "Datos cargados exitosamente.");
+
+                NodeList eventoExternoList = doc.getElementsByTagName("evento externo");
+                for (int i = 0; i < eventoExternoList.getLength(); i++) {
+                    Node node = eventoExternoList.item(i);
+                    if (node.getNodeType() == Node.ELEMENT_NODE) {
+                        Element element = (Element) node;
+
+                        // Obtiene los datos del evento
+                        String codigo = element.getElementsByTagName("codigo").item(0).getTextContent();
+                        String descripcion = element.getElementsByTagName("descripcion").item(0).getTextContent();
+                        LocalDate fecha = LocalDate.parse(element.getElementsByTagName("fecha").item(0).getTextContent());
+                        LocalTime inicio = LocalTime.parse(element.getElementsByTagName("inicio").item(0).getTextContent());
+                        LocalTime fin = LocalTime.parse(element.getElementsByTagName("fin").item(0).getTextContent());
+                        int participantes = Integer.parseInt(element.getElementsByTagName("participantes").item(0).getTextContent());
+                        int costoalquiler = Integer.parseInt(element.getElementsByTagName("costo alquiler").item(0).getTextContent());
+                        String nombreorganizacion = element.getElementsByTagName("nombre organizacion").item(0).getTextContent();
+                        // Crea un objeto Evento con los datos obtenidos y lo agrega a la universidad
+                        EventoExterno evento = new EventoExterno(codigo, participantes, inicio, fin, descripcion, fecha, costoalquiler, nombreorganizacion);
+                        universidad.poneEventoExterno(evento);
                     }
                 }
                 JOptionPane.showMessageDialog(this, "Datos cargados exitosamente.");
