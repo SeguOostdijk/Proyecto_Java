@@ -11,15 +11,6 @@ public class Universidad implements Serializable{
         listaReservables = new HashMap<>();
     }
 
-    public Universidad(HashMap<String, Reservable> listaReservables) {
-        ListaAulas=new TreeSet<>(new Comparator<Aula>() {
-            @Override
-            public int compare(Aula o1, Aula o2) {
-                return o1.getNumero()-o2.getNumero();
-            }
-        });
-        this.listaReservables = listaReservables;
-    }
 
     public Aula getAula(int codigoAula) {
         for (Aula aula : ListaAulas) {
@@ -109,13 +100,7 @@ public class Universidad implements Serializable{
         }
         return sb.toString();
     }
-    public List<MontoPorAula> getMontoPorAula(){
-        ArrayList<MontoPorAula> listaMA=new ArrayList<>();
-        for (Aula aula : ListaAulas) {
-            listaMA.add(new MontoPorAula(aula.montoRecaudado(),aula.getNumero()));
-        }
-        return listaMA;
-    }
+
     public Montos getMontos(){
         int pisoActual;
         float sumTotal=0;

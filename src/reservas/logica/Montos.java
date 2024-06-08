@@ -7,12 +7,7 @@ public class Montos {
     private TreeMap<Integer,Float> montosAula;
     private float montoTotal;
     public  Montos(){
-        montosAula=new TreeMap<>(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return 0;
-            }
-        });
+        montosAula=new TreeMap<>();
         montosPiso=new ArrayList<>();
         montoTotal=0;
     }
