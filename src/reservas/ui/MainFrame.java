@@ -14,8 +14,6 @@ import org.w3c.dom.NodeList;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.TreeSet;
 import reservas.logica.*;
 import java.util.Date;
 
@@ -27,7 +25,7 @@ public class MainFrame extends JFrame {
         setTitle("Sistema de Gestión de Reservas de Aulas");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        universidad = new Universidad(new TreeSet<>(), new HashMap<>());
+        universidad = new Universidad();
         initUI();
     }
 
@@ -124,8 +122,8 @@ public class MainFrame extends JFrame {
                         String codigo = element.getElementsByTagName("codigo").item(0).getTextContent();
                         String nombre = element.getElementsByTagName("nombre").item(0).getTextContent();
                         String dia = element.getElementsByTagName("dia").item(0).getTextContent();
-                        String inicio = element.getElementsByTagName("inicio").item(0).getTextContent();
-                        String fin = element.getElementsByTagName("fin").item(0).getTextContent();
+                        LocalTime inicio = LocalTime.parse(element.getElementsByTagName("inicio").item(0).getTextContent());
+                        LocalTime fin = LocalTime.parse(element.getElementsByTagName("fin").item(0).getTextContent());
                         int inscriptos = Integer.parseInt(element.getElementsByTagName("inscriptos").item(0).getTextContent());
 
                         // Crea un objeto Asignatura con los datos obtenidos y lo agrega a la universidad
