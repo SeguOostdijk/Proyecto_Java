@@ -2,13 +2,13 @@
 
 <Universidad>
     <asignatura codigo="101">
-            <cantidadDeInscriptos>26</cantidadDeInscriptos>
-            <nombre>Algebra</nombre>
-            <fehcaInicioCursada>10-03-24</fehcaInicioCursada>
-            <fechaFinCursada>10-07-24</fechaFinCursada>
-            <diaDeSemana>Lunes</diaDeSemana>
-            <HoraIncio>14</HoraIncio>
-            <HoraFin>18</HoraFin>
+        <cantidadDeInscriptos>26</cantidadDeInscriptos>
+        <nombre>Algebra</nombre>
+        <fehcaInicioCursada>10-03-24</fehcaInicioCursada>
+        <fechaFinCursada>10-07-24</fechaFinCursada>
+        <diaDeSemana>Lunes</diaDeSemana>
+        <HoraIncio>14</HoraIncio>
+        <HoraFin>18</HoraFin>
     </asignatura>
     <asignatura codigo="102">
         <cantidadDeInscriptos>60</cantidadDeInscriptos>
@@ -46,20 +46,73 @@
         <cantidadDeClases>20</cantidadDeClases>
         <costo>50000</costo>
     </curso>
-    <evento codigo="301">
+    <eventoInterno codigo="311">
         <cantidadDeInscriptos>100</cantidadDeInscriptos>
         <fechaInicio>05-05-24</fechaInicio>
         <horaInicio>10</horaInicio>
         <horaFin>12</horaFin>
         <descripcion>Evento de intruduccion a la facultad</descripcion>
-        <tipo>interno</tipo>
-    </evento>
-    <evento codigo="302">
+    </eventoInterno>
+    <eventoExterno codigo="321">
         <cantidadDeInscriptos>55</cantidadDeInscriptos>
         <fechaInicio>04-09-24</fechaInicio>
         <horaInicio>16</horaInicio>
         <horaFin>18</horaFin>
         <descripcion>Evento de diseño</descripcion>
-        <tipo>externo</tipo>
-    </evento>
+        <costoAlquiler>20000</costoAlquiler>
+        <nombreOrg>colegio X</nombreOrg>
+    </eventoExterno>
+    <aula numeroAula = "024">
+        <capacidad>50</capacidad>
+        <reservas codigoDeReserva="1">
+            <reservable>
+                // id de un reservable y lo busca
+            </reservable>
+        </reservas>
+        <reservas codigoDeReserva="2">
+            <reservable>
+
+            </reservable>
+        </reservas>
+        <reservas codigoDeReserva="3">
+            <reservable>
+
+            </reservable>
+        </reservas>
+    </aula>
+    <aula numeroAula = "145">
+        <capacidad>30</capacidad>
+        <reservas>
+            <reservable>
+
+            </reservable>
+        </reservas>
+    </aula>
+    <aula numeroAula = "346">
+        <capacidad>40</capacidad>
+        <reservas>
+            <reservable>
+
+            </reservable>
+
+        </reservas>
+        <reservas>
+            <reservable>
+
+            </reservable>
+        </reservas>
+    </aula>
+    <aula numeroAula = "452">
+        <capacidad>40</capacidad>
+        <reservas>
+            <reservable>
+
+            </reservable>
+        </reservas>
+        <reservas>
+            <reservable>
+
+            </reservable>
+        </reservas>
+    </aula>
 </Universidad>

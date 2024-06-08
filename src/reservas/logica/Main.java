@@ -48,6 +48,7 @@ public class Main {
                                 Asignatura.setFechaFinCursada(ffc);
                                 Asignatura.setFechaInicioCursada(fic);
                                 uni.poneAsignatura(agregaAsig);
+
                                 break;
                             case "curso":
                                 int cantclases = Integer.parseInt(element.getAttribute("cantidadDeClases"));
@@ -55,17 +56,29 @@ public class Main {
                                 float cost = Float.parseFloat(element.getAttribute("costo"));
 
                                 CursoExtension agregaCurso = new CursoExtension(cod,cantIns,cantclases,desc,cost);
-                                break;
-                            case "evento":
-                                LocalDate fie =
+                                uni.poneCurso(agregaCurso);
 
-                                // codigo="301">
-                                // <cantidadDeInscriptos>100</cantidadDeInscriptos>
-                                <fechaInicio>05-05-24</fechaInicio>
-                                <horaInicio>10</horaInicio>
-                                <horaFin>12</horaFin>
-                                <descripcion>Evento de intruduccion a la facultad</descripcion>
-                                <tipo>interno</tipo>
+                                break;
+                            case "eventoInterno":
+                                LocalDate fie = LocalDate.parse(element.getAttribute("fechaInicio"));
+                                LocalTime hie = LocalTime.parse(element.getAttribute("horaInicio"));
+                                LocalTime hfe = LocalTime.parse(element.getAttribute("horaFin"));
+                                String dsc = element.getAttribute("descripcion");
+
+                                EventoInterno agregaEventoI = new EventoInterno(cod,cantIns,hie,hfe,dsc,fie);
+                                uni.poneEventoInterno(agregaEventoI);
+
+                                break;
+                            case "eventoExterno":
+                                LocalDate fieE = LocalDate.parse(element.getAttribute("fechaInicio"));
+                                LocalTime hieE = LocalTime.parse(element.getAttribute("horaInicio"));
+                                LocalTime hfeE = LocalTime.parse(element.getAttribute("horaFin"));
+                                String dscE = element.getAttribute("descripcion");
+                                Float costAlq = Float.parseFloat(element.getAttribute("costoAlquiler"));
+                                String nomorg = element.getAttribute("nombreOrg");
+
+                                EventoExterno agregaEventoE = new EventoExterno(cod,cantIns,hieE,hfeE,dscE,fieE,costAlq,nomorg);
+                                uni.poneEventoExterno(agregaEventoE);
 
                                 break;
                         }
@@ -82,64 +95,5 @@ public class Main {
         Universidad CAECE = new Universidad();
 
         Main.CargaDatosXML(CAECE);
-
     }
 }
-
-
-
-
-
-
-/*public class Main {
-    public static void cargaDatos(Productos gestor){
-        try{
-            File archivoXML = new File("C:\\Users\\pablo\\IdeaProjects\\pruebaXML\\src\\archivo.xml"); // direccion del archivo
-            final DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            final DocumentBuilder builder = dbFactory.newDocumentBuilder();
-            final Document documentoXML = builder.parse(archivoXML);
-
-            Element nodoRaiz = documentoXML.getDocumentElement();
-
-            final NodeList children = nodoRaiz.getChildNodes();
-            for(int i = 0; i < children.getLength(); i++){
-                producto p = new producto();
-
-                final Node n = children.item(i);
-
-                if(n.getNodeType() == Node.ELEMENT_NODE){
-                    Element element = (Element) n;  //transformamos el nodo a elemento
-
-                    p.setId(Integer.parseInt(element.getAttribute("id")));
-                    //System.out.println("Id: " + element.getAttribute("id"));
-
-                    p.setNombre(element.getElementsByTagName("nombre").item(0).getTextContent());
-                    //System.out.println("Nombre: " + element.getElementsByTagName("nombre").item(0).getTextContent());
-
-                    p.setPrecio(Double.parseDouble(element.getElementsByTagName("precio").item(0).getTextContent()));
-                    //System.out.println("Precio: " + element.getElementsByTagName("precio").item(0).getTextContent());
-
-                    p.setCantidad(Integer.parseInt(element.getElementsByTagName("cantidad").item(0).getTextContent()));
-                    //System.out.println("Cantidad: " + element.getElementsByTagName("cantidad").item(0).getTextContent());
-
-                    gestor.add(p);
-
-                }
-            }
-        } catch (ParserConfigurationException | SAXException | IOException e){
-            System.out.println("Error " + e.getMessage());
-        }
-    }
-
-    public static void muestraLista(Productos gestor){
-        producto p = gestor.buscaProducto(2); --> eso es id no indice
-        System.out.println(p.nombre);
-    }
-
-    public static void main(String[] args) {
-        Productos gestorProductos = new Productos(); // vendria a ser universidad
-
-        Main.cargaDatos(gestorProductos);
-        Main.muestraLista(gestorProductos);
-    }
-}*/
