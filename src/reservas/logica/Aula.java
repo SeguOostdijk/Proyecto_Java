@@ -54,6 +54,14 @@ public class Aula implements Serializable,Comparable<Aula>{
 
     }
 
+    public boolean hizoReserva(int codigoId){
+        for (Reserva reserva : listaReservas.values()) {
+            if(reserva.getCODIGO()==codigoId)
+                return true;
+        }
+        return false;
+    }
+
     public int getCapacidadmaxima() {
         return capacidadMaxima;
     }
@@ -67,46 +75,65 @@ public class Aula implements Serializable,Comparable<Aula>{
     }
 
     public void agregaReservas(int codigoAsignatura) {  //asignatura o evento interno
-            Asignatura asignatura = universidad.getAsignatura(codigoAsignatura);
-            LocalDate fechaInicio = Asignatura.getFechaInicioCursada();
-            LocalDate fechaFin = Asignatura.getFechaFinCursada();
+        Asignatura asignatura = universidad.getAsignatura(codigoAsignatura);
+        LocalDate fechaInicio = Asignatura.getFechaInicioCursada();
+        LocalDate fechaFin = Asignatura.getFechaFinCursada();
 
-            LocalDate fechaActual = fechaInicio;
+        LocalDate fechaActual = fechaInicio;
 
-            while(!fechaActual.isAfter(fechaFin)) {
-                Reserva nuevaReserva = new Reserva(fechaActual, asignatura.getHoraInicio(), asignatura.getHoraFin(), asignatura);
-                if (estaDisponible(asignatura.getHoraInicio(), asignatura.getHoraFin(), fechaActual) && noSuperaCapacidad(asignatura.getCantidadInscriptos()))
-                    listaReservas.put(nuevaReserva.getCODIGO(), nuevaReserva);
-                else
-                    throw new NoSuchElementException("No se pudo realizar la reserva");
-                fechaActual = fechaActual.plusWeeks(1);
-            }
+        while(!fechaActual.isAfter(fechaFin)) {
+            Reserva nuevaReserva = new Reserva(fechaActual, asignatura.getHoraInicio(), asignatura.getHoraFin(), asignatura);
+            if (estaDisponible(asignatura.getHoraInicio(), asignatura.getHoraFin(), fechaActual) && noSuperaCapacidad(asignatura.getCantidadInscriptos()))
+                listaReservas.put(nuevaReserva.getCODIGO(), nuevaReserva);
+            else
+                throw new NoSuchElementException("No se pudo realizar la reserva");
+            fechaActual = fechaActual.plusWeeks(1);
+        }
     }
 
     public void agregaReservas(int codigoCurso, LocalDate fechaInicio, LocalTime horaInicio, LocalTime horaFin){
-            CursoExtension curso = universidad.getCursoExtension(codigoCurso);
-            LocalDate fechaActual = fechaInicio;
-            int clasesReservadas = 0;
-            int cantidadClases = curso.getCantidadClases();
+        CursoExtension curso = universidad.getCursoExtension(codigoCurso);
+        LocalDate fechaActual = fechaInicio;
+        int clasesReservadas = 0;
+        int cantidadClases = curso.getCantidadClases();
 
-            while(clasesReservadas < cantidadClases) {
-                Reserva nuevaReserva = new Reserva(fechaInicio, horaInicio, horaFin, curso);
-                if (estaDisponible(horaInicio, horaFin, fechaActual) && noSuperaCapacidad(curso.getCantidadInscriptos()))
-                    listaReservas.put(nuevaReserva.getCODIGO(), nuevaReserva);
-                else
-                    throw new NoSuchElementException("No se pudo realizar la reserva");
-                clasesReservadas++;
-                fechaActual = fechaActual.plusWeeks(1);
-            }
+        while(clasesReservadas < cantidadClases) {
+            Reserva nuevaReserva = new Reserva(fechaInicio, horaInicio, horaFin, curso);
+            if (estaDisponible(horaInicio, horaFin, fechaActual) && noSuperaCapacidad(curso.getCantidadInscriptos()))
+                listaReservas.put(nuevaReserva.getCODIGO(), nuevaReserva);
+            else
+                throw new NoSuchElementException("No se pudo realizar la reserva");
+            clasesReservadas++;
+            fechaActual = fechaActual.plusWeeks(1);
+        }
     }
 
+    public void agregaReservasEventoInterno(int codigoEventoInterno){
+        EventoInterno eventoInterno = universidad.getEventoInterno(codigoEventoInterno);
+        LocalDate fechaInicio = eventoInterno.getFechaInicio();
+        LocalTime horaInicio = eventoInterno.getHoraInicio();
+        LocalTime horaFin = eventoInterno.getHoraFin();
 
-    public void agregaReservasExterno(int codigoEvento, String nombreOrganizacion, float costoAlquiler){
-            Evento evento = universidad.getEvento(codigoEvento);
-            Reserva nuevaReserva = new Reserva(evento.getFechaInicio(),evento.getHoraInicio(),evento.getHoraFin(),evento);
-            if(estaDisponible(evento.getHoraInicio(),evento.getHoraFin(),evento.getFechaInicio()) && noSuperaCapacidad(evento.getCantidadInscriptos()))
-                listaReservas.put(nuevaReserva.getCODIGO(),nuevaReserva);
-            System.out.println("Reserva para evento " + " realizada con exito");
+        Reserva nuevaReserva = new Reserva(fechaInicio,horaInicio,horaFin,eventoInterno);
+        if(estaDisponible(horaInicio,horaFin,fechaInicio) && noSuperaCapacidad(eventoInterno.getCantidadInscriptos()))
+            listaReservas.put(nuevaReserva.getCODIGO(),nuevaReserva);
+        else
+            throw new NoSuchElementException("No se pudo realizar la reserva");
+    }
+
+    public void agregaReservasEventoExterno(int codigoEventoExterno, String nombreOrganizacion, float costoAlquiler){
+        EventoExterno eventoExterno = universidad.getEventoExterno(codigoEventoExterno);
+        LocalDate fechaInicio = eventoExterno.getFechaInicio();
+        LocalTime horaInicio = eventoExterno.getHoraInicio();
+        LocalTime horaFin = eventoExterno.getHoraFin();
+        eventoExterno.setNombreOrganizacion(nombreOrganizacion);
+        eventoExterno.setCostoAlquiler(costoAlquiler);
+
+        Reserva nuevaReserva = new Reserva(fechaInicio,horaInicio,horaFin,eventoExterno);
+        if(estaDisponible(horaInicio,horaFin,fechaInicio) && noSuperaCapacidad(eventoExterno.getCantidadInscriptos()))
+            listaReservas.put(nuevaReserva.getCODIGO(),nuevaReserva);
+        else
+            throw new NoSuchElementException("No se pudo realizar la reserva");
     }
 
     @Override
