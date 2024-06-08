@@ -16,9 +16,9 @@ public class Universidad implements Serializable {
         this.listaReservables = listaReservables;
     }
 
-    public Aula getAula(Integer codigoAula) {
+    public Aula getAula(int codigoAula) {
         for (Aula aula : ListaAulas) {
-            if (aula.getNumero().equals(codigoAula)) {
+            if (aula.getNumero()==codigoAula) {
                 return aula;
             }
         }
@@ -105,17 +105,24 @@ public class Universidad implements Serializable {
     }
     public Montos getMontos(){
         int pisoActual;
+        float sumTotal=0;
+        float sumPiso;
         Montos m=new Montos();
         Iterator<Aula> it=ListaAulas.iterator();
+        Aula a=it.next();
         while(it.hasNext()){
-            Aula a=it.next();
-            m.getMontosAula().add(a.getMonto());
+            sumPiso=0;
             pisoActual=a.getPiso();
             while(it.hasNext()&&a.getPiso()==pisoActual){
-               m.getMontosPiso().add(getMonto)
-
+                m.agregaMontosAula(a.getNumero(),a.montoRecaudado());
+                a=it.next();
+                sumPiso+=a.montoRecaudado();
+                sumTotal+=a.montoRecaudado();
             }
+            m.agregaMontosPiso(sumPiso);
         }
+        m.setMontoTotal(sumTotal);
+        return m;
     }
     public ReporteAulasReserva getReporteReservas(){
         float sumaTotal=0;

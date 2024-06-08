@@ -6,11 +6,12 @@ import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
 
-public class Aula implements Serializable {
+public class Aula implements Serializable,Comparable<Aula>{
     private int numeroAula;
     private int capacidadMaxima;
     private HashMap <Integer,Reserva> listaReservas;
     private Universidad universidad;
+
 
     public Aula(int capacidadMaxima, Integer numeroAula) {
         this.capacidadMaxima = capacidadMaxima;
@@ -109,5 +110,10 @@ public class Aula implements Serializable {
                 ", cantidad de reservas="+listaReservas.size()+
                 ", lista de Reservas=" + listaReservas +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Aula o) {
+        return this.getNumero()-o.getNumero();
     }
 }

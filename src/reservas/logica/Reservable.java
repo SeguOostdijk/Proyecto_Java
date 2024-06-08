@@ -1,6 +1,7 @@
 package reservas.logica;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public abstract class Reservable implements Serializable {
     private final String codigoIdentificador;
@@ -28,5 +29,18 @@ public abstract class Reservable implements Serializable {
         return "codigo identificador='" + codigoIdentificador + '\'' +
                 ", cantidad de inscriptos=" + cantidadInscriptos +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reservable that = (Reservable) o;
+        return Objects.equals(codigoIdentificador, that.codigoIdentificador);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(codigoIdentificador);
     }
 }
