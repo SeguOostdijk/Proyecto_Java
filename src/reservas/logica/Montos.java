@@ -1,14 +1,18 @@
 package reservas.logica;
 
-import java.util.ArrayList;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Montos {
     private ArrayList<Float> montosPiso;
-    private TreeSet<Float> montosAula:
+    private TreeMap<Integer,Float> montosAula;
     private float montoTotal;
     public  Montos(){
-        montosAula=new TreeSet<>();
+        montosAula=new TreeMap<>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return 0;
+            }
+        });
         montosPiso=new ArrayList<>();
         montoTotal=0;
     }
@@ -21,11 +25,22 @@ public class Montos {
         this.montoTotal = montoTotal;
     }
 
-    public ArrayList<Float> getMontosPiso() {
-        return montosPiso;
+    public void agregaMontosPiso(float monto) {
+        montosPiso.add(monto);
+    }
+    public void agregaMontosAula(int clave,float monto){
+        montosAula.put(clave,monto);
     }
 
-    public TreeSet<Float> getMontosAula() {
-        return montosAula;
+    @Override
+    public String toString() {
+        StringBuilder sb=new StringBuilder();
+        for (Map.Entry<Integer, Float> integerFloatEntry : montosAula.entrySet())
+            sb.append("aula: "+integerFloatEntry.getKey()+" monto recaudado: "+integerFloatEntry.getValue()+"/n");
+        for (int i = 0; i < montosPiso.size(); i++)
+            sb.append("Piso:"+i+" monto recaudado:"+montosPiso.get(i)+"/n");
+        sb.append("Monto total de la institucion:"+montoTotal);
+        return sb.toString();
     }
+
 }

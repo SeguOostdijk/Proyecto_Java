@@ -10,12 +10,11 @@ public abstract class Evento extends Reservable{
     private String descripcion;
     private float costoAlquiler;
 
-    public Evento(String codigoIdentificador, int cantidadInscriptos, LocalTime horaInicio, LocalTime horaFin, String descripcion,float costoAlquiler,LocalDate fechaInicio) {
+    public Evento(String codigoIdentificador, int cantidadInscriptos, LocalTime horaInicio, LocalTime horaFin, String descripcion,LocalDate fechaInicio) {
         super(codigoIdentificador, cantidadInscriptos);
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
         this.descripcion = descripcion;
-        this.costoAlquiler = costoAlquiler;
         this.fechaInicio= fechaInicio;
     }
 
@@ -24,7 +23,7 @@ public abstract class Evento extends Reservable{
     }
 
     public void setFechaInicio(LocalDate fechaInicio) {
-        fechaInicio = fechaInicio;
+        this.fechaInicio = fechaInicio;
     }
 
     public LocalTime getHoraInicio() {
@@ -49,14 +48,6 @@ public abstract class Evento extends Reservable{
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public float getCostoAlquiler() {
-        return costoAlquiler;
-    }
-
-    public void setCostoAlquiler(float costoAlquiler) {
-        this.costoAlquiler = costoAlquiler;
     }
 
     @Override

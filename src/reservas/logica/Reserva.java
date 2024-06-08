@@ -3,6 +3,7 @@ package reservas.logica;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 
 public class Reserva implements Serializable {
   private static int numCodigo=0;
@@ -66,5 +67,18 @@ public class Reserva implements Serializable {
             ", hora de finalizacion='" + horaFin + '\'' +
             ", tipo=" + reservable.getClass().getSimpleName() +
             '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Reserva reserva = (Reserva) o;
+    return CODIGO == reserva.CODIGO;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(CODIGO);
   }
 }
