@@ -2,7 +2,7 @@ package reservas.logica;
 import java.io.Serializable;
 import java.util.*;
 
-public class Universidad implements Serializable {
+public class Universidad implements Serializable{
     private TreeSet<Aula> ListaAulas;
     private HashMap<String, Reservable> listaReservables;
 
@@ -16,20 +16,20 @@ public class Universidad implements Serializable {
         this.listaReservables = listaReservables;
     }
 
-    public Aula getAula(Integer codigoAula) {
+    public Aula getAula(int codigoAula) {
         for (Aula aula : ListaAulas) {
-            if (aula.getNumero().equals(codigoAula)) {
+            if (aula.getNumero()==codigoAula) {
                 return aula;
             }
         }
-        throw new NoSuchElementException("No se encontro el aula con codogio " + codigoAula);
+        throw new NoSuchElementException("No se encontro el aula con codigo " + codigoAula);
     }
 
     public void poneAula(Aula nuevaAula){
-       ListaAulas.add(nuevaAula);
+        ListaAulas.add(nuevaAula);
     }
 
-    public Asignatura getAsignatura(String codAsignatura) {
+    public Asignatura getAsignatura(int codAsignatura) {
         return (Asignatura) listaReservables.get(codAsignatura);
     }
 
@@ -37,7 +37,7 @@ public class Universidad implements Serializable {
         listaReservables.put(nuevaAsignatura.getCodigoIdentificador(), nuevaAsignatura);
     }
 
-    public CursoExtension getCursoExtension(String codCurso){
+    public CursoExtension getCursoExtension(int codCurso){
         return  (CursoExtension) listaReservables.get(codCurso);
     }
 
@@ -45,7 +45,7 @@ public class Universidad implements Serializable {
         listaReservables.put(nuevoCurso.getCodigoIdentificador(),nuevoCurso);
     }
 
-    public Evento getEvento(String codEvento){
+    public Evento getEvento(int codEvento){
         return (Evento) listaReservables.get(codEvento);
     }
 
@@ -70,10 +70,10 @@ public class Universidad implements Serializable {
         while(it.hasNext() && a.getPiso()<numeroPiso)
             a=it.next();
         if(it.hasNext())
-          while(it.hasNext()&& a.getPiso()==numeroPiso) {
-              aulasporpiso.add(a);
-              a = it.next();
-          }
+            while(it.hasNext()&& a.getPiso()==numeroPiso) {
+                aulasporpiso.add(a);
+                a = it.next();
+            }
         else
             throw new NoSuchElementException();
         return aulasporpiso;
@@ -99,23 +99,30 @@ public class Universidad implements Serializable {
     public List<MontoPorAula> getMontoPorAula(){
         ArrayList<MontoPorAula> listaMA=new ArrayList<>();
         for (Aula aula : ListaAulas) {
-            listaMA.add(new MontoPorAula(aula.getmonto(),aula.getNumero()));
+            listaMA.add(new MontoPorAula(aula.montoRecaudado(),aula.getNumero()));
         }
         return listaMA;
     }
     public Montos getMontos(){
         int pisoActual;
+        float sumTotal=0;
+        float sumPiso;
         Montos m=new Montos();
         Iterator<Aula> it=ListaAulas.iterator();
+        Aula a=it.next();
         while(it.hasNext()){
-            Aula a=it.next();
-            m.getMontosAula().add(a.getMonto());
+            sumPiso=0;
             pisoActual=a.getPiso();
             while(it.hasNext()&&a.getPiso()==pisoActual){
-               m.getMontosPiso().add(getMonto)
-
+                m.agregaMontosAula(a.getNumero(),a.montoRecaudado());
+                a=it.next();
+                sumPiso+=a.montoRecaudado();
+                sumTotal+=a.montoRecaudado();
             }
+            m.agregaMontosPiso(sumPiso);
         }
+        m.setMontoTotal(sumTotal);
+        return m;
     }
     public ReporteAulasReserva getReporteReservas(){
         float sumaTotal=0;
@@ -125,7 +132,7 @@ public class Universidad implements Serializable {
             sumaTotal+=aula.cantidadReservas();
         }
         if(!ListaAulas.isEmpty())
-          reporte.setPromReservasAula(sumaTotal/ListaAulas.size());
+            reporte.setPromReservasAula(sumaTotal/ListaAulas.size());
         else
             reporte.setPromReservasAula(0);
         return  reporte;
