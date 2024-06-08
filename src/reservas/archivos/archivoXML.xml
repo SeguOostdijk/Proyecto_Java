@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Universidad>
+    <asignatura nombre = "Algebra">
+            <fehcaInicioCursada>10-03-24</fehcaInicioCursada>
+            <fechaFinCursada>10-07-24</fechaFinCursada>
+            <diaDeSemana>Lunes</diaDeSemana>
+            <HoraIncio>14</HoraIncio>
+            <HoraFin>18</HoraFin>
+    </asignatura>
+    <asignatura nombre="algoritmos">
+        <fehcaInicioCursada>10-03-24</fehcaInicioCursada>
+        <fechaFinCursada>10-07-24</fechaFinCursada>
+        <diaDeSemana>Miercoles</diaDeSemana>
+        <HoraIncio>18</HoraIncio>
+        <HoraFin>22</HoraFin>
+    </asignatura>
+    <asignatura nombre="estructura de datos">
+        <fehcaInicioCursada>10-03-24</fehcaInicioCursada>
+        <fechaFinCursada>10-07-24</fechaFinCursada>
+        <diaDeSemana>Viernes</diaDeSemana>
+        <HoraIncio>18</HoraIncio>
+        <HoraFin>22</HoraFin>
+    </asignatura>
+    <curso codigo="010">
+        <cantidadDeInscriptos>55</cantidadDeInscriptos>
+        <descripcion>Curso de programacion</descripcion>
+        <cantidadDeClases>20</cantidadDeClases>
+        <costo>100000</costo>
+    </curso>
+    <curso codigo="020">
+        <cantidadDeInscriptos>30</cantidadDeInscriptos>
+        <descripcion>Curso de diseño</descripcion>
+        <cantidadDeClases>20</cantidadDeClases>
+        <costo>150000</costo>
+    </curso>
+    <curso codigo="056">
+        <cantidadDeInscriptos>16</cantidadDeInscriptos>
+        <descripcion>Curso de base de datos</descripcion>
+        <cantidadDeClases>20</cantidadDeClases>
+        <costo>50000</costo>
+    </curso>
+    <evento codigo="001">
+        <cantidadDeInscriptos>100</cantidadDeInscriptos>
+        <fechaInicio>05-05-24</fechaInicio>
+        <horaInicio>10</horaInicio>
+        <horaFin>12</horaFin>
+        <descripcion>Evento de intruduccion a la facultad</descripcion>
+        <tipo>interno</tipo>
+    </evento>
+    <evento codigo="005">
+        <cantidadDeInscriptos>55</cantidadDeInscriptos>
+        <fechaInicio>04-09-24</fechaInicio>
+        <horaInicio>16</horaInicio>
+        <horaFin>18</horaFin>
+        <descripcion>Evento de diseño</descripcion>
+        <tipo>externo</tipo>
+    </evento>
+    /*int numeroAula;
+    int capacidadMaxima;
+    HashMap <Integer,Reserva> listaReservas;
+    Universidad universidad;
+    */
+    <aula numeroAula = "024">
+        <capacidad>50</capacidad>
+        <reservas codigoDeReserva="1">
+            <reservable>
+                // id de un reservable y lo busca
+            </reservable>
+        </reservas>
+        <reservas codigoDeReserva="2">
+            <reservable>
+
+            </reservable>
+        </reservas>
+        <reservas codigoDeReserva="3">
+            <reservable>
+
+            </reservable>
+        </reservas>
+    </aula>
+    <aula numeroAula = "145">
+        <capacidad>30</capacidad>
+        <reservas>
+            <reservable>
+
+            </reservable>
+        </reservas>
+    </aula>
+    <aula numeroAula = "346">
+        <capacidad>40</capacidad>
+        <reservas>
+            <reservable>
+
+            </reservable>
+
+        </reservas>
+        <reservas>
+            <reservable>
+
+            </reservable>
+        </reservas>
+    </aula>
+    <aula numeroAula = "452">
+        <capacidad>40</capacidad>
+        <reservas>
+            <reservable>
+
+            </reservable>
+        </reservas>
+        <reservas>
+            <reservable>
+
+            </reservable>
+        </reservas>
+    </aula>
+</Universidad>
