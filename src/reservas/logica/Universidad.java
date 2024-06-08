@@ -45,12 +45,20 @@ public class Universidad implements Serializable{
         listaReservables.put(nuevoCurso.getCodigoIdentificador(),nuevoCurso);
     }
 
-    public Evento getEvento(int codEvento){
-        return (Evento) listaReservables.get(codEvento);
+    public EventoInterno getEventoInterno(int codEventoInterno){
+        return (EventoInterno) listaReservables.get(codEventoInterno);
     }
 
-    public void poneEvento(Evento nuevoEvento){
-        listaReservables.put(nuevoEvento.getCodigoIdentificador(),nuevoEvento);
+    public void poneEventoInterno(EventoInterno nuevoEventoInterno){
+        listaReservables.put(nuevoEventoInterno.getCodigoIdentificador(),nuevoEventoInterno);
+    }
+
+    public EventoExterno getEventoExterno(int codEventoExterno){
+        return (EventoExterno) listaReservables.get(codEventoExterno);
+    }
+
+    public void poneEventoExterno(EventoExterno nuevoEventoExterno){
+        listaReservables.put(nuevoEventoExterno.getCodigoIdentificador(),nuevoEventoExterno);
     }
 
     public void cancelarReserva(Aula aula, Integer codReserva){
@@ -78,10 +86,10 @@ public class Universidad implements Serializable{
             throw new NoSuchElementException();
         return aulasporpiso;
     }
-    public List<Aula> consultarAula(String codigoId) {
+    public List<Aula> consultarAula(int codigoId) {
         ArrayList<Aula> aulasporcodigo = new ArrayList<>();
         for (Aula aula : ListaAulas) {
-            if (aula.hizoReserva(CodigoId))
+            if (aula.hizoReserva(codigoId))
                 aulasporcodigo.add(aula);
         }
         if (aulasporcodigo.isEmpty())
