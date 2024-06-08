@@ -22,14 +22,14 @@ public class Universidad implements Serializable {
                 return aula;
             }
         }
-        throw new NoSuchElementException("No se encontro el aula con codogio " + codigoAula);
+        throw new NoSuchElementException("No se encontro el aula con codigo " + codigoAula);
     }
 
     public void poneAula(Aula nuevaAula){
        ListaAulas.add(nuevaAula);
     }
 
-    public Asignatura getAsignatura(String codAsignatura) {
+    public Asignatura getAsignatura(int codAsignatura) {
         return (Asignatura) listaReservables.get(codAsignatura);
     }
 
@@ -37,7 +37,7 @@ public class Universidad implements Serializable {
         listaReservables.put(nuevaAsignatura.getCodigoIdentificador(), nuevaAsignatura);
     }
 
-    public CursoExtension getCursoExtension(String codCurso){
+    public CursoExtension getCursoExtension(int codCurso){
         return  (CursoExtension) listaReservables.get(codCurso);
     }
 
@@ -45,7 +45,7 @@ public class Universidad implements Serializable {
         listaReservables.put(nuevoCurso.getCodigoIdentificador(),nuevoCurso);
     }
 
-    public Evento getEvento(String codEvento){
+    public Evento getEvento(int codEvento){
         return (Evento) listaReservables.get(codEvento);
     }
 
@@ -99,7 +99,7 @@ public class Universidad implements Serializable {
     public List<MontoPorAula> getMontoPorAula(){
         ArrayList<MontoPorAula> listaMA=new ArrayList<>();
         for (Aula aula : ListaAulas) {
-            listaMA.add(new MontoPorAula(aula.getmonto(),aula.getNumero()));
+            listaMA.add(new MontoPorAula(aula.montoRecaudado(),aula.getNumero()));
         }
         return listaMA;
     }
