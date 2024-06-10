@@ -70,14 +70,16 @@ public class Universidad implements Serializable{
     public List<Aula> consultarAula(Integer numeroPiso) {
         Iterator<Aula> it= ListaAulas.iterator();
         ArrayList<Aula> aulasporpiso = new ArrayList<>();
-        Aula a=ListaAulas.getFirst();
-        while(it.hasNext() && a.getPiso()<numeroPiso)
-            a=it.next();
-        if(it.hasNext())
-            while(it.hasNext()&& a.getPiso()==numeroPiso) {
-                aulasporpiso.add(a);
+        if(it.hasNext()) {
+            Aula a = it.next();
+            while (it.hasNext() && a.getPiso() < numeroPiso)
                 a = it.next();
-            }
+            if (it.hasNext())
+                while (it.hasNext() && a.getPiso() == numeroPiso) {
+                    aulasporpiso.add(a);
+                    a = it.next();
+                }
+        }
         else
             throw new NoSuchElementException();
         return aulasporpiso;
@@ -135,9 +137,5 @@ public class Universidad implements Serializable{
             reporte.setPromReservasAula(0);
         return  reporte;
     }
-
-
-
-
 }
 
