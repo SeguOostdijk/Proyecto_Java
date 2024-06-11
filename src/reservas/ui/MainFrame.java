@@ -4,7 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
+import javax.swing.text.JTextComponent;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
@@ -28,6 +31,8 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         universidad = new Universidad();
         initUI();
+        
+
     }
 
     private void initUI() {
@@ -36,14 +41,14 @@ public class MainFrame extends JFrame {
         JButton listarAulasButton = new JButton("Listar Aulas");
         JButton reservarAulaButton = new JButton("Agregar Reserva");
         JButton cancelarReservaButton = new JButton("Cancelar Reserva");
-        JButton generaReportes = new JButton("Generar Reportes");
+        JButton generaReportesbutton = new JButton("Generar Reportes");
 
         // Establecer un tamaño preferido más pequeño para los botones
         Dimension buttonSize = new Dimension(250, 50);
         listarAulasButton.setPreferredSize(buttonSize);
         reservarAulaButton.setPreferredSize(buttonSize);
         cancelarReservaButton.setPreferredSize(buttonSize);
-        generaReportes.setPreferredSize(buttonSize);
+        generaReportesbutton.setPreferredSize(buttonSize);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -58,7 +63,7 @@ public class MainFrame extends JFrame {
         gbc.gridy++;
         panel.add(cancelarReservaButton,gbc);
         gbc.gridy++;
-        panel.add(generaReportes,gbc);
+        panel.add(generaReportesbutton,gbc);
 
         add(panel, BorderLayout.CENTER);
 
@@ -86,11 +91,21 @@ public class MainFrame extends JFrame {
             }
         });
 
+        generaReportesbutton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                generarReportes();
+
+            }
+        });
+
         cancelarReservaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // implementar cancelar reserva
                 cancelarReserva();
+
             }
         });
     }
@@ -369,6 +384,25 @@ public class MainFrame extends JFrame {
         }
     }
 
+    private void generarReportes(){
+        JPanel panel=new JPanel(new FlowLayout());
+        panel.add(new JLabel("Seleccione el tipo de reporte:"));
+        String[] vectorItems={"Montos","Aulas"};
+        JComboBox comboBox=new JComboBox(vectorItems);
+        panel.add(comboBox);
+        int  result= JOptionPane.showConfirmDialog(this, panel, "Generar Reportes",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);//Muestra el panel
+        if(result==JOptionPane.OK_OPTION)
+        {
+          String itemSeleccionado = (String) comboBox.getSelectedItem();
+          if (itemSeleccionado.equals("Montos"))
+            // JOptionPane.showMessageDialog(panel, "Generando lista de montos...");
+            JOptionPane.showMessageDialog(panel,"Generando lista de montos");
+          else
+             JOptionPane.showMessageDialog(panel, "Generando lista de aulas...");
+
+        }
+
+    }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -376,6 +410,7 @@ public class MainFrame extends JFrame {
                 MainFrame mainFrame = new MainFrame();
                 mainFrame.setLocationRelativeTo(null);
                 mainFrame.setVisible(true);
+                mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             }
         });
     }
