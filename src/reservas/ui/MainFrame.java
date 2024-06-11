@@ -18,6 +18,7 @@ import reservas.logica.*;
 import java.util.Date;
 
 
+
 public class MainFrame extends JFrame {
     private Universidad universidad;
 
@@ -30,26 +31,43 @@ public class MainFrame extends JFrame {
     }
 
     private void initUI() {
-        JPanel panel = new JPanel();
+        JPanel panel = new JPanel(new GridBagLayout());
 
-        JButton cargarDatosButton = new JButton("Cargar Datos");
         JButton listarAulasButton = new JButton("Listar Aulas");
         JButton reservarAulaButton = new JButton("Reservar Aula");
         JButton cancelarReservaButton = new JButton("Cancelar Reserva");
+        JButton generaReportes = new JButton("Generar Reportes");
 
-        panel.add(cargarDatosButton);
-        panel.add(listarAulasButton);
-        panel.add(reservarAulaButton);
-        panel.add(cancelarReservaButton);
+        // Establecer un tamaño preferido más pequeño para los botones
+        Dimension buttonSize = new Dimension(250, 50);
+        listarAulasButton.setPreferredSize(buttonSize);
+        reservarAulaButton.setPreferredSize(buttonSize);
+        cancelarReservaButton.setPreferredSize(buttonSize);
+        generaReportes.setPreferredSize(buttonSize);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy =0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.insets = new Insets(5, 5, 5, 5);
+
+        panel.add(listarAulasButton,gbc);
+        gbc.gridy++;
+        panel.add(reservarAulaButton,gbc);
+        gbc.gridy++;
+        panel.add(cancelarReservaButton,gbc);
+        gbc.gridy++;
+        panel.add(generaReportes,gbc);
+
         add(panel, BorderLayout.CENTER);
 
-        cargarDatosButton.addActionListener(new ActionListener() {
+        /*cargarDatosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // implementar cargar datos
                 cargarDatos();
             }
-        });
+        });*/
 
         listarAulasButton.addActionListener(new ActionListener() {
             @Override
@@ -212,37 +230,24 @@ public class MainFrame extends JFrame {
 
     private void reservarAula() {
         JPanel panel = new JPanel();
-        JTextField numeroAulaField = new JTextField(5);
-        JTextField fechaField = new JTextField(10);
-        JTextField inicioField = new JTextField(5);
-        JTextField finField = new JTextField(5);
-        JTextField quienHizoReservaField = new JTextField(20);
+        panel.setLayout(new GridLayout(0,1));
 
-        panel.add(new JLabel("Número de Aula:"));
-        panel.add(numeroAulaField);
-        panel.add(new JLabel("Fecha (dd-mm-aaaa):"));
-        panel.add(fechaField);
-        panel.add(new JLabel("Inicio (HH):"));
-        panel.add(inicioField);
-        panel.add(new JLabel("Fin (HH):"));
-        panel.add(finField);
-        panel.add(new JLabel("Quién Hizo la Reserva:"));
-        panel.add(quienHizoReservaField);
+        JLabel titulo = new JLabel("¿Para que desea reservas un aula?");
+        JButton asignatura = new JButton("Asignatura");
+        JButton eventoInterno = new JButton("Evento Interno");
+        JButton eventoExterno = new JButton("Evento Externo");
+        JButton cursoExtension = new JButton("Curso de extension");
 
-        int result = JOptionPane.showConfirmDialog(null, panel, "Reservar Aula", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        panel.add(titulo);
+        panel.add(asignatura);
+        panel.add(eventoInterno);
+        panel.add(eventoExterno);
+        panel.add(cursoExtension);
+        add(panel,BorderLayout.CENTER);
 
-        if (result == JOptionPane.OK_OPTION) {
-            try {
-                int numeroAula = Integer.parseInt(numeroAulaField.getText());
-                Date fecha = new SimpleDateFormat("dd-MM-yyyy").parse(fechaField.getText());
-                int inicio = Integer.parseInt(inicioField.getText());
-                int fin = Integer.parseInt(finField.getText());
-                String quienHizoReserva = quienHizoReservaField.getText();
+        JOptionPane.showConfirmDialog(null, panel, "Reservar Aula", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Error en los datos ingresados.");
-            }
-        }
+
     }
 
 
