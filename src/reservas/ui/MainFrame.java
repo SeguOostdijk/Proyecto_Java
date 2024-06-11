@@ -396,16 +396,22 @@ public class MainFrame extends JFrame {
           String itemSeleccionado = (String) comboBox.getSelectedItem();
           if (itemSeleccionado.equals("Montos")) {
               try {
-                  Montos m = universidad.getMontos();
-                  JOptionPane.showMessageDialog(this, m, "Reporte de montos", JOptionPane.INFORMATION_MESSAGE);
+                  Montos reporteMontos = universidad.getMontos();
+                  JOptionPane.showMessageDialog(this, reporteMontos, "Reporte de montos", JOptionPane.INFORMATION_MESSAGE);
               }
               catch (Exception e){
-                  JOptionPane.showMessageDialog(panel,e.getMessage(),"ERROR",JOptionPane.ERROR_MESSAGE);
+                  JOptionPane.showMessageDialog(panel,e.getMessage(),"Reporte de montos",JOptionPane.ERROR_MESSAGE);
               }
           }
-          else
-             JOptionPane.showMessageDialog(panel, "Generando lista de aulas...");
-
+          else{
+              try {
+                  ReporteAulasReserva reporteAulas = universidad.getReporteReservas();
+                  JOptionPane.showMessageDialog(this, reporteAulas, "Reporte de aulas", JOptionPane.INFORMATION_MESSAGE);
+              }
+              catch (Exception e){
+                  JOptionPane.showMessageDialog(panel,e.getMessage(),"Reporte de aulas",JOptionPane.ERROR_MESSAGE);
+              }
+          }
         }
 
     }

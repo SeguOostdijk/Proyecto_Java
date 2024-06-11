@@ -2,7 +2,7 @@ package reservas.logica;
 import java.io.Serializable;
 import java.util.*;
 
-public class Universidad implements Serializable{
+public class Universidad implements Serializable {
     private TreeSet<Aula> ListaAulas;
     private HashMap<String, Reservable> listaReservables;
 
@@ -14,14 +14,14 @@ public class Universidad implements Serializable{
 
     public Aula getAula(int codigoAula) {
         for (Aula aula : ListaAulas) {
-            if (aula.getNumero()==codigoAula) {
+            if (aula.getNumero() == codigoAula) {
                 return aula;
             }
         }
         throw new NoSuchElementException("No se encontro el aula con codigo " + codigoAula);
     }
 
-    public void poneAula(Aula nuevaAula){
+    public void poneAula(Aula nuevaAula) {
         ListaAulas.add(nuevaAula);
     }
 
@@ -29,48 +29,48 @@ public class Universidad implements Serializable{
         return (Asignatura) listaReservables.get(codAsignatura);
     }
 
-    public void poneAsignatura(Asignatura nuevaAsignatura){
+    public void poneAsignatura(Asignatura nuevaAsignatura) {
         listaReservables.put(nuevaAsignatura.getCodigoIdentificador(), nuevaAsignatura);
     }
 
-    public CursoExtension getCursoExtension(int codCurso){
-        return  (CursoExtension) listaReservables.get(codCurso);
+    public CursoExtension getCursoExtension(int codCurso) {
+        return (CursoExtension) listaReservables.get(codCurso);
     }
 
-    public void poneCurso(CursoExtension nuevoCurso){
-        listaReservables.put(nuevoCurso.getCodigoIdentificador(),nuevoCurso);
+    public void poneCurso(CursoExtension nuevoCurso) {
+        listaReservables.put(nuevoCurso.getCodigoIdentificador(), nuevoCurso);
     }
 
-    public EventoInterno getEventoInterno(int codEventoInterno){
+    public EventoInterno getEventoInterno(int codEventoInterno) {
         return (EventoInterno) listaReservables.get(codEventoInterno);
     }
 
-    public void poneEventoInterno(EventoInterno nuevoEventoInterno){
-        listaReservables.put(nuevoEventoInterno.getCodigoIdentificador(),nuevoEventoInterno);
+    public void poneEventoInterno(EventoInterno nuevoEventoInterno) {
+        listaReservables.put(nuevoEventoInterno.getCodigoIdentificador(), nuevoEventoInterno);
     }
 
-    public EventoExterno getEventoExterno(int codEventoExterno){
+    public EventoExterno getEventoExterno(int codEventoExterno) {
         return (EventoExterno) listaReservables.get(codEventoExterno);
     }
 
-    public void poneEventoExterno(EventoExterno nuevoEventoExterno){
-        listaReservables.put(nuevoEventoExterno.getCodigoIdentificador(),nuevoEventoExterno);
+    public void poneEventoExterno(EventoExterno nuevoEventoExterno) {
+        listaReservables.put(nuevoEventoExterno.getCodigoIdentificador(), nuevoEventoExterno);
     }
 
-    public void cancelarReserva(Aula aula, Integer codReserva){
-        try{
+    public void cancelarReserva(Aula aula, Integer codReserva) {
+        try {
             Aula elimAula = getAula(aula.getNumero());
             // elimAula.cancela reserva de la clase reserva
-        } catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             System.out.println(e.getMessage());
         }
     }
 
 
     public List<Aula> consultarAula(Integer numeroPiso) {
-        Iterator<Aula> it= ListaAulas.iterator();
+        Iterator<Aula> it = ListaAulas.iterator();
         ArrayList<Aula> aulasporpiso = new ArrayList<>();
-        if(it.hasNext()) {
+        if (it.hasNext()) {
             Aula a = it.next();
             while (it.hasNext() && a.getPiso() < numeroPiso)
                 a = it.next();
@@ -79,11 +79,11 @@ public class Universidad implements Serializable{
                     aulasporpiso.add(a);
                     a = it.next();
                 }
-        }
-        else
+        } else
             throw new NoSuchElementException();
         return aulasporpiso;
     }
+
     public List<Aula> consultarAula(int codigoId) {
         ArrayList<Aula> aulasporcodigo = new ArrayList<>();
         for (Aula aula : ListaAulas) {
@@ -94,8 +94,9 @@ public class Universidad implements Serializable{
             throw new NoSuchElementException();
         return aulasporcodigo;
     }
-    public String listaEntidad(Class<? extends Reservable> tipoEntidad){
-        StringBuilder sb=new StringBuilder();
+
+    public String listaEntidad(Class<? extends Reservable> tipoEntidad) {
+        StringBuilder sb = new StringBuilder();
         for (Reservable reservable : listaReservables.values()) {
             if (tipoEntidad.isInstance(reservable))
                 sb.append(reservable).append('\n');
@@ -103,12 +104,12 @@ public class Universidad implements Serializable{
         return sb.toString();
     }
 
-    public Montos getMontos(){
+    public Montos getMontos() {
         int pisoActual;
-        float sumTotal=0;
+        float sumTotal = 0;
         float sumPiso;
-        Montos m=new Montos();
-        if(!ListaAulas.isEmpty()) {
+        Montos m = new Montos();
+        if (!ListaAulas.isEmpty()) {
             Iterator<Aula> it = ListaAulas.iterator();
             Aula a = it.next();
             while (it.hasNext()) {
@@ -123,21 +124,25 @@ public class Universidad implements Serializable{
                 m.agregaMontosPiso(sumPiso);
             }
             m.setMontoTotal(sumTotal);
-        }else throw new IllegalStateException("ERROR. No hay aulas registradas en el sistema.");
+        } else throw new IllegalStateException("ERROR AL GENERAR REPORTE. No hay aulas registradas en el sistema.");
         return m;
     }
-    public ReporteAulasReserva getReporteReservas(){
-        float sumaTotal=0;
-        ReporteAulasReserva reporte=new ReporteAulasReserva();
-        for (Aula aula : ListaAulas) {
-            reporte.agregarAula(aula);
-            sumaTotal+=aula.cantidadReservas();
-        }
-        if(!ListaAulas.isEmpty())
-            reporte.setPromReservasAula(sumaTotal/ListaAulas.size());
-        else
-            reporte.setPromReservasAula(0);
-        return  reporte;
+
+    public ReporteAulasReserva getReporteReservas() {
+        float sumaTotal = 0;
+        ReporteAulasReserva reporte = new ReporteAulasReserva();
+        if (!ListaAulas.isEmpty()) {
+
+            for (Aula aula : ListaAulas) {
+                reporte.agregarAula(aula);
+                sumaTotal += aula.cantidadReservas();
+            }
+            if (!ListaAulas.isEmpty())
+                reporte.setPromReservasAula(sumaTotal / ListaAulas.size());
+            else
+                reporte.setPromReservasAula(0);
+        } else throw new IllegalStateException("ERROR AL GENERAR REPORTE. No hay aulas registradas en el sistema.");
+        return reporte;
     }
 }
 
