@@ -247,7 +247,23 @@ public class MainFrame extends JFrame {
 
         JOptionPane.showConfirmDialog(null, panel, "Reservar Aula", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
+        asignatura.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JPanel panel = new JPanel();
+                panel.setLayout(new GridLayout(0,1));
 
+                JLabel titulo = new JLabel("Ingrese los datos de la asignatura");
+                JLabel codigo = new JLabel("Codigo:");
+                JTextField codigoText = new JTextField();
+
+                panel.add(titulo);
+                panel.add(codigo);
+                panel.add(codigoText);
+                add(panel,BorderLayout.CENTER);
+
+            }
+        });
     }
 
 
