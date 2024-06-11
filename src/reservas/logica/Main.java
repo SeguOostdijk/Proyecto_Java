@@ -77,13 +77,44 @@ public class Main {
                                 Float costAlq = Float.parseFloat(element.getAttribute("costoAlquiler"));
                                 String nomorg = element.getAttribute("nombreOrg");
 
-                                EventoExterno agregaEventoE = new EventoExterno(cod,cantIns,hieE,hfeE,dscE,fieE,costAlq,nomorg);
+                                EventoExterno agregaEventoE = new EventoExterno(cod, cantIns, hieE, hfeE, dscE, fieE, costAlq, nomorg);
                                 uni.poneEventoExterno(agregaEventoE);
-
                                 break;
+                            case "aula":
+                                NodeList aulas = documentoXML.getElementsByTagName("aula");
+                                for(int j = 0; j < aulas.getLength(); j++){
+                                    Node nodoAula = aulas.item(j);
+                                    if(nodoAula.getNodeType() == Node.ELEMENT_NODE){
+                                        Element elementoAula = (Element) nodoAula;
+
+                                        int numAula = Integer.parseInt(element.getAttribute("codigo"));
+                                        int capacidad = Integer.parseInt(element.getAttribute("capacidad"));
+
+                                        Aula aula = new Aula(capacidad,numAula);
+
+                                        NodeList Reservas = elementoAula.getElementsByTagName("reservas");
+
+                                        for(int m = 0; m < Reservas.getLength(); m++){
+                                            Node nodoReserva = Reservas.item(m);
+
+                                            if(nodoReserva.getNodeType() == Node.ELEMENT_NODE){
+                                                Element elementoReserva = (Element) nodoReserva;
+
+                                                LocalTime horaInicio = LocalTime.ofSecondOfDay(Integer.parseInt(elementoReserva.getElementsByTagName("horaInicio").item(0).getTextContent()));
+                                                LocalTime horaFin = LocalTime.ofSecondOfDay(Integer.parseInt(elementoReserva.getElementsByTagName("horaFin").item(0).getTextContent()));
+                                                LocalDate fecha = LocalDate.parse(elementoReserva.getElementsByTagName("fecha").item(0).getTextContent());
+                                                int reservable = Integer.parseInt(elementoReserva.getElementsByTagName("reservable").item(0).getTextContent());
+
+                                                aula.agregaReservas(reservable,fecha,horaInicio,horaFin); // HAY QUE CAMBIAR!!
+                                            }
+                                        }
+                                        uni.poneAula(aula);
+                                    }
+                                }
+                                break;
+                            default:
+                                throw new IllegalStateException("Unexpected value: " + element.getTagName());
                         }
-
-
                 }
             }
         } catch(ParserConfigurationException | SAXException | IOException e){

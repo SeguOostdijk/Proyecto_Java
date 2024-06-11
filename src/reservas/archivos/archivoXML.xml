@@ -62,57 +62,49 @@
         <costoAlquiler>20000</costoAlquiler>
         <nombreOrg>colegio X</nombreOrg>
     </eventoExterno>
-    <aula numeroAula = "024">
+    <aula codigo = "024">
         <capacidad>50</capacidad>
-        <reservas codigoDeReserva="1">
-            <reservable>
-                // id de un reservable y lo busca
-            </reservable>
+        <reservas>
+            <horaInicio>14</horaInicio>
+            <horaFin>18</horaFin>
+            <fecha>15-3-24</fecha>
+            <reservable>101</reservable>
         </reservas>
-        <reservas codigoDeReserva="2">
-            <reservable>
-
-            </reservable>
+        <reservas>
+            <horaInicio>8</horaInicio>
+            <horaFin>12</horaFin>
+            <fecha>11-3-24</fecha>
+            <reservable>103</reservable>
         </reservas>
-        <reservas codigoDeReserva="3">
-            <reservable>
-
-            </reservable>
+        <reservas>
+            <horaInicio>18</horaInicio>
+            <horaFin>22</horaFin>
+            <fecha>10-5-24</fecha>
+            <reservable>321</reservable>
         </reservas>
     </aula>
-    <aula numeroAula = "145">
+    <aula codigo = "145">
         <capacidad>30</capacidad>
         <reservas>
-            <reservable>
-
-            </reservable>
+            <horaInicio>18</horaInicio>
+            <horaFin>22</horaFin>
+            <fecha>10-4-24</fecha>
+            <reservable>202</reservable>
         </reservas>
     </aula>
-    <aula numeroAula = "346">
+    <aula codigo = "346">
         <capacidad>40</capacidad>
         <reservas>
-            <reservable>
-
-            </reservable>
-
+            <horaInicio>18</horaInicio>
+            <horaFin>22</horaFin>
+            <fecha>9-6-24</fecha>
+            <reservable>311</reservable>
         </reservas>
         <reservas>
-            <reservable>
-
-            </reservable>
-        </reservas>
-    </aula>
-    <aula numeroAula = "452">
-        <capacidad>40</capacidad>
-        <reservas>
-            <reservable>
-
-            </reservable>
-        </reservas>
-        <reservas>
-            <reservable>
-
-            </reservable>
+            <horaInicio>14</horaInicio>
+            <horaFin>18</horaFin>
+            <fecha>10-3-24</fecha>
+            <reservable>102</reservable>
         </reservas>
     </aula>
 </Universidad>
