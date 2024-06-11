@@ -108,20 +108,22 @@ public class Universidad implements Serializable{
         float sumTotal=0;
         float sumPiso;
         Montos m=new Montos();
-        Iterator<Aula> it=ListaAulas.iterator();
-        Aula a=it.next();
-        while(it.hasNext()){
-            sumPiso=0;
-            pisoActual=a.getPiso();
-            while(it.hasNext()&&a.getPiso()==pisoActual){
-                m.agregaMontosAula(a.getNumero(),a.montoRecaudado());
-                a=it.next();
-                sumPiso+=a.montoRecaudado();
-                sumTotal+=a.montoRecaudado();
+        if(!ListaAulas.isEmpty()) {
+            Iterator<Aula> it = ListaAulas.iterator();
+            Aula a = it.next();
+            while (it.hasNext()) {
+                sumPiso = 0;
+                pisoActual = a.getPiso();
+                while (it.hasNext() && a.getPiso() == pisoActual) {
+                    m.agregaMontosAula(a.getNumero(), a.montoRecaudado());
+                    a = it.next();
+                    sumPiso += a.montoRecaudado();
+                    sumTotal += a.montoRecaudado();
+                }
+                m.agregaMontosPiso(sumPiso);
             }
-            m.agregaMontosPiso(sumPiso);
-        }
-        m.setMontoTotal(sumTotal);
+            m.setMontoTotal(sumTotal);
+        }else throw new IllegalStateException("ERROR. No hay aulas registradas en el sistema.");
         return m;
     }
     public ReporteAulasReserva getReporteReservas(){

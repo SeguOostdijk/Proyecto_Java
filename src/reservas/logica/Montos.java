@@ -31,9 +31,9 @@ public class Montos {
     public String toString() {
         StringBuilder sb=new StringBuilder();
         for (Map.Entry<Integer, Float> integerFloatEntry : montosAula.entrySet())
-            sb.append("aula: "+integerFloatEntry.getKey()+" monto recaudado: "+integerFloatEntry.getValue()+"/n");
+            sb.append("aula: "+integerFloatEntry.getKey()+" monto recaudado: "+integerFloatEntry.getValue()+"\n");
         for (int i = 0; i < montosPiso.size(); i++)
-            sb.append("Piso:"+i+" monto recaudado:"+montosPiso.get(i)+"/n");
+            sb.append("Piso:"+i+" monto recaudado:"+montosPiso.get(i)+"\n");
         sb.append("Monto total de la institucion:"+montoTotal);
         return sb.toString();
     }
