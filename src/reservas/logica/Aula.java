@@ -43,7 +43,11 @@ public class Aula implements Serializable,Comparable<Aula>{
     }
 
     public void cancelaReserva(int codigoEntidad){
-        listaReservas.remove(codigoEntidad);
+        if(listaReservas.containsKey(codigoEntidad))
+          listaReservas.remove(codigoEntidad);
+        else
+            throw new NoSuchElementException("La reserva que intenta eliminar no existe");
+
     }
 
     public int cantidadReservas(){

@@ -4,21 +4,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.io.File;
-import javax.swing.text.JTextComponent;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import java.text.SimpleDateFormat;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import reservas.logica.*;
-import java.util.Date;
 
 
 
@@ -377,14 +373,15 @@ public class MainFrame extends JFrame {
             try {
                 int numeroAula = Integer.parseInt(numeroAulaField.getText());
                 int codigoReserva = Integer.parseInt(codigoReservaField.getText());
-
+                universidad.cancelarReserva(numeroAula,codigoReserva);
+                JOptionPane.showMessageDialog(panel,"Reserva cancelada con exito","Cancelar Reserva",JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Error en los datos ingresados.");
+                JOptionPane.showMessageDialog(panel,ex.getMessage(),"Cancelar Reserva",JOptionPane.ERROR_MESSAGE);
             }
         }
     }
 
-    private void generarReportes(){
+    private void generarReportes(){ //Falta generar los reportes en archivos de texto
         JPanel panel=new JPanel(new FlowLayout());
         panel.add(new JLabel("Seleccione el tipo de reporte:"));
         String[] vectorItems={"Montos","Aulas"};

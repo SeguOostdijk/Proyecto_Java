@@ -18,7 +18,7 @@ public class Universidad implements Serializable {
                 return aula;
             }
         }
-        throw new NoSuchElementException("No se encontro el aula con codigo " + codigoAula);
+        return null;
     }
 
     public void poneAula(Aula nuevaAula) {
@@ -57,13 +57,12 @@ public class Universidad implements Serializable {
         listaReservables.put(nuevoEventoExterno.getCodigoIdentificador(), nuevoEventoExterno);
     }
 
-    public void cancelarReserva(Aula aula, Integer codReserva) {
-        try {
-            Aula elimAula = getAula(aula.getNumero());
-            // elimAula.cancela reserva de la clase reserva
-        } catch (NoSuchElementException e) {
-            System.out.println(e.getMessage());
-        }
+    public void cancelarReserva(int numeroAula, Integer codReserva) {
+            Aula elimAula = getAula(numeroAula);
+            if(elimAula!=null)
+              elimAula.cancelaReserva(codReserva);
+            else
+                throw new NoSuchElementException("El numero de aula ingresado no existe");
     }
 
 
