@@ -354,9 +354,7 @@ public class MainFrame extends JFrame {
         resultado = JOptionPane.showConfirmDialog(null,panel,"Datos del evento externo",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
 
         if(resultado==JOptionPane.OK_OPTION){
-            try{
 
-            }
         }
     }
 
