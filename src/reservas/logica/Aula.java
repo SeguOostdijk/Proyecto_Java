@@ -140,6 +140,14 @@ public class Aula implements Serializable,Comparable<Aula>{
             throw new NoSuchElementException("No se pudo realizar la reserva");
     }
 
+    public void horariosDisponibles(LocalDate fecha,LocalTime horaInicio,LocalTime horaFin){
+        for (Reserva reserva : listaReservas.values()) {
+            if(fecha==reserva.getFecha()){
+
+            }
+        }
+    }
+
     @Override
     public String toString() {
         return "Aula{" +
