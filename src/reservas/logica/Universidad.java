@@ -1,5 +1,7 @@
 package reservas.logica;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 public class Universidad implements Serializable {
@@ -142,6 +144,15 @@ public class Universidad implements Serializable {
                 reporte.setPromReservasAula(0);
         } else throw new IllegalStateException("ERROR AL GENERAR REPORTE. No hay aulas registradas en el sistema.");
         return reporte;
+    }
+
+    public List<Aula> aulasDisponibles(LocalDate fecha, LocalTime horaInicio, LocalTime horaFin,int cantidadPersonas){
+        List<Aula> listaAulasDisponibles = new ArrayList<>();
+        for (Aula aula : ListaAulas) {
+            if(aula.estaDisponible(horaInicio,horaFin,fecha) && aula.noSuperaCapacidad(cantidadPersonas))
+                listaAulasDisponibles.add(aula);
+        }
+        return listaAulasDisponibles;
     }
 }
 
