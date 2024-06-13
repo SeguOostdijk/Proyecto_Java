@@ -120,7 +120,6 @@ public class Main {
                                             }
                                         }
                                     }
-                                    System.out.println(uni.getAula(numAula));
 
                                 }
                             }

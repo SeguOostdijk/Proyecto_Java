@@ -161,12 +161,15 @@ public class Aula implements Serializable,Comparable<Aula>{
 
     @Override
     public String toString() {
-        return "Aula{" +
-                "numero de aula=" + numeroAula +
-                ", capacidad maxima=" + capacidadMaxima +
-                ", cantidad de reservas="+listaReservas.size()+
-                ", lista de Reservas=" + listaReservas +
-                '}';
+        StringBuilder sb=new StringBuilder();
+        sb.append( " \n Aula numero " + numeroAula +
+                "\n Capacidad maxima=" + capacidadMaxima +
+                "\n Cantidad de reservas="+listaReservas.size()+
+                "\n Lista de Reservas:"+"\n");
+        for (Reserva reserva : listaReservas.values()) {
+            sb.append(reserva);
+        }
+        return sb.toString();
     }
 
     @Override

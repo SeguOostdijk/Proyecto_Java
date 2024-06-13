@@ -1,21 +1,18 @@
 package reservas.logica;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 public class ReporteAulasReserva {
-    private TreeSet<Aula> listaAulasReservas;
+    private ArrayList<Aula> listaAulasReservas;
     private float promReservasAula;
-    public ReporteAulasReserva(){
-        listaAulasReservas=new TreeSet<>(new Comparator<Aula>() {
-            @Override
-            public int compare(Aula o1, Aula o2) {
-                return o1.cantidadReservas()-o2.cantidadReservas();
-            }
-        });
+    public ReporteAulasReserva() {
+        listaAulasReservas = new ArrayList();
     }
-
-    public TreeSet<Aula> getListaAulasReservas() {
+    public ArrayList<Aula> getListaAulasReservas() {
         return listaAulasReservas;
     }
 
@@ -35,9 +32,11 @@ public class ReporteAulasReserva {
     public String toString() {  //Para mostrar el reporte directamente invocando a la funcion
         StringBuilder sb = new StringBuilder();
         sb.append("Reporte de Aulas ordenadas por cantidad de reservas:\n");
+        listaAulasReservas.sort(Comparator.comparingInt(Aula::cantidadReservas).reversed());
         for (Aula aula : listaAulasReservas) {
             sb.append(aula).append('\n');
         }
+        promReservasAula= (float) (Math.round(promReservasAula * 100d)/100d);
         sb.append("Promedio de reservas por aula: ").append(promReservasAula);
         return sb.toString();
     }

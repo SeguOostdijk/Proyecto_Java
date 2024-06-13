@@ -30,11 +30,14 @@ public class Montos {
     @Override
     public String toString() {
         StringBuilder sb=new StringBuilder();
+        sb.append("Montos por Aula:\n");
         for (Map.Entry<Integer, Float> integerFloatEntry : montosAula.entrySet())
-            sb.append("aula: "+integerFloatEntry.getKey()+" monto recaudado: "+integerFloatEntry.getValue()+"\n");
-        for (int i = 0; i < montosPiso.size(); i++)
-            sb.append("Piso:"+i+" monto recaudado:"+montosPiso.get(i)+"\n");
-        sb.append("Monto total de la institucion:"+montoTotal);
+            sb.append("Aula "+integerFloatEntry.getKey()+": Monto recaudado="+integerFloatEntry.getValue()+"\n");
+        sb.append("\nMontos por piso:\n");
+        sb.append("Planta baja:"+" Monto recaudado="+montosPiso.get(0)+"\n");
+        for (int i = 1; i < montosPiso.size(); i++)
+            sb.append("Piso "+i+": Monto recaudado="+montosPiso.get(i)+"\n");
+        sb.append("\nMonto total de la institucion="+montoTotal);
         return sb.toString();
     }
 
