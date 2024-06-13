@@ -1,5 +1,7 @@
 package reservas.logica;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 public class Universidad implements Serializable {
@@ -10,7 +12,9 @@ public class Universidad implements Serializable {
         ListaAulas = new TreeSet<>();
         listaReservables = new HashMap<>();
     }
-
+    public Reservable getReservable(String codReservable){
+        return listaReservables.get(codReservable);
+    }
 
     public Aula getAula(int codigoAula) {
         for (Aula aula : ListaAulas) {
@@ -25,15 +29,15 @@ public class Universidad implements Serializable {
         ListaAulas.add(nuevaAula);
     }
 
-    public Asignatura getAsignatura(int codAsignatura) {
+    public Asignatura getAsignatura(String codAsignatura) {
         return (Asignatura) listaReservables.get(codAsignatura);
     }
 
     public void poneAsignatura(Asignatura nuevaAsignatura) {
-        listaReservables.put(nuevaAsignatura.getCodigoIdentificador(), nuevaAsignatura);
+          listaReservables.put(nuevaAsignatura.getCodigoIdentificador(), nuevaAsignatura);
     }
 
-    public CursoExtension getCursoExtension(int codCurso) {
+    public CursoExtension getCursoExtension(String codCurso) {
         return (CursoExtension) listaReservables.get(codCurso);
     }
 
@@ -41,7 +45,7 @@ public class Universidad implements Serializable {
         listaReservables.put(nuevoCurso.getCodigoIdentificador(), nuevoCurso);
     }
 
-    public EventoInterno getEventoInterno(int codEventoInterno) {
+    public EventoInterno getEventoInterno(String codEventoInterno) {
         return (EventoInterno) listaReservables.get(codEventoInterno);
     }
 
@@ -49,7 +53,7 @@ public class Universidad implements Serializable {
         listaReservables.put(nuevoEventoInterno.getCodigoIdentificador(), nuevoEventoInterno);
     }
 
-    public EventoExterno getEventoExterno(int codEventoExterno) {
+    public EventoExterno getEventoExterno( String codEventoExterno) {
         return (EventoExterno) listaReservables.get(codEventoExterno);
     }
 
@@ -57,12 +61,14 @@ public class Universidad implements Serializable {
         listaReservables.put(nuevoEventoExterno.getCodigoIdentificador(), nuevoEventoExterno);
     }
 
-    public void cancelarReserva(int numeroAula, Integer codReserva) {
+    public Reserva cancelarReserva(int numeroAula, Integer codReserva) {
             Aula elimAula = getAula(numeroAula);
+            Reserva reservaCancelada;
             if(elimAula!=null)
-              elimAula.cancelaReserva(codReserva);
+              reservaCancelada= elimAula.cancelaReserva(codReserva);
             else
                 throw new NoSuchElementException("El numero de aula ingresado no existe");
+            return  reservaCancelada;
     }
 
 
@@ -143,5 +149,15 @@ public class Universidad implements Serializable {
         } else throw new IllegalStateException("ERROR AL GENERAR REPORTE. No hay aulas registradas en el sistema.");
         return reporte;
     }
+
+    public List<Aula> aulasDisponibles(LocalDate fecha, LocalTime horaInicio, LocalTime horaFin,int cantidadPersonas){
+        List<Aula> listaAulasDisponibles = new ArrayList<>();
+        for (Aula aula : ListaAulas) {
+            if(aula.estaDisponible(horaInicio,horaFin,fecha) && aula.noSuperaCapacidad(cantidadPersonas))
+                listaAulasDisponibles.add(aula);
+        }
+        return listaAulasDisponibles;
+    }
+
 }
 

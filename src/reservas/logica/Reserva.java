@@ -60,13 +60,12 @@ public class Reserva implements Serializable {
 
   @Override
   public String toString() {
-    return "Reserva{" +
-            "Codigo de reserva=" + CODIGO +
+    return  "{Codigo de reserva=" + CODIGO +
             ", fecha='" + fecha + '\'' +
             ", hora de inicio='" + horaInicio + '\'' +
             ", hora de finalizacion='" + horaFin + '\'' +
             ", tipo=" + reservable.getClass().getSimpleName() +
-            '}';
+            "}\n";
   }
 
   @Override

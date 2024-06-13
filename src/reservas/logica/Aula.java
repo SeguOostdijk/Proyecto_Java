@@ -18,6 +18,7 @@ public class Aula implements Serializable,Comparable<Aula>{
         this.capacidadMaxima = capacidadMaxima;
         this.numeroAula = numeroAula;
         listaReservas = new HashMap();
+        universidad=new Universidad();
     }
 
     public float montoRecaudado(){
@@ -42,11 +43,15 @@ public class Aula implements Serializable,Comparable<Aula>{
         return true;
     }
 
-    public void cancelaReserva(int codigoEntidad){
-        if(listaReservas.containsKey(codigoEntidad))
-          listaReservas.remove(codigoEntidad);
+    public Reserva cancelaReserva(int codigoEntidad){
+        Reserva reservaCancelada;
+        if(listaReservas.containsKey(codigoEntidad)) {
+            reservaCancelada = listaReservas.get(codigoEntidad);
+            listaReservas.remove(codigoEntidad);
+        }
         else
             throw new NoSuchElementException("La reserva que intenta eliminar no existe");
+        return reservaCancelada;
 
     }
 
@@ -78,7 +83,7 @@ public class Aula implements Serializable,Comparable<Aula>{
         return numeroAula/100;
     }
 
-    public void agregaReservas(int codigoAsignatura) {  //asignatura o evento interno
+    public void agregaReservas(String codigoAsignatura) {  //asignatura o evento interno
         Asignatura asignatura = universidad.getAsignatura(codigoAsignatura);
         LocalDate fechaInicio = Asignatura.getFechaInicioCursada();
         LocalDate fechaFin = Asignatura.getFechaFinCursada();
@@ -95,7 +100,7 @@ public class Aula implements Serializable,Comparable<Aula>{
         }
     }
 
-    public void agregaReservas(int codigoCurso, LocalDate fechaInicio, LocalTime horaInicio, LocalTime horaFin){
+    public void agregaReservas(String codigoCurso, LocalDate fechaInicio, LocalTime horaInicio, LocalTime horaFin){
         CursoExtension curso = universidad.getCursoExtension(codigoCurso);
         LocalDate fechaActual = fechaInicio;
         int clasesReservadas = 0;
@@ -112,7 +117,7 @@ public class Aula implements Serializable,Comparable<Aula>{
         }
     }
 
-    public void agregaReservasEventoInterno(int codigoEventoInterno){
+    public void agregaReservasEventoInterno(String codigoEventoInterno){
         EventoInterno eventoInterno = universidad.getEventoInterno(codigoEventoInterno);
         LocalDate fechaInicio = eventoInterno.getFechaInicio();
         LocalTime horaInicio = eventoInterno.getHoraInicio();
@@ -125,7 +130,7 @@ public class Aula implements Serializable,Comparable<Aula>{
             throw new NoSuchElementException("No se pudo realizar la reserva");
     }
 
-    public void agregaReservasEventoExterno(int codigoEventoExterno, String nombreOrganizacion, float costoAlquiler){
+    public void agregaReservasEventoExterno(String codigoEventoExterno, String nombreOrganizacion, float costoAlquiler){
         EventoExterno eventoExterno = universidad.getEventoExterno(codigoEventoExterno);
         LocalDate fechaInicio = eventoExterno.getFechaInicio();
         LocalTime horaInicio = eventoExterno.getHoraInicio();
@@ -140,14 +145,35 @@ public class Aula implements Serializable,Comparable<Aula>{
             throw new NoSuchElementException("No se pudo realizar la reserva");
     }
 
+    public void horariosDisponibles(LocalDate fecha,LocalTime horaInicio,LocalTime horaFin){
+        for (Reserva reserva : listaReservas.values()) {
+            if(fecha==reserva.getFecha()){
+
+            }
+        }
+    }
+    public void agregaReservaXML(String codReservable,LocalDate fecha,LocalTime horaInicio,LocalTime horaFin,Universidad uni){
+        Reservable tipoReservable= uni.getReservable(codReservable);
+        if(tipoReservable!=null){
+            Reserva nuevaReserva=new Reserva(fecha,horaInicio,horaFin,tipoReservable);
+            if(estaDisponible(horaInicio,horaFin,fecha) && noSuperaCapacidad(tipoReservable.getCantidadInscriptos()))
+                listaReservas.put(nuevaReserva.getCODIGO(),nuevaReserva);
+        }
+        else
+            throw new NoSuchElementException("ERROR.Codigo de reservable inexistente");
+    }
+
     @Override
     public String toString() {
-        return "Aula{" +
-                "numero de aula=" + numeroAula +
-                ", capacidad maxima=" + capacidadMaxima +
-                ", cantidad de reservas="+listaReservas.size()+
-                ", lista de Reservas=" + listaReservas +
-                '}';
+        StringBuilder sb=new StringBuilder();
+        sb.append( " \n Aula numero " + numeroAula +
+                "\n Capacidad maxima=" + capacidadMaxima +
+                "\n Cantidad de reservas="+listaReservas.size()+
+                "\n Lista de Reservas:"+"\n");
+        for (Reserva reserva : listaReservas.values()) {
+            sb.append(reserva);
+        }
+        return sb.toString();
     }
 
     @Override

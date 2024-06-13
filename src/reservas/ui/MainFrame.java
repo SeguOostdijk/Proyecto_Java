@@ -11,9 +11,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 import reservas.logica.*;
 
 
@@ -26,6 +29,7 @@ public class MainFrame extends JFrame {
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         universidad = new Universidad();
+        Main.CargaDatosXML(universidad);
         initUI();
         
 
@@ -236,8 +240,26 @@ public class MainFrame extends JFrame {
 
 
     private void listarAulas() {
-        // Implementar la lógica para listar aulas
-        JOptionPane.showMessageDialog(this, "Listar Aulas no implementado.");
+        JPanel panel=new JPanel(new FlowLayout());
+        JComboBox comboBox =new JComboBox<String>();
+        JLabel filtrar=new JLabel("Filtrar por:");
+        comboBox.addItem("Numero de piso");
+        comboBox.addItem("Codigo de curso/evento/asignatura");
+        panel.add(filtrar);
+        panel.add(comboBox);
+        int resultado=JOptionPane.showConfirmDialog(this,panel,"Consultar aulas",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
+        if(resultado==JOptionPane.OK_OPTION) {
+            JPanel panelConsulta = new JPanel(new BorderLayout());
+            JLabel pedidoInput=new JLabel();
+            JTextField input=new JTextField();
+            if (comboBox.getSelectedItem().equals("Numero de piso")) {
+                pedidoInput.setText("Ingrese el numero de piso(0=Planta baja)");
+                panelConsulta.add(pedidoInput,BorderLayout.PAGE_START);
+                panelConsulta.add(input,BorderLayout.PAGE_END);
+                JOptionPane.showConfirmDialog(panel,panelConsulta,"Consultar aulas",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
+
+            }
+        }
     }
 
     private void reservarAula() {
@@ -261,102 +283,166 @@ public class MainFrame extends JFrame {
         asignatura.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int resultado;
-                JPanel panel = new JPanel();
-                panel.setLayout(new GridLayout(0,1));
-
-                JLabel tituloAsignatura = new JLabel("Ingrese los datos de la asignatura");
-                JLabel codigoAsignatura = new JLabel("Codigo:");
-                JTextField codigoAsignaturaTexto = new JTextField();
-
-                panel.add(tituloAsignatura);
-                panel.add(codigoAsignatura);
-                panel.add(codigoAsignaturaTexto);
-                add(panel,BorderLayout.CENTER);
-                resultado = JOptionPane.showConfirmDialog(null, panel, "Datos asignatura", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                reservarAulaAsignatura();
             }
         });
 
         eventoInterno.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int resultado;
-                JPanel panel = new JPanel();
-                panel.setLayout(new GridLayout(0,1));
-
-                JLabel tituloEventoInterno = new JLabel("Ingrese los datos del evento interno");
-                JLabel codigoEventoInterno = new JLabel("Codigo:");
-                JTextField codigoEventoInternoTexto = new JTextField();
-
-                panel.add(tituloEventoInterno);
-                panel.add(codigoEventoInterno);
-                panel.add(codigoEventoInternoTexto);
-                add(panel,BorderLayout.CENTER);
-                resultado = JOptionPane.showConfirmDialog(null,panel,"Datos evento interno",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
+                reservarAulaEventoInterno();
             }
         });
 
         eventoExterno.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int resultado;
-                JPanel panel = new JPanel();
-                panel.setLayout(new GridLayout(0,1));
-
-                JLabel tituloEventoExterno = new JLabel("Ingrese los datos del evento externo");
-                JLabel codigoEventoExterno = new JLabel("Codigo:");
-                JTextField codigoEventoExternoTexto = new JTextField();
-                JLabel nombreOrganizacion = new JLabel("Nombre de la organizacion:");
-                JTextField nombreOrganizacionTexto = new JTextField();
-                JLabel costoAlquiler = new JLabel("Costo de alquiler:");
-                JTextField costoALquilerTexto = new JTextField();
-
-                panel.add(tituloEventoExterno);
-                panel.add(codigoEventoExterno);
-                panel.add(codigoEventoExternoTexto);
-                panel.add(nombreOrganizacion);
-                panel.add(nombreOrganizacionTexto);
-                panel.add(costoAlquiler);
-                panel.add(costoALquilerTexto);
-                add(panel,BorderLayout.CENTER);
-
-                resultado = JOptionPane.showConfirmDialog(null,panel,"Datos del evento externo",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
+                reservarAulaEventoExterno();
             }
         });
 
         cursoExtension.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int resultado;
-                JPanel panel = new JPanel();
-                panel.setLayout(new GridLayout(0,1));
-
-                JLabel tituloCurso = new JLabel("Ingrese los datos del curso de extension");
-                JLabel codigoCurso = new JLabel("Codigo:");
-                JTextField codigoCursoTexto = new JTextField();
-                JLabel fechaInicio = new JLabel("Fecha de inicio:");
-                JTextField fechaInicioTexto = new JTextField();
-                JLabel horaInicio = new JLabel("Hora de inicio:");
-                JTextField horaInicioTexto = new JTextField();
-                JLabel horaFin = new JLabel("Hora de fin:");
-                JTextField  horaFinTexto= new JTextField();
-
-                panel.add(tituloCurso);
-                panel.add(codigoCurso);
-                panel.add(codigoCursoTexto);
-                panel.add(fechaInicio);
-                panel.add(fechaInicioTexto);
-                panel.add(horaInicio);
-                panel.add(horaInicioTexto);
-                panel.add(horaFin);
-                panel.add(horaFinTexto);
-
-                resultado = JOptionPane.showConfirmDialog(null,panel,"Curso de extension",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
+                reservarAulaCursoExtension();
             }
         });
         JOptionPane.showConfirmDialog(null, panel, "Reservar Aula", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
     }
 
+
+
+    ////////////////////////////////////RESERVAS/////////////////////////////////////
+
+
+
+    private void reservarAulaAsignatura(){
+        int resultado;
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(0,1));
+
+        JLabel tituloAsignatura = new JLabel("Ingrese los datos de la asignatura");
+        JLabel codigoAsignatura = new JLabel("Codigo:");
+        JTextField codigoAsignaturaTexto = new JTextField();
+
+        panel.add(tituloAsignatura);
+        panel.add(codigoAsignatura);
+        panel.add(codigoAsignaturaTexto);
+        add(panel,BorderLayout.CENTER);
+        resultado = JOptionPane.showConfirmDialog(null, panel, "Datos asignatura", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+    }
+
+    private void reservarAulaEventoInterno(){
+        int resultado;
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(0,1));
+
+        JLabel tituloEventoInterno = new JLabel("Ingrese los datos del evento interno");
+        JLabel codigoEventoInterno = new JLabel("Codigo:");
+        JTextField codigoEventoInternoTexto = new JTextField();
+
+        panel.add(tituloEventoInterno);
+        panel.add(codigoEventoInterno);
+        panel.add(codigoEventoInternoTexto);
+        add(panel,BorderLayout.CENTER);
+        resultado = JOptionPane.showConfirmDialog(null,panel,"Datos evento interno",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
+    }
+
+    private void reservarAulaEventoExterno(){
+        int resultado;
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(0,1));
+
+        JLabel tituloEventoExterno = new JLabel("Ingrese los datos del evento externo");
+        JLabel codigoEventoExterno = new JLabel("Codigo:");
+        JTextField codigoEventoExternoTexto = new JTextField();
+        JLabel nombreOrganizacion = new JLabel("Nombre de la organizacion:");
+        JTextField nombreOrganizacionTexto = new JTextField();
+        JLabel costoAlquiler = new JLabel("Costo de alquiler:");
+        JTextField costoALquilerTexto = new JTextField();
+
+        panel.add(tituloEventoExterno);
+        panel.add(codigoEventoExterno);
+        panel.add(codigoEventoExternoTexto);
+        panel.add(nombreOrganizacion);
+        panel.add(nombreOrganizacionTexto);
+        panel.add(costoAlquiler);
+        panel.add(costoALquilerTexto);
+        add(panel,BorderLayout.CENTER);
+
+        resultado = JOptionPane.showConfirmDialog(null,panel,"Datos del evento externo",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
+
+        if(resultado==JOptionPane.OK_OPTION){
+
+        }
+    }
+
+    private void reservarAulaCursoExtension(){
+        int resultado;
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(0,1));
+
+        JLabel tituloCurso = new JLabel("Ingrese los datos del curso de extension");
+        JLabel codigoCurso = new JLabel("Codigo:");
+        PlaceholderTextField codigoCursoTexto = new PlaceholderTextField("123456");
+        JLabel fechaInicio = new JLabel("Fecha de inicio:");
+        PlaceholderTextField fechaInicioTexto = new PlaceholderTextField("00-00-0000");
+        JLabel horaInicio = new JLabel("Hora de inicio:");
+        PlaceholderTextField horaInicioTexto = new PlaceholderTextField("00:00");
+        JLabel horaFin = new JLabel("Hora de fin:");
+        PlaceholderTextField  horaFinTexto= new PlaceholderTextField("00:00");
+
+        panel.add(tituloCurso);
+        panel.add(codigoCurso);
+        panel.add(codigoCursoTexto);
+        panel.add(fechaInicio);
+        panel.add(fechaInicioTexto);
+        panel.add(horaInicio);
+        panel.add(horaInicioTexto);
+        panel.add(horaFin);
+        panel.add(horaFinTexto);
+
+        resultado = JOptionPane.showConfirmDialog(null,panel,"Curso de extension",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
+        if(resultado == JOptionPane.OK_OPTION){
+            try{
+               String codigoVar = (codigoCursoTexto.getText());
+                LocalDate fechaInicioVar = LocalDate.parse(fechaInicioTexto.getText(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+                LocalTime horaInicioVar = LocalTime.parse(horaInicioTexto.getText(), DateTimeFormatter.ofPattern("HH:mm"));
+                LocalTime horaFinVar = LocalTime.parse(horaFinTexto.getText(), DateTimeFormatter.ofPattern("HH:mm"));
+                int cantidadInscriptos = universidad.getEventoInterno(codigoVar).getCantidadInscriptos();
+                List<Aula> aulasDisponibles = universidad.aulasDisponibles(fechaInicioVar,horaInicioVar,horaFinVar,cantidadInscriptos);
+
+                JPanel panelAulas = new JPanel();
+                JButton aulaButton;
+
+                panelAulas.setLayout(new GridLayout(0,1));
+                panelAulas.add(new JLabel("Aulas disponibles, seleccione una: "));
+                for(Aula aula : aulasDisponibles){
+                    aulaButton = new JButton("Aula: " + aula.getNumero());
+                    aulaButton.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            try{
+                                aula.agregaReservas(codigoVar,fechaInicioVar,horaInicioVar,horaFinVar);
+                                JOptionPane.showMessageDialog(null,"Reserva realizada con exito para el Aula: " + aula.getNumero(),"Reserva exitosa",JOptionPane.INFORMATION_MESSAGE);
+                            }
+                            catch(Exception ex) {
+                                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error en la reserva", JOptionPane.ERROR_MESSAGE);
+                            }
+                        }
+                    });
+                    panelAulas.add(aulaButton);
+                }
+                JOptionPane.showMessageDialog(null,panelAulas,"Aulas Disponibles",JOptionPane.INFORMATION_MESSAGE);
+            }
+            catch(Exception ex){
+                JOptionPane.showMessageDialog(panel,ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+            }
+            JOptionPane.showConfirmDialog(null,panel,"Reservar Aula",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void cancelarReserva() {
         JPanel panel = new JPanel();
@@ -367,14 +453,14 @@ public class MainFrame extends JFrame {
         panel.add(numeroAulaField);
         panel.add(new JLabel("Código de Reserva:"));
         panel.add(codigoReservaField);
-
+        Reserva reservaCancelada;
         int result = JOptionPane.showConfirmDialog(null, panel, "Cancelar Reserva", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
         if (result == JOptionPane.OK_OPTION) {
             try {
                 int numeroAula = Integer.parseInt(numeroAulaField.getText());
                 int codigoReserva = Integer.parseInt(codigoReservaField.getText());
-                universidad.cancelarReserva(numeroAula,codigoReserva);
-                JOptionPane.showMessageDialog(panel,"Reserva cancelada con exito","Cancelar Reserva",JOptionPane.INFORMATION_MESSAGE);
+                reservaCancelada=universidad.cancelarReserva(numeroAula,codigoReserva);
+                JOptionPane.showMessageDialog(panel,"Reserva cancelada con exito"+"\nDatos de la Reserva:\n"+reservaCancelada,"Cancelar Reserva",JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(panel,ex.getMessage(),"Cancelar Reserva",JOptionPane.ERROR_MESSAGE);
             }
@@ -412,6 +498,7 @@ public class MainFrame extends JFrame {
         }
 
     }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
