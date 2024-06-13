@@ -29,6 +29,7 @@ public class MainFrame extends JFrame {
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         universidad = new Universidad();
+        Main.CargaDatosXML(universidad);
         initUI();
         
 
@@ -239,8 +240,26 @@ public class MainFrame extends JFrame {
 
 
     private void listarAulas() {
-        // Implementar la lógica para listar aulas
-        JOptionPane.showMessageDialog(this, "Listar Aulas no implementado.");
+        JPanel panel=new JPanel(new FlowLayout());
+        JComboBox comboBox =new JComboBox<String>();
+        JLabel filtrar=new JLabel("Filtrar por:");
+        comboBox.addItem("Numero de piso");
+        comboBox.addItem("Codigo de curso/evento/asignatura");
+        panel.add(filtrar);
+        panel.add(comboBox);
+        int resultado=JOptionPane.showConfirmDialog(this,panel,"Consultar aulas",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
+        if(resultado==JOptionPane.OK_OPTION) {
+            JPanel panelConsulta = new JPanel(new BorderLayout());
+            JLabel pedidoInput=new JLabel();
+            JTextField input=new JTextField();
+            if (comboBox.getSelectedItem().equals("Numero de piso")) {
+                pedidoInput.setText("Ingrese el numero de piso(0=Planta baja)");
+                panelConsulta.add(pedidoInput,BorderLayout.PAGE_START);
+                panelConsulta.add(input,BorderLayout.PAGE_END);
+                JOptionPane.showConfirmDialog(panel,panelConsulta,"Consultar aulas",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
+
+            }
+        }
     }
 
     private void reservarAula() {
@@ -386,7 +405,7 @@ public class MainFrame extends JFrame {
         resultado = JOptionPane.showConfirmDialog(null,panel,"Curso de extension",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
         if(resultado == JOptionPane.OK_OPTION){
             try{
-                int codigoVar = Integer.parseInt(codigoCursoTexto.getText());
+               String codigoVar = (codigoCursoTexto.getText());
                 LocalDate fechaInicioVar = LocalDate.parse(fechaInicioTexto.getText(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
                 LocalTime horaInicioVar = LocalTime.parse(horaInicioTexto.getText(), DateTimeFormatter.ofPattern("HH:mm"));
                 LocalTime horaFinVar = LocalTime.parse(horaFinTexto.getText(), DateTimeFormatter.ofPattern("HH:mm"));
@@ -479,6 +498,7 @@ public class MainFrame extends JFrame {
         }
 
     }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override

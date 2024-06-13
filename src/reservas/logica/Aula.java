@@ -18,6 +18,7 @@ public class Aula implements Serializable,Comparable<Aula>{
         this.capacidadMaxima = capacidadMaxima;
         this.numeroAula = numeroAula;
         listaReservas = new HashMap();
+        universidad=new Universidad();
     }
 
     public float montoRecaudado(){
@@ -78,7 +79,7 @@ public class Aula implements Serializable,Comparable<Aula>{
         return numeroAula/100;
     }
 
-    public void agregaReservas(int codigoAsignatura) {  //asignatura o evento interno
+    public void agregaReservas(String codigoAsignatura) {  //asignatura o evento interno
         Asignatura asignatura = universidad.getAsignatura(codigoAsignatura);
         LocalDate fechaInicio = Asignatura.getFechaInicioCursada();
         LocalDate fechaFin = Asignatura.getFechaFinCursada();
@@ -95,7 +96,7 @@ public class Aula implements Serializable,Comparable<Aula>{
         }
     }
 
-    public void agregaReservas(int codigoCurso, LocalDate fechaInicio, LocalTime horaInicio, LocalTime horaFin){
+    public void agregaReservas(String codigoCurso, LocalDate fechaInicio, LocalTime horaInicio, LocalTime horaFin){
         CursoExtension curso = universidad.getCursoExtension(codigoCurso);
         LocalDate fechaActual = fechaInicio;
         int clasesReservadas = 0;
@@ -112,7 +113,7 @@ public class Aula implements Serializable,Comparable<Aula>{
         }
     }
 
-    public void agregaReservasEventoInterno(int codigoEventoInterno){
+    public void agregaReservasEventoInterno(String codigoEventoInterno){
         EventoInterno eventoInterno = universidad.getEventoInterno(codigoEventoInterno);
         LocalDate fechaInicio = eventoInterno.getFechaInicio();
         LocalTime horaInicio = eventoInterno.getHoraInicio();
@@ -125,7 +126,7 @@ public class Aula implements Serializable,Comparable<Aula>{
             throw new NoSuchElementException("No se pudo realizar la reserva");
     }
 
-    public void agregaReservasEventoExterno(int codigoEventoExterno, String nombreOrganizacion, float costoAlquiler){
+    public void agregaReservasEventoExterno(String codigoEventoExterno, String nombreOrganizacion, float costoAlquiler){
         EventoExterno eventoExterno = universidad.getEventoExterno(codigoEventoExterno);
         LocalDate fechaInicio = eventoExterno.getFechaInicio();
         LocalTime horaInicio = eventoExterno.getHoraInicio();
@@ -146,6 +147,16 @@ public class Aula implements Serializable,Comparable<Aula>{
 
             }
         }
+    }
+    public void agregaReservaXML(String codReservable,LocalDate fecha,LocalTime horaInicio,LocalTime horaFin,Universidad uni){
+        Reservable tipoReservable= uni.getReservable(codReservable);
+        if(tipoReservable!=null){
+            Reserva nuevaReserva=new Reserva(fecha,horaInicio,horaFin,tipoReservable);
+            if(estaDisponible(horaInicio,horaFin,fecha) && noSuperaCapacidad(tipoReservable.getCantidadInscriptos()))
+                listaReservas.put(nuevaReserva.getCODIGO(),nuevaReserva);
+        }
+        else
+            throw new NoSuchElementException("ERROR.Codigo de reservable inexistente");
     }
 
     @Override

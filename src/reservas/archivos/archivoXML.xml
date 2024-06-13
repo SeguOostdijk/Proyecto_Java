@@ -1,110 +1,110 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Universidad>
-    <asignatura codigo="101">
+    <asignatura codigo="AB101">
         <cantidadDeInscriptos>26</cantidadDeInscriptos>
         <nombre>Algebra</nombre>
-        <fehcaInicioCursada>10-03-24</fehcaInicioCursada>
-        <fechaFinCursada>10-07-24</fechaFinCursada>
+        <fehcaInicioCursada>2024-03-10</fehcaInicioCursada>
+        <fechaFinCursada>2024-07-10</fechaFinCursada>
         <diaDeSemana>Lunes</diaDeSemana>
-        <HoraIncio>14</HoraIncio>
-        <HoraFin>18</HoraFin>
+        <HoraIncio>14:00:00</HoraIncio>
+        <HoraFin>18:00:00</HoraFin>
     </asignatura>
-    <asignatura codigo="102">
+    <asignatura codigo="MN102">
         <cantidadDeInscriptos>60</cantidadDeInscriptos>
         <nombre>algoritmos</nombre>
-        <fehcaInicioCursada>10-03-24</fehcaInicioCursada>
-        <fechaFinCursada>10-07-24</fechaFinCursada>
+        <fehcaInicioCursada>2024-03-10</fehcaInicioCursada>
+        <fechaFinCursada>2024-07-10</fechaFinCursada>
         <diaDeSemana>Miercoles</diaDeSemana>
-        <HoraIncio>18</HoraIncio>
-        <HoraFin>22</HoraFin>
+        <HoraIncio>18:00:00</HoraIncio>
+        <HoraFin>22:00:00</HoraFin>
     </asignatura>
-    <asignatura codigo="103">
+    <asignatura codigo="DB103">
         <cantidadDeInscriptos>32</cantidadDeInscriptos>
         <nombre>estructura de datos</nombre>
-        <fehcaInicioCursada>10-03-24</fehcaInicioCursada>
-        <fechaFinCursada>10-07-24</fechaFinCursada>
+        <fehcaInicioCursada>2024-03-10</fehcaInicioCursada>
+        <fechaFinCursada>2024-07-10</fechaFinCursada>
         <diaDeSemana>Viernes</diaDeSemana>
-        <HoraIncio>18</HoraIncio>
-        <HoraFin>22</HoraFin>
+        <HoraIncio>18:00:00</HoraIncio>
+        <HoraFin>22:00:00</HoraFin>
     </asignatura>
-    <curso codigo="201">
+    <curso codigo="LO201">
         <cantidadDeInscriptos>55</cantidadDeInscriptos>
         <descripcion>Curso de programacion</descripcion>
         <cantidadDeClases>20</cantidadDeClases>
         <costo>100000</costo>
     </curso>
-    <curso codigo="202">
+    <curso codigo="HH202">
         <cantidadDeInscriptos>30</cantidadDeInscriptos>
         <descripcion>Curso de diseño</descripcion>
         <cantidadDeClases>20</cantidadDeClases>
         <costo>150000</costo>
     </curso>
-    <curso codigo="203">
+    <curso codigo="PL203">
         <cantidadDeInscriptos>16</cantidadDeInscriptos>
         <descripcion>Curso de base de datos</descripcion>
         <cantidadDeClases>20</cantidadDeClases>
         <costo>50000</costo>
     </curso>
-    <eventoInterno codigo="311">
+    <eventoInterno codigo="KL311">
         <cantidadDeInscriptos>100</cantidadDeInscriptos>
-        <fechaInicio>05-05-24</fechaInicio>
-        <horaInicio>10</horaInicio>
-        <horaFin>12</horaFin>
+        <fechaInicio>2024-05-05</fechaInicio>
+        <horaInicio>10:00:00</horaInicio>
+        <horaFin>12:00:00</horaFin>
         <descripcion>Evento de intruduccion a la facultad</descripcion>
     </eventoInterno>
-    <eventoExterno codigo="321">
-        <cantidadDeInscriptos>55</cantidadDeInscriptos>
-        <fechaInicio>04-09-24</fechaInicio>
-        <horaInicio>16</horaInicio>
-        <horaFin>18</horaFin>
+    <eventoExterno codigo="CN321">
+        <cantidadDeInscriptos>20</cantidadDeInscriptos>
+        <fechaInicio>2024-09-04</fechaInicio>
+        <horaInicio>16:00:00</horaInicio>
+        <horaFin>18:00:00</horaFin>
         <descripcion>Evento de diseño</descripcion>
         <costoAlquiler>20000</costoAlquiler>
         <nombreOrg>colegio X</nombreOrg>
     </eventoExterno>
-    <aula codigo = "024">
+    <aula codigo="024">
         <capacidad>50</capacidad>
         <reservas>
-            <horaInicio>14</horaInicio>
-            <horaFin>18</horaFin>
-            <fecha>15-3-24</fecha>
-            <reservable>101</reservable>
+            <horaInicio>14:00:00</horaInicio>
+            <horaFin>18:00:00</horaFin>
+            <fecha>2024-03-15</fecha>
+            <reservable>AB101</reservable>
         </reservas>
         <reservas>
-            <horaInicio>8</horaInicio>
-            <horaFin>12</horaFin>
-            <fecha>11-3-24</fecha>
-            <reservable>103</reservable>
+            <horaInicio>08:00:00</horaInicio>
+            <horaFin>12:00:00</horaFin>
+            <fecha>2024-03-11</fecha>
+            <reservable>DB103</reservable>
         </reservas>
         <reservas>
-            <horaInicio>18</horaInicio>
-            <horaFin>22</horaFin>
-            <fecha>10-5-24</fecha>
-            <reservable>321</reservable>
+            <horaInicio>18:00:00</horaInicio>
+            <horaFin>22:00:00</horaFin>
+            <fecha>2024-05-10</fecha>
+            <reservable>CN321</reservable>
         </reservas>
     </aula>
-    <aula codigo = "145">
+    <aula codigo="145">
         <capacidad>30</capacidad>
         <reservas>
-            <horaInicio>18</horaInicio>
-            <horaFin>22</horaFin>
-            <fecha>10-4-24</fecha>
-            <reservable>202</reservable>
+            <horaInicio>18:00:00</horaInicio>
+            <horaFin>22:00:00</horaFin>
+            <fecha>2024-04-10</fecha>
+            <reservable>HH202</reservable>
         </reservas>
     </aula>
-    <aula codigo = "346">
+    <aula codigo="346">
         <capacidad>40</capacidad>
         <reservas>
-            <horaInicio>18</horaInicio>
-            <horaFin>22</horaFin>
-            <fecha>9-6-24</fecha>
-            <reservable>311</reservable>
+            <horaInicio>18:00:00</horaInicio>
+            <horaFin>22:00:00</horaFin>
+            <fecha>2024-06-09</fecha>
+            <reservable>KL311</reservable>
         </reservas>
         <reservas>
-            <horaInicio>14</horaInicio>
-            <horaFin>18</horaFin>
-            <fecha>10-3-24</fecha>
-            <reservable>102</reservable>
+            <horaInicio>14:00:00</horaInicio>
+            <horaFin>18:00:00</horaFin>
+            <fecha>2024-03-10</fecha>
+            <reservable>CN321</reservable>
         </reservas>
     </aula>
 </Universidad>

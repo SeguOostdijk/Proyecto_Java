@@ -12,7 +12,9 @@ public class Universidad implements Serializable {
         ListaAulas = new TreeSet<>();
         listaReservables = new HashMap<>();
     }
-
+    public Reservable getReservable(String codReservable){
+        return listaReservables.get(codReservable);
+    }
 
     public Aula getAula(int codigoAula) {
         for (Aula aula : ListaAulas) {
@@ -27,15 +29,15 @@ public class Universidad implements Serializable {
         ListaAulas.add(nuevaAula);
     }
 
-    public Asignatura getAsignatura(int codAsignatura) {
+    public Asignatura getAsignatura(String codAsignatura) {
         return (Asignatura) listaReservables.get(codAsignatura);
     }
 
     public void poneAsignatura(Asignatura nuevaAsignatura) {
-        listaReservables.put(nuevaAsignatura.getCodigoIdentificador(), nuevaAsignatura);
+          listaReservables.put(nuevaAsignatura.getCodigoIdentificador(), nuevaAsignatura);
     }
 
-    public CursoExtension getCursoExtension(int codCurso) {
+    public CursoExtension getCursoExtension(String codCurso) {
         return (CursoExtension) listaReservables.get(codCurso);
     }
 
@@ -43,7 +45,7 @@ public class Universidad implements Serializable {
         listaReservables.put(nuevoCurso.getCodigoIdentificador(), nuevoCurso);
     }
 
-    public EventoInterno getEventoInterno(int codEventoInterno) {
+    public EventoInterno getEventoInterno(String codEventoInterno) {
         return (EventoInterno) listaReservables.get(codEventoInterno);
     }
 
@@ -51,7 +53,7 @@ public class Universidad implements Serializable {
         listaReservables.put(nuevoEventoInterno.getCodigoIdentificador(), nuevoEventoInterno);
     }
 
-    public EventoExterno getEventoExterno(int codEventoExterno) {
+    public EventoExterno getEventoExterno( String codEventoExterno) {
         return (EventoExterno) listaReservables.get(codEventoExterno);
     }
 
@@ -154,5 +156,6 @@ public class Universidad implements Serializable {
         }
         return listaAulasDisponibles;
     }
+
 }
 

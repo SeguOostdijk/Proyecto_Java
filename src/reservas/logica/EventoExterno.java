@@ -3,14 +3,14 @@ package reservas.logica;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class EventoExterno extends Evento{
+public class EventoExterno extends Evento {
     private float costoAlquiler;
     String nombreOrganizacion;
 
-    public EventoExterno(String codigoIdentificador, int cantidadInscriptos, LocalTime horaInicio, LocalTime horaFin, String descripcion, LocalDate fechaInicio, float costoAlquiler,String nombreOrganizacion){
-        super(codigoIdentificador,cantidadInscriptos,horaInicio,horaFin,descripcion,fechaInicio);
-        this.costoAlquiler=costoAlquiler;
-        this.nombreOrganizacion=nombreOrganizacion;
+    public EventoExterno(String codigoIdentificador, int cantidadInscriptos, LocalTime horaInicio, LocalTime horaFin, String descripcion, LocalDate fechaInicio, float costoAlquiler, String nombreOrganizacion) {
+        super(codigoIdentificador, cantidadInscriptos, horaInicio, horaFin, descripcion, fechaInicio);
+        this.costoAlquiler = costoAlquiler;
+        this.nombreOrganizacion = nombreOrganizacion;
     }
 
     public float getCostoAlquiler() {
@@ -27,5 +27,13 @@ public class EventoExterno extends Evento{
 
     public void setNombreOrganizacion(String nombreOrganizacion) {
         this.nombreOrganizacion = nombreOrganizacion;
+    }
+
+    @Override
+    public String toString() {
+        return  super.toString() +
+                "costoAlquiler=" + costoAlquiler +
+                ", nombreOrganizacion='" + nombreOrganizacion + '\'' +
+                "} ";
     }
 }
