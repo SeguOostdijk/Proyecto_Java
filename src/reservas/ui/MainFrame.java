@@ -27,7 +27,7 @@ public class MainFrame extends JFrame {
         setTitle("Sistema de Gestión de Reservas de Aulas");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        CargaXML.CargaDatosXML(Universidad.getInstance());
+
         initUI();
         
 
@@ -457,7 +457,7 @@ public class MainFrame extends JFrame {
             try {
                 int numeroAula = Integer.parseInt(numeroAulaField.getText());
                 int codigoReserva = Integer.parseInt(codigoReservaField.getText());
-                reservaCancelada=universidad.cancelarReserva(numeroAula,codigoReserva);
+                reservaCancelada=Universidad.getInstance().cancelarReserva(numeroAula,codigoReserva);
                 JOptionPane.showMessageDialog(panel,"Reserva cancelada con exito"+"\nDatos de la Reserva:\n"+reservaCancelada,"Cancelar Reserva",JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(panel,ex.getMessage(),"Cancelar Reserva",JOptionPane.ERROR_MESSAGE);
@@ -498,10 +498,14 @@ public class MainFrame extends JFrame {
     }
 
     public static void main(String[] args) {
-                MainFrame mainFrame = new MainFrame();
-                mainFrame.setLocationRelativeTo(null);
-                mainFrame.setVisible(true);
-                mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                Persistencia.serializar();
-            }
+        File Archivo=new File("C:\\Users\\pablo\\Proyecto_Java\\src\\universidad.dat")  ;
+        if(Archivo.exists())
+            Persistencia.deserializar();
+        else
+            CargaXML.CargaDatosXML(Universidad.getInstance());
+        MainFrame mainFrame = new MainFrame();
+        mainFrame.setLocationRelativeTo(null);
+        mainFrame.setVisible(true);
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+}

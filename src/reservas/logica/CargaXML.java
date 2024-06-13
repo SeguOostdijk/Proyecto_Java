@@ -113,13 +113,15 @@ public class CargaXML {
                                             LocalDate fecha = LocalDate.parse(elementoReserva.getElementsByTagName("fecha").item(0).getTextContent());
                                             String reservable = (elementoReserva.getElementsByTagName("reservable").item(0).getTextContent());
                                             try {
-                                                aula.agregaReservaXML(reservable, fecha, horaInicio, horaFin,uni);
+                                                aula.agregaReservaXML(reservable, fecha, horaInicio, horaFin);
 
                                             }catch (Exception e){
                                                 System.out.println(e.getMessage());
                                             }
                                         }
+                                        System.out.println(aula);
                                     }
+
 
                                 }
                             }

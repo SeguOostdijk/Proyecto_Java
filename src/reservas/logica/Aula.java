@@ -12,7 +12,6 @@ public class Aula implements Serializable,Comparable<Aula>{
     private int numeroAula;
     private int capacidadMaxima;
     private HashMap <Integer,Reserva> listaReservas;
-    private Universidad universidad;
 
 
     public Aula(int capacidadMaxima, Integer numeroAula) {
@@ -51,8 +50,9 @@ public class Aula implements Serializable,Comparable<Aula>{
         }
         else
             throw new NoSuchElementException("La reserva que intenta eliminar no existe");
-        return reservaCancelada;
 
+        Persistencia.serializar();
+        return reservaCancelada;
     }
 
     public int cantidadReservas(){
@@ -84,7 +84,7 @@ public class Aula implements Serializable,Comparable<Aula>{
     }
 
     public void agregaReservas(String codigoAsignatura) {  //asignatura o evento interno
-        Asignatura asignatura = universidad.getAsignatura(codigoAsignatura);
+        Asignatura asignatura = Universidad.getInstance().getAsignatura(codigoAsignatura);
         LocalDate fechaInicio = Asignatura.getFechaInicioCursada();
         LocalDate fechaFin = Asignatura.getFechaFinCursada();
 
@@ -100,7 +100,6 @@ public class Aula implements Serializable,Comparable<Aula>{
         }
 
         Persistencia.serializar();
-
     }
 
     public void agregaReservas(String codigoCurso, LocalDate fechaInicio, LocalTime horaInicio, LocalTime horaFin){
@@ -118,10 +117,12 @@ public class Aula implements Serializable,Comparable<Aula>{
             clasesReservadas++;
             fechaActual = fechaActual.plusWeeks(1);
         }
+
+        Persistencia.serializar();
     }
 
     public void agregaReservasEventoInterno(String codigoEventoInterno){
-        EventoInterno eventoInterno = universidad.getEventoInterno(codigoEventoInterno);
+        EventoInterno eventoInterno = Universidad.getInstance().getEventoInterno(codigoEventoInterno);
         LocalDate fechaInicio = eventoInterno.getFechaInicio();
         LocalTime horaInicio = eventoInterno.getHoraInicio();
         LocalTime horaFin = eventoInterno.getHoraFin();
@@ -131,10 +132,12 @@ public class Aula implements Serializable,Comparable<Aula>{
             listaReservas.put(nuevaReserva.getCODIGO(),nuevaReserva);
         else
             throw new NoSuchElementException("No se pudo realizar la reserva");
+
+        Persistencia.serializar();
     }
 
     public void agregaReservasEventoExterno(String codigoEventoExterno, String nombreOrganizacion, float costoAlquiler){
-        EventoExterno eventoExterno = universidad.getEventoExterno(codigoEventoExterno);
+        EventoExterno eventoExterno = Universidad.getInstance().getEventoExterno(codigoEventoExterno);
         LocalDate fechaInicio = eventoExterno.getFechaInicio();
         LocalTime horaInicio = eventoExterno.getHoraInicio();
         LocalTime horaFin = eventoExterno.getHoraFin();
@@ -146,6 +149,8 @@ public class Aula implements Serializable,Comparable<Aula>{
             listaReservas.put(nuevaReserva.getCODIGO(),nuevaReserva);
         else
             throw new NoSuchElementException("No se pudo realizar la reserva");
+
+        Persistencia.serializar();
     }
 
     public void horariosDisponibles(LocalDate fecha,LocalTime horaInicio,LocalTime horaFin){
@@ -155,8 +160,8 @@ public class Aula implements Serializable,Comparable<Aula>{
             }
         }
     }
-    public void agregaReservaXML(String codReservable,LocalDate fecha,LocalTime horaInicio,LocalTime horaFin,Universidad uni){
-        Reservable tipoReservable= uni.getReservable(codReservable);
+    public void agregaReservaXML(String codReservable,LocalDate fecha,LocalTime horaInicio,LocalTime horaFin){
+        Reservable tipoReservable= Universidad.getInstance().getReservable(codReservable);
         if(tipoReservable!=null){
             Reserva nuevaReserva=new Reserva(fecha,horaInicio,horaFin,tipoReservable);
             if(estaDisponible(horaInicio,horaFin,fecha) && noSuperaCapacidad(tipoReservable.getCantidadInscriptos()))
@@ -164,6 +169,8 @@ public class Aula implements Serializable,Comparable<Aula>{
         }
         else
             throw new NoSuchElementException("ERROR.Codigo de reservable inexistente");
+
+        Persistencia.serializar();
     }
 
     @Override
