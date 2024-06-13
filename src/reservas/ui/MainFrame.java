@@ -453,14 +453,14 @@ public class MainFrame extends JFrame {
         panel.add(numeroAulaField);
         panel.add(new JLabel("Código de Reserva:"));
         panel.add(codigoReservaField);
-
+        Reserva reservaCancelada;
         int result = JOptionPane.showConfirmDialog(null, panel, "Cancelar Reserva", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
         if (result == JOptionPane.OK_OPTION) {
             try {
                 int numeroAula = Integer.parseInt(numeroAulaField.getText());
                 int codigoReserva = Integer.parseInt(codigoReservaField.getText());
-                universidad.cancelarReserva(numeroAula,codigoReserva);
-                JOptionPane.showMessageDialog(panel,"Reserva cancelada con exito","Cancelar Reserva",JOptionPane.INFORMATION_MESSAGE);
+                reservaCancelada=universidad.cancelarReserva(numeroAula,codigoReserva);
+                JOptionPane.showMessageDialog(panel,"Reserva cancelada con exito"+"\nDatos de la Reserva:\n"+reservaCancelada,"Cancelar Reserva",JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(panel,ex.getMessage(),"Cancelar Reserva",JOptionPane.ERROR_MESSAGE);
             }

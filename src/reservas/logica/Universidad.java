@@ -61,12 +61,14 @@ public class Universidad implements Serializable {
         listaReservables.put(nuevoEventoExterno.getCodigoIdentificador(), nuevoEventoExterno);
     }
 
-    public void cancelarReserva(int numeroAula, Integer codReserva) {
+    public Reserva cancelarReserva(int numeroAula, Integer codReserva) {
             Aula elimAula = getAula(numeroAula);
+            Reserva reservaCancelada;
             if(elimAula!=null)
-              elimAula.cancelaReserva(codReserva);
+              reservaCancelada= elimAula.cancelaReserva(codReserva);
             else
                 throw new NoSuchElementException("El numero de aula ingresado no existe");
+            return  reservaCancelada;
     }
 
 
