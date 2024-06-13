@@ -11,14 +11,13 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import reservas.logica.*;
-
+import reservas.persistencia.Persistencia;
 
 
 public class MainFrame extends JFrame {
@@ -29,7 +28,7 @@ public class MainFrame extends JFrame {
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         universidad = new Universidad();
-        Main.CargaDatosXML(universidad);
+        CargaXML.CargaDatosXML(universidad);
         initUI();
         
 
@@ -500,14 +499,10 @@ public class MainFrame extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
                 MainFrame mainFrame = new MainFrame();
                 mainFrame.setLocationRelativeTo(null);
                 mainFrame.setVisible(true);
                 mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                Persistencia.serializar();
             }
-        });
     }
-}
