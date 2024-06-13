@@ -1,19 +1,28 @@
 package reservas.logica;
 import java.io.Serializable;
+import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
 public class Universidad implements Serializable {
+    private static Universidad instance = null;
     private TreeSet<Aula> ListaAulas;
     private HashMap<String, Reservable> listaReservables;
 
-    public Universidad() {
+    private Universidad() {
         ListaAulas = new TreeSet<>();
         listaReservables = new HashMap<>();
     }
     public Reservable getReservable(String codReservable){
         return listaReservables.get(codReservable);
+    }
+
+    public static Universidad getInstance(){
+        if(instance == null){
+            instance = new Universidad();
+        }
+        return instance;
     }
 
     public Aula getAula(int codigoAula) {

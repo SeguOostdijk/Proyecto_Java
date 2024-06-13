@@ -7,11 +7,11 @@ import java.io.*;
 public class Persistencia {
 
     // Método estático para serializar un objeto
-    public static void serializar(Universidad universidad) {
+    public static void serializar() {
         try {
             FileOutputStream fos = new FileOutputStream("universidad.dat");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(universidad);
+            oos.writeObject(Universidad.getInstance());
             oos.close();
         } catch (IOException e) {
             System.out.println("Exception during serialization: " + e);

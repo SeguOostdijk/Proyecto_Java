@@ -1,5 +1,7 @@
 package reservas.logica;
 
+import reservas.persistencia.Persistencia;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -17,7 +19,6 @@ public class Aula implements Serializable,Comparable<Aula>{
         this.capacidadMaxima = capacidadMaxima;
         this.numeroAula = numeroAula;
         listaReservas = new HashMap();
-        universidad=new Universidad();
     }
 
     public float montoRecaudado(){
@@ -97,10 +98,13 @@ public class Aula implements Serializable,Comparable<Aula>{
                 throw new NoSuchElementException("No se pudo realizar la reserva");
             fechaActual = fechaActual.plusWeeks(1);
         }
+
+        Persistencia.serializar();
+
     }
 
     public void agregaReservas(String codigoCurso, LocalDate fechaInicio, LocalTime horaInicio, LocalTime horaFin){
-        CursoExtension curso = universidad.getCursoExtension(codigoCurso);
+        CursoExtension curso = Universidad.getInstance().getCursoExtension(codigoCurso);
         LocalDate fechaActual = fechaInicio;
         int clasesReservadas = 0;
         int cantidadClases = curso.getCantidadClases();

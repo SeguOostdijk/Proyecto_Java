@@ -27,8 +27,7 @@ public class MainFrame extends JFrame {
         setTitle("Sistema de Gestión de Reservas de Aulas");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        universidad = new Universidad();
-        CargaXML.CargaDatosXML(universidad);
+        CargaXML.CargaDatosXML(Universidad.getInstance());
         initUI();
         
 
