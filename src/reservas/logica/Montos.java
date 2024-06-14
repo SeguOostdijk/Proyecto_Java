@@ -1,8 +1,9 @@
 package reservas.logica;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Montos {
+public class Montos implements Serializable {
     private ArrayList<Float> montosPiso;
     private TreeMap<Integer,Float> montosAula;
     private float montoTotal;

@@ -11,6 +11,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -18,6 +20,7 @@ import java.time.format.DateTimeFormatter;
 
 import reservas.logica.*;
 import reservas.persistencia.Persistencia;
+import reservas.persistencia.UniversidadDTO;
 
 
 public class MainFrame extends JFrame {
@@ -498,11 +501,15 @@ public class MainFrame extends JFrame {
     }
 
     public static void main(String[] args) {
-        File Archivo=new File("C:\\Users\\pablo\\Proyecto_Java\\src\\universidad.dat")  ;
-        if(Archivo.exists())
-            Persistencia.deserializar();
-        else
-            CargaXML.CargaDatosXML(Universidad.getInstance());
+        File Archivo=new File("universidad.dat");
+        UniversidadDTO uni;
+        if(Archivo.exists()) {
+            uni = (UniversidadDTO) Persistencia.deserializar();
+            Persistencia.UniversidadDTOAUniversidad(uni);
+        } else
+            CargaXML.CargaDatosXML();
+
+        Universidad.getInstance().mostrarAulas();
         MainFrame mainFrame = new MainFrame();
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setVisible(true);

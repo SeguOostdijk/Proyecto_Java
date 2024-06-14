@@ -1,12 +1,13 @@
 package reservas.logica;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-public class ReporteAulasReserva {
+public class ReporteAulasReserva implements Serializable {
     private ArrayList<Aula> listaAulasReservas;
     private float promReservasAula;
     public ReporteAulasReserva() {

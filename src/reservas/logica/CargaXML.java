@@ -16,10 +16,10 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-
-
 public class CargaXML {
-    public static void CargaDatosXML(Universidad uni) {
+    public static void CargaDatosXML() {
+        Universidad uni = Universidad.getInstance();
+
         try {
             File archivoXML = new File("src/reservas/archivos/archivoXML.xml"); // dirección del archivo
             final DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -100,7 +100,6 @@ public class CargaXML {
                                     Aula aula = new Aula(capacidad, numAula);
                                     uni.poneAula(aula);
 
-
                                     NodeList Reservas = elementoAula.getElementsByTagName("reservas");
 
                                     for (int m = 0; m < Reservas.getLength(); m++) {
@@ -119,7 +118,6 @@ public class CargaXML {
                                                 System.out.println(e.getMessage());
                                             }
                                         }
-                                        System.out.println(aula);
                                     }
 
 
@@ -134,7 +132,6 @@ public class CargaXML {
         } catch (ParserConfigurationException | SAXException | IOException e) {
             System.out.println("Error " + e.getMessage());
         }
-
     }
 
 }

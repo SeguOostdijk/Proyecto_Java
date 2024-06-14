@@ -4,14 +4,29 @@ import reservas.logica.Universidad;
 
 import java.io.*;
 
+import static reservas.logica.Universidad.getInstance;
+
 public class Persistencia {
+
+    public static UniversidadDTO UniversidadAUniversidadDTO(Universidad universidad){
+        UniversidadDTO uni = new UniversidadDTO();
+        uni.setListaAulas(universidad.getListaAulas());
+        uni.setListaReservables(uni.getListaReservables());
+        return uni;
+    }
+
+    public static void UniversidadDTOAUniversidad(UniversidadDTO universidadDTO){
+        Universidad.getInstance().setListaAulas(universidadDTO.getListaAulas());
+        Universidad.getInstance().setListaReservables(universidadDTO.getListaReservables());
+    }
 
     // Método estático para serializar un objeto
     public static void serializar() {
         try {
+            UniversidadDTO uniDTO = Persistencia.UniversidadAUniversidadDTO(Universidad.getInstance());
             FileOutputStream fos = new FileOutputStream("universidad.dat");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(Universidad.getInstance());
+            oos.writeObject(getInstance());
             oos.close();
         } catch (IOException e) {
             System.out.println("Exception during serialization: " + e);
@@ -19,16 +34,16 @@ public class Persistencia {
     }
 
     // Método estático para deserializar un objeto
-    public static Universidad deserializar() {
-        Universidad universidad = null;
+    public static Serializable deserializar() {
+        Serializable ser = null;
         try {
             FileInputStream fis = new FileInputStream("universidad.dat");
             ObjectInputStream ois = new ObjectInputStream(fis);
-            universidad = (Universidad) ois.readObject();
+            ser = (UniversidadDTO) ois.readObject();
             ois.close();
         } catch (Exception e) {
             System.out.println("Exception during deserialization: " + e);
         }
-        return universidad;
+        return ser;
     }
 }

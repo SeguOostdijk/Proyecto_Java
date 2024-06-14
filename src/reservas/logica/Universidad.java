@@ -25,6 +25,26 @@ public class Universidad implements Serializable {
         return instance;
     }
 
+    public static void setInstance(Universidad universidad){
+        instance = universidad;
+    }
+
+    public HashMap<String, Reservable> getListaReservables() {
+        return listaReservables;
+    }
+
+    public TreeSet<Aula> getListaAulas() {
+        return ListaAulas;
+    }
+
+    public void setListaAulas(TreeSet<Aula> listaAulas) {
+        ListaAulas = listaAulas;
+    }
+
+    public void setListaReservables(HashMap<String, Reservable> listaReservables) {
+        this.listaReservables = listaReservables;
+    }
+
     public Aula getAula(int codigoAula) {
         for (Aula aula : ListaAulas) {
             if (aula.getNumero() == codigoAula) {
@@ -78,6 +98,10 @@ public class Universidad implements Serializable {
             else
                 throw new NoSuchElementException("El numero de aula ingresado no existe");
             return  reservaCancelada;
+    }
+
+    public void mostrarAulas(){
+        System.out.println(ListaAulas);
     }
 
 
