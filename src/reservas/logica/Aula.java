@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class Aula implements Serializable,Comparable<Aula>{
@@ -63,13 +64,21 @@ public class Aula implements Serializable,Comparable<Aula>{
 
     }
 
-    public boolean hizoReserva(int codigoId){
-        for (Reserva reserva : listaReservas.values()) {
-            if(reserva.getCODIGO()==codigoId)
-                return true;
+    public boolean hizoReserva(String codigoId) {
+        boolean bandera = false;
+        Iterator<Reserva> iterator = listaReservas.values().iterator();
+
+        while (!bandera && iterator.hasNext()) {
+            Reserva reserva = iterator.next();
+            Reservable reservable = reserva.getReservable();
+            if (reservable.getCodigoIdentificador().equals(codigoId)) {
+                bandera = true;
+            }
         }
-        return false;
+
+        return bandera;
     }
+
 
     public int getCapacidadmaxima() {
         return capacidadMaxima;

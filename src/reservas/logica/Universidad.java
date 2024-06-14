@@ -118,30 +118,26 @@ public class Universidad implements Serializable {
 
 
     public List<Aula> consultarAula(Integer numeroPiso) {
-        Iterator<Aula> it = ListaAulas.iterator();
-        ArrayList<Aula> aulasporpiso = new ArrayList<>();
-        if (it.hasNext()) {
-            Aula a = it.next();
-            while (it.hasNext() && a.getPiso() < numeroPiso)
-                a = it.next();
-            if (it.hasNext())
-                while (it.hasNext() && a.getPiso() == numeroPiso) {
-                    aulasporpiso.add(a);
-                    a = it.next();
-                }
-        } else
-            throw new NoSuchElementException();
+        List<Aula> aulasporpiso = new ArrayList<>();
+        for (Aula aula : ListaAulas) {
+            if (aula.getPiso() == numeroPiso) {
+                aulasporpiso.add(aula);
+            }
+        }
+        if (aulasporpiso.isEmpty()) {
+            throw new NoSuchElementException("No se encontraron aulas en el piso especificado.");
+        }
         return aulasporpiso;
     }
 
-    public List<Aula> consultarAula(int codigoId) {
+    public List<Aula> consultarAula(String codigoId) {
         ArrayList<Aula> aulasporcodigo = new ArrayList<>();
         for (Aula aula : ListaAulas) {
             if (aula.hizoReserva(codigoId))
                 aulasporcodigo.add(aula);
         }
         if (aulasporcodigo.isEmpty())
-            throw new NoSuchElementException();
+            throw new NoSuchElementException("No se encontraron aulas para el código de reserva " + codigoId);
         return aulasporcodigo;
     }
 

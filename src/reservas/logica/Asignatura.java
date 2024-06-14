@@ -73,7 +73,8 @@ public class Asignatura extends Reservable{
                 "nombre='" + nombre + '\'' +
                 ", dia de la semana='" + diaSemana + '\'' +
                 ", hora de inicio='" + horaInicio + '\'' +
-                ", hora de finalizacion='" + horaFin + '\'' +
-                  super.toString();
+                ", hora de finalización='" + horaFin + '\'' +
+                ", " + super.toString() +
+                '}';
     }
 }

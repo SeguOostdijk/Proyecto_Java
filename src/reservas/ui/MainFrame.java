@@ -17,6 +17,8 @@ import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.NoSuchElementException;
+
 import reservas.logica.*;
 import reservas.persistencia.Persistencia;
 import reservas.persistencia.UniversidadDTO;
@@ -240,24 +242,61 @@ public class MainFrame extends JFrame {
 
 
     private void listarAulas() {
-        JPanel panel=new JPanel(new FlowLayout());
-        JComboBox comboBox =new JComboBox<String>();
-        JLabel filtrar=new JLabel("Filtrar por:");
+        // Crear panel y componentes para la selección del filtro
+        JPanel panel = new JPanel(new FlowLayout());
+        JComboBox<String> comboBox = new JComboBox<>();
+        JLabel filtrar = new JLabel("Filtrar por:");
         comboBox.addItem("Numero de piso");
         comboBox.addItem("Codigo de curso/evento/asignatura");
         panel.add(filtrar);
         panel.add(comboBox);
-        int resultado=JOptionPane.showConfirmDialog(this,panel,"Consultar aulas",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
-        if(resultado==JOptionPane.OK_OPTION) {
-            JPanel panelConsulta = new JPanel(new BorderLayout());
-            JLabel pedidoInput=new JLabel();
-            JTextField input=new JTextField();
-            if (comboBox.getSelectedItem().equals("Numero de piso")) {
-                pedidoInput.setText("Ingrese el numero de piso(0=Planta baja)");
-                panelConsulta.add(pedidoInput,BorderLayout.PAGE_START);
-                panelConsulta.add(input,BorderLayout.PAGE_END);
-                JOptionPane.showConfirmDialog(panel,panelConsulta,"Consultar aulas",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
 
+        // Mostrar el cuadro de diálogo de selección del filtro
+        int resultado = JOptionPane.showConfirmDialog(this, panel, "Consultar aulas", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        if (resultado == JOptionPane.OK_OPTION) {
+            // Crear panel y componentes para la entrada del valor
+            JPanel panelConsulta = new JPanel(new BorderLayout());
+            JLabel pedidoInput = new JLabel();
+            JTextField input = new JTextField(15);
+
+            String itemSeleccionado = (String) comboBox.getSelectedItem();
+            if (itemSeleccionado.equals("Numero de piso")) {
+                pedidoInput.setText("Ingrese el numero de piso (0=Planta baja):");
+            } else {
+                pedidoInput.setText("Ingrese el Codigo de curso/evento/asignatura:");
+            }
+
+            panelConsulta.add(pedidoInput, BorderLayout.NORTH);
+            panelConsulta.add(input, BorderLayout.CENTER);
+
+            // Mostrar el cuadro de diálogo de entrada del valor
+            int resultadoConsulta = JOptionPane.showConfirmDialog(this, panelConsulta, "Consultar aulas", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+            if (resultadoConsulta == JOptionPane.OK_OPTION) {
+                try {
+                    if (itemSeleccionado.equals("Numero de piso")) {
+                        int numpiso = Integer.parseInt(input.getText());
+                        List<Aula> listaAulasPiso = universidad.consultarAula(numpiso);
+                        StringBuilder aulasInfo = new StringBuilder("Aulas en el piso " + numpiso + ":\n");
+                        for (Aula aula : listaAulasPiso) {
+                            aulasInfo.append(aula.toString()).append("\n");
+                        }
+                        JOptionPane.showMessageDialog(this, aulasInfo.toString(), "Listado de piso", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        String codreserva = input.getText();
+                        List<Aula> listaAulasReserva = universidad.consultarAula(codreserva);
+                        StringBuilder aulasInfo = new StringBuilder("Aulas para el código de reserva " + codreserva + ":\n");
+                        for (Aula aula : listaAulasReserva) {
+                            aulasInfo.append(aula.toString()).append("\n");
+                        }
+                        JOptionPane.showMessageDialog(this, aulasInfo.toString(), "Listado de tipo de reserva", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "Entrada inválida. Por favor, ingrese un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                } catch (NoSuchElementException e) {
+                    JOptionPane.showMessageDialog(this, "No se encontraron aulas para el código especificado.", "Aulas no encontradas", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         }
     }
