@@ -4,46 +4,31 @@ import reservas.logica.Universidad;
 
 import java.io.*;
 
-import static reservas.logica.Universidad.getInstance;
-
 public class Persistencia {
 
-    public static UniversidadDTO UniversidadAUniversidadDTO(Universidad universidad){
-        UniversidadDTO uni = new UniversidadDTO();
-        uni.setListaAulas(universidad.getListaAulas());
-        uni.setListaReservables(uni.getListaReservables());
-        return uni;
-    }
+    private static final String FILE_NAME = "universidad.dat";
 
-    public static void UniversidadDTOAUniversidad(UniversidadDTO universidadDTO){
-        Universidad.getInstance().setListaAulas(universidadDTO.getListaAulas());
-        Universidad.getInstance().setListaReservables(universidadDTO.getListaReservables());
-    }
+    public static void serializarUniversidad() {
+        Universidad universidad = Universidad.getInstance();
+        UniversidadDTO dto = universidad.toDTO();
 
-    // Método estático para serializar un objeto
-    public static void serializar() {
-        try {
-            UniversidadDTO uniDTO = Persistencia.UniversidadAUniversidadDTO(Universidad.getInstance());
-            FileOutputStream fos = new FileOutputStream("universidad.dat");
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(getInstance());
-            oos.close();
-        } catch (IOException e) {
-            System.out.println("Exception during serialization: " + e);
+        try (FileOutputStream fileOut = new FileOutputStream(FILE_NAME);
+             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+            out.writeObject(dto);
+        } catch (IOException i) {
+            i.printStackTrace();
         }
     }
 
-    // Método estático para deserializar un objeto
-    public static Serializable deserializar() {
-        Serializable ser = null;
-        try {
-            FileInputStream fis = new FileInputStream("universidad.dat");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            ser = (UniversidadDTO) ois.readObject();
-            ois.close();
-        } catch (Exception e) {
-            System.out.println("Exception during deserialization: " + e);
+    public static void deserializarUniversidad() {
+        Universidad universidad = Universidad.getInstance();
+
+        try (FileInputStream fileIn = new FileInputStream(FILE_NAME);
+             ObjectInputStream in = new ObjectInputStream(fileIn)) {
+            UniversidadDTO dto = (UniversidadDTO) in.readObject();
+            universidad.fromDTO(dto);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
-        return ser;
     }
 }

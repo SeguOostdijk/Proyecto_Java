@@ -51,7 +51,7 @@ public class Aula implements Serializable,Comparable<Aula>{
         else
             throw new NoSuchElementException("La reserva que intenta eliminar no existe");
 
-        Persistencia.serializar();
+       Persistencia.serializarUniversidad();
         return reservaCancelada;
     }
 
@@ -99,7 +99,7 @@ public class Aula implements Serializable,Comparable<Aula>{
             fechaActual = fechaActual.plusWeeks(1);
         }
 
-        Persistencia.serializar();
+        Persistencia.serializarUniversidad();
     }
 
     public void agregaReservas(String codigoCurso, LocalDate fechaInicio, LocalTime horaInicio, LocalTime horaFin){
@@ -117,8 +117,7 @@ public class Aula implements Serializable,Comparable<Aula>{
             clasesReservadas++;
             fechaActual = fechaActual.plusWeeks(1);
         }
-
-        Persistencia.serializar();
+        Persistencia.serializarUniversidad();
     }
 
     public void agregaReservasEventoInterno(String codigoEventoInterno){
@@ -133,7 +132,7 @@ public class Aula implements Serializable,Comparable<Aula>{
         else
             throw new NoSuchElementException("No se pudo realizar la reserva");
 
-        Persistencia.serializar();
+        Persistencia.serializarUniversidad();
     }
 
     public void agregaReservasEventoExterno(String codigoEventoExterno, String nombreOrganizacion, float costoAlquiler){
@@ -150,7 +149,7 @@ public class Aula implements Serializable,Comparable<Aula>{
         else
             throw new NoSuchElementException("No se pudo realizar la reserva");
 
-        Persistencia.serializar();
+      Persistencia.serializarUniversidad();
     }
 
     public void horariosDisponibles(LocalDate fecha,LocalTime horaInicio,LocalTime horaFin){
@@ -170,7 +169,7 @@ public class Aula implements Serializable,Comparable<Aula>{
         else
             throw new NoSuchElementException("ERROR.Codigo de reservable inexistente");
 
-        Persistencia.serializar();
+       Persistencia.serializarUniversidad();
     }
 
     @Override

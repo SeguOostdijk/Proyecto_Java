@@ -12,26 +12,25 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import java.rmi.server.UnicastRemoteObject;
+
 import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-
 import reservas.logica.*;
 import reservas.persistencia.Persistencia;
 import reservas.persistencia.UniversidadDTO;
 
 
 public class MainFrame extends JFrame {
-    private Universidad universidad;
 
+    Universidad universidad=Universidad.getInstance();
     public MainFrame() {
         setTitle("Sistema de Gestión de Reservas de Aulas");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         initUI();
+
         
 
     }
@@ -504,15 +503,14 @@ public class MainFrame extends JFrame {
         File Archivo=new File("universidad.dat");
         UniversidadDTO uni;
         if(Archivo.exists()) {
-            uni = (UniversidadDTO) Persistencia.deserializar();
-            Persistencia.UniversidadDTOAUniversidad(uni);
+            Persistencia.deserializarUniversidad();
         } else
             CargaXML.CargaDatosXML();
-
-        Universidad.getInstance().mostrarAulas();
+        //Universidad.getInstance().mostrarAulas();
         MainFrame mainFrame = new MainFrame();
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setVisible(true);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
     }
 }

@@ -2,7 +2,7 @@ package reservas.persistencia;
 
 import reservas.logica.Aula;
 import reservas.logica.Reservable;
-import reservas.logica.Universidad;
+
 
 import java.io.Serializable;
 import java.util.HashMap;

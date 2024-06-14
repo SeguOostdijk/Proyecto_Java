@@ -1,33 +1,45 @@
 package reservas.logica;
+
+import reservas.persistencia.UniversidadDTO;
+
 import java.io.Serializable;
-import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
 public class Universidad implements Serializable {
-    private static Universidad instance = null;
+    private static Universidad instance;
     private TreeSet<Aula> ListaAulas;
     private HashMap<String, Reservable> listaReservables;
 
+    // Constructor privado para el patrón Singleton
     private Universidad() {
         ListaAulas = new TreeSet<>();
         listaReservables = new HashMap<>();
     }
-    public Reservable getReservable(String codReservable){
-        return listaReservables.get(codReservable);
-    }
 
-    public static Universidad getInstance(){
-        if(instance == null){
+    // Método para obtener la instancia única de Universidad
+    public static Universidad getInstance() {
+        if (instance == null) {
             instance = new Universidad();
         }
         return instance;
     }
 
-    public static void setInstance(Universidad universidad){
-        instance = universidad;
+    // Método para convertir Universidad a un DTO
+    public UniversidadDTO toDTO() {
+        UniversidadDTO dto = new UniversidadDTO();
+        dto.setListaAulas(new TreeSet<>(ListaAulas));
+        dto.setListaReservables(new HashMap<>(listaReservables));
+        return dto;
     }
+
+    // Método para actualizar Universidad desde un DTO
+    public void fromDTO(UniversidadDTO dto) {
+        ListaAulas = new TreeSet<>(dto.getListaAulas());
+        listaReservables = new HashMap<>(dto.getListaReservables());
+    }
+
 
     public HashMap<String, Reservable> getListaReservables() {
         return listaReservables;
@@ -183,7 +195,7 @@ public class Universidad implements Serializable {
         return reporte;
     }
 
-    public List<Aula> aulasDisponibles(LocalDate fecha, LocalTime horaInicio, LocalTime horaFin,int cantidadPersonas){
+    public List<Aula> aulasDisponibles(LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, int cantidadPersonas){
         List<Aula> listaAulasDisponibles = new ArrayList<>();
         for (Aula aula : ListaAulas) {
             if(aula.estaDisponible(horaInicio,horaFin,fecha) && aula.noSuperaCapacidad(cantidadPersonas))
@@ -192,5 +204,8 @@ public class Universidad implements Serializable {
         return listaAulasDisponibles;
     }
 
+    public Reservable getReservable(String codReservable) {
+       return listaReservables.get(codReservable);
+    }
 }
 
