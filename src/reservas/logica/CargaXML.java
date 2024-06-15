@@ -95,11 +95,10 @@ public class CargaXML {
                                     Element elementoAula = (Element) nodoAula;
 
                                     int numAula = Integer.parseInt(elementoAula.getAttribute("codigo"));
-                                    int capacidad = Integer.parseInt(element.getElementsByTagName("capacidad").item(0).getTextContent());
+                                    int capacidad = Integer.parseInt(elementoAula.getElementsByTagName("capacidad").item(0).getTextContent());
 
                                     Aula aula = new Aula(capacidad, numAula);
                                     uni.poneAula(aula);
-
                                     NodeList Reservas = elementoAula.getElementsByTagName("reservas");
 
                                     for (int m = 0; m < Reservas.getLength(); m++) {

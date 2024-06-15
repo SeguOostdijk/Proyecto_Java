@@ -20,8 +20,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.NoSuchElementException;
 
 import reservas.logica.*;
-import reservas.persistencia.Persistencia;
-import reservas.persistencia.UniversidadDTO;
+
 
 
 public class MainFrame extends JFrame {
@@ -33,12 +32,13 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         initUI();
 
-        
+
 
     }
 
     private void initUI() {
         JPanel panel = new JPanel(new GridBagLayout());
+
 
         JButton listarAulasButton = new JButton("Listar Aulas");
         JButton reservarAulaButton = new JButton("Agregar Reserva");
@@ -51,7 +51,6 @@ public class MainFrame extends JFrame {
         reservarAulaButton.setPreferredSize(buttonSize);
         cancelarReservaButton.setPreferredSize(buttonSize);
         generaReportesbutton.setPreferredSize(buttonSize);
-
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy =0;
@@ -538,18 +537,4 @@ public class MainFrame extends JFrame {
 
     }
 
-    public static void main(String[] args) {
-        File Archivo=new File("universidad.dat");
-        UniversidadDTO uni;
-        if(Archivo.exists()) {
-            Persistencia.deserializarUniversidad();
-        } else
-            CargaXML.CargaDatosXML();
-        //Universidad.getInstance().mostrarAulas();
-        MainFrame mainFrame = new MainFrame();
-        mainFrame.setLocationRelativeTo(null);
-        mainFrame.setVisible(true);
-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-    }
 }
