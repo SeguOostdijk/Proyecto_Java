@@ -294,7 +294,7 @@ public class MainFrame extends JFrame {
                 } catch (NumberFormatException e) {
                     JOptionPane.showMessageDialog(this, "Entrada inválida. Por favor, ingrese un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
                 } catch (NoSuchElementException e) {
-                    JOptionPane.showMessageDialog(this, "No se encontraron aulas para el código especificado.", "Aulas no encontradas", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         }
