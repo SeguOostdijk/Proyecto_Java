@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
@@ -12,7 +13,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-
+import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -31,41 +32,34 @@ public class MainFrame extends JFrame {
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         initUI();
-
-
-
     }
 
     private void initUI() {
         JPanel panel = new JPanel(new GridBagLayout());
-
-
         JButton listarAulasButton = new JButton("Listar Aulas");
         JButton reservarAulaButton = new JButton("Agregar Reserva");
         JButton cancelarReservaButton = new JButton("Cancelar Reserva");
         JButton generaReportesbutton = new JButton("Generar Reportes");
-
-        // Establecer un tamaño preferido más pequeño para los botones
+        ArrayList<JButton> botones=new ArrayList<>();
+        botones.add(listarAulasButton);
+        botones.add(reservarAulaButton);
+        botones.add(cancelarReservaButton);
+        botones.add(generaReportesbutton);
         Dimension buttonSize = new Dimension(250, 50);
-        listarAulasButton.setPreferredSize(buttonSize);
-        reservarAulaButton.setPreferredSize(buttonSize);
-        cancelarReservaButton.setPreferredSize(buttonSize);
-        generaReportesbutton.setPreferredSize(buttonSize);
+        panel.setBackground(Color.decode("#298a80"));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy =0;
         gbc.fill = GridBagConstraints.BOTH;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(5, 5, 5, 5);
-
-        panel.add(listarAulasButton,gbc);
-        gbc.gridy++;
-        panel.add(reservarAulaButton,gbc);
-        gbc.gridy++;
-        panel.add(cancelarReservaButton,gbc);
-        gbc.gridy++;
-        panel.add(generaReportesbutton,gbc);
-
+        for (JButton boton : botones) {
+            boton.setPreferredSize(buttonSize);
+            boton.setBackground(Color.WHITE);
+            boton.setForeground(Color.decode("#298a80").darker());
+            panel.add(boton,gbc);
+            gbc.gridy++;
+        }
         add(panel, BorderLayout.CENTER);
 
         /*cargarDatosButton.addActionListener(new ActionListener() {
@@ -499,8 +493,11 @@ public class MainFrame extends JFrame {
                 int codigoReserva = Integer.parseInt(codigoReservaField.getText());
                 reservaCancelada=Universidad.getInstance().cancelarReserva(numeroAula,codigoReserva);
                 JOptionPane.showMessageDialog(panel,"Reserva cancelada con exito"+"\nDatos de la Reserva:\n"+reservaCancelada,"Cancelar Reserva",JOptionPane.INFORMATION_MESSAGE);
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(panel,ex.getMessage(),"Cancelar Reserva",JOptionPane.ERROR_MESSAGE);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(panel,"Entrada inválida. Por favor ingrese un numero de aula y codigo de reserva válido","Error",JOptionPane.ERROR_MESSAGE);
+            }
+            catch (NoSuchElementException ex){
+                JOptionPane.showMessageDialog(panel,ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -514,27 +511,21 @@ public class MainFrame extends JFrame {
         int  result= JOptionPane.showConfirmDialog(this, panel, "Generar Reportes",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);//Muestra el panel
         if(result==JOptionPane.OK_OPTION)
         {
-          String itemSeleccionado = (String) comboBox.getSelectedItem();
-          if (itemSeleccionado.equals("Montos")) {
-              try {
-                  Montos reporteMontos = universidad.getMontos();
-                  JOptionPane.showMessageDialog(this, reporteMontos, "Reporte de montos", JOptionPane.INFORMATION_MESSAGE);
-              }
+            try {
+                String itemSeleccionado = (String) comboBox.getSelectedItem();
+                if (itemSeleccionado.equals("Montos")) {
+                    Montos reporteMontos = universidad.getMontos();
+                    JOptionPane.showMessageDialog(this, reporteMontos, "Reporte de montos", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    ReporteAulasReserva reporteAulas = universidad.getReporteReservas();
+                    JOptionPane.showMessageDialog(this, reporteAulas, "Reporte de aulas", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
               catch (Exception e){
-                  JOptionPane.showMessageDialog(panel,e.getMessage(),"Reporte de montos",JOptionPane.ERROR_MESSAGE);
+                  JOptionPane.showMessageDialog(panel,e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
               }
-          }
-          else{
-              try {
-                  ReporteAulasReserva reporteAulas = universidad.getReporteReservas();
-                  JOptionPane.showMessageDialog(this, reporteAulas, "Reporte de aulas", JOptionPane.INFORMATION_MESSAGE);
-              }
-              catch (Exception e){
-                  JOptionPane.showMessageDialog(panel,e.getMessage(),"Reporte de aulas",JOptionPane.ERROR_MESSAGE);
-              }
-          }
         }
-
     }
-
 }
+
+
