@@ -26,6 +26,10 @@ public class Aula implements Serializable,Comparable<Aula>{
         for (Reserva reserva : listaReservas.values()) {
             if(reserva.getReservable() instanceof EventoExterno)
                 sumadorCostos+=((EventoExterno) reserva.getReservable()).getCostoAlquiler();
+            else if (reserva.getReservable() instanceof CursoExtension) {
+                sumadorCostos+=((CursoExtension)reserva.getReservable()).getCostoTotal();
+
+            }
         }
         return sumadorCostos;
     }

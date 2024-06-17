@@ -1,8 +1,8 @@
 package reservas.logica;
 
-import org.w3c.dom.Document;
+
 import reservas.persistencia.Persistencia;
-import reservas.persistencia.UniversidadDTO;
+
 import reservas.ui.MainFrame;
 
 import java.io.File;

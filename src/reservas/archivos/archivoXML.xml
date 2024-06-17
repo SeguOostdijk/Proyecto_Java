@@ -92,6 +92,15 @@
             <reservable>HH202</reservable>
         </reservas>
     </aula>
+    <aula codigo="221">
+        <capacidad>60</capacidad>
+        <reservas>
+            <horaInicio>19:00:00</horaInicio>
+            <horaFin>21:00:00</horaFin>
+            <fecha>2024-05-11</fecha>
+            <reservable>LO201</reservable>
+        </reservas>
+    </aula>
     <aula codigo="346">
         <capacidad>40</capacidad>
         <reservas>

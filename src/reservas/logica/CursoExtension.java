@@ -28,7 +28,10 @@ public class CursoExtension extends Reservable{
         this.cantidadClases = cantidadClases;
     }
 
-    public float getCosto() {
+    public float getCostoTotal() {
+        return costo*getCantidadInscriptos();
+    }
+    public float getCostoAlumno(){
         return costo;
     }
 
