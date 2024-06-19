@@ -36,6 +36,13 @@ public class MainFrame extends JFrame {
 
     private void initUI() {
         JPanel panel = new JPanel(new GridBagLayout());
+        JPanel paneltitulo=new JPanel();
+        paneltitulo.setBounds(550,100,800,200);
+        JLabel titulo=new JLabel("Gestión de aulas");
+        titulo.setForeground(Color.white);
+        titulo.setFont(new Font("", Font.BOLD, 70));
+        paneltitulo.setBackground(Color.decode("#298a80"));
+        paneltitulo.add(titulo);
         JButton listarAulasButton = new JButton("Listar Aulas");
         JButton reservarAulaButton = new JButton("Agregar Reserva");
         JButton cancelarReservaButton = new JButton("Cancelar Reserva");
@@ -45,21 +52,23 @@ public class MainFrame extends JFrame {
         botones.add(reservarAulaButton);
         botones.add(cancelarReservaButton);
         botones.add(generaReportesbutton);
-        Dimension buttonSize = new Dimension(250, 50);
+        Dimension buttonSize = new Dimension(300, 60);
         panel.setBackground(Color.decode("#298a80"));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy =0;
         gbc.fill = GridBagConstraints.BOTH;
         gbc.anchor = GridBagConstraints.CENTER;
-        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.insets = new Insets(7, 5, 5, 5);
         for (JButton boton : botones) {
             boton.setPreferredSize(buttonSize);
             boton.setBackground(Color.WHITE);
             boton.setForeground(Color.decode("#298a80").darker());
+            boton.setFont(new Font("", Font.BOLD,15));
             panel.add(boton,gbc);
             gbc.gridy++;
         }
+        add(paneltitulo);
         add(panel, BorderLayout.CENTER);
 
         /*cargarDatosButton.addActionListener(new ActionListener() {
