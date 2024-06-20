@@ -5,20 +5,20 @@ import reservas.persistencia.Persistencia;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.TreeMap;
 
 public class Aula implements Serializable,Comparable<Aula>{
     private int numeroAula;
     private int capacidadMaxima;
-    private HashMap <Integer,Reserva> listaReservas;
+    private TreeMap<Integer,Reserva> listaReservas;
 
 
     public Aula(int capacidadMaxima, Integer numeroAula) {
         this.capacidadMaxima = capacidadMaxima;
         this.numeroAula = numeroAula;
-        listaReservas = new HashMap();
+        listaReservas = new TreeMap<>();
     }
 
     public float montoRecaudado(){
@@ -165,23 +165,24 @@ public class Aula implements Serializable,Comparable<Aula>{
       Persistencia.serializarUniversidad();
     }
 
-    public void horariosDisponibles(LocalDate fecha,LocalTime horaInicio,LocalTime horaFin){
-        for (Reserva reserva : listaReservas.values()) {
-            if(fecha==reserva.getFecha()){
-
-            }
-        }
-    }
-    public void agregaReservaXML(String codReservable,LocalDate fecha,LocalTime horaInicio,LocalTime horaFin){
+    public void agregaReservaXML(String codReservable,LocalDate fecha,LocalTime horaInicio,LocalTime horaFin) throws AulaOcupadaException {
         Reservable tipoReservable= Universidad.getInstance().getReservable(codReservable);
-        if(tipoReservable!=null){
-            Reserva nuevaReserva=new Reserva(fecha,horaInicio,horaFin,tipoReservable);
-            if(estaDisponible(horaInicio,horaFin,fecha) && noSuperaCapacidad(tipoReservable.getCantidadInscriptos()))
-                listaReservas.put(nuevaReserva.getCODIGO(),nuevaReserva);
+        if(tipoReservable!=null) {
+
+            if (estaDisponible(horaInicio, horaFin, fecha) && noSuperaCapacidad(tipoReservable.getCantidadInscriptos())) {
+                if(tipoReservable instanceof CursoExtension)
+                    agregaReservas(codReservable,fecha,horaInicio,horaFin);
+                else if (tipoReservable instanceof Asignatura) {
+                    agregaReservas(codReservable);
+                }
+                else{
+                    Reserva nuevaReserva = new Reserva(fecha, horaInicio, horaFin, tipoReservable);
+                    listaReservas.put(nuevaReserva.getCODIGO(),nuevaReserva);
+                }
+            }
         }
         else
             throw new NoSuchElementException("ERROR.Codigo de reservable inexistente");
-
        Persistencia.serializarUniversidad();
     }
 

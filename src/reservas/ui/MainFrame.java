@@ -416,10 +416,7 @@ public class MainFrame extends JFrame {
         resultado = JOptionPane.showConfirmDialog(null,panel,"Datos del evento externo",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
 
         if(resultado==JOptionPane.OK_OPTION){
-            try{
-                String codigoVar = codigoEventoExterno.getText();
 
-            }
         }
     }
 
@@ -520,6 +517,7 @@ public class MainFrame extends JFrame {
 
     private void generarReportes(){ //Falta generar los reportes en archivos de texto
         JPanel panel=new JPanel(new FlowLayout());
+        JTextArea reporte;
         panel.add(new JLabel("Seleccione el tipo de reporte:"));
         String[] vectorItems={"Montos","Aulas"};
         JComboBox comboBox=new JComboBox(vectorItems);
@@ -531,15 +529,21 @@ public class MainFrame extends JFrame {
                 String itemSeleccionado = (String) comboBox.getSelectedItem();
                 if (itemSeleccionado.equals("Montos")) {
                     Montos reporteMontos = universidad.getMontos();
-                    JOptionPane.showMessageDialog(this, reporteMontos, "Reporte de montos", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    ReporteAulasReserva reporteAulas = universidad.getReporteReservas();
-                    JOptionPane.showMessageDialog(this, reporteAulas, "Reporte de aulas", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, reporteMontos, "Reporte Montos", JOptionPane.INFORMATION_MESSAGE);
                 }
+                else {
+                    ReporteAulasReserva reporteAulas = universidad.getReporteReservas();
+                    reporte = new JTextArea(reporteAulas.toString());
+                    JScrollPane scrollPane = new JScrollPane(reporte);
+                    scrollPane.setPreferredSize(new Dimension(600, 400));
+                    JOptionPane.showMessageDialog(this, scrollPane, "Reporte Aulas", JOptionPane.INFORMATION_MESSAGE);
+                }
+
             }
               catch (Exception e){
                   JOptionPane.showMessageDialog(panel,e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
               }
+
         }
     }
 }

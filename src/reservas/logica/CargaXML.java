@@ -112,7 +112,6 @@ public class CargaXML {
                                             String reservable = (elementoReserva.getElementsByTagName("reservable").item(0).getTextContent());
                                             try {
                                                 aula.agregaReservaXML(reservable, fecha, horaInicio, horaFin);
-
                                             }catch (Exception e){
                                                 System.out.println(e.getMessage());
                                             }
