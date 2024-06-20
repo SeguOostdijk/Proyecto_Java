@@ -183,13 +183,19 @@ public class Universidad implements Serializable {
         return reporte;
     }
 
-    public List<Aula> aulasDisponibles(LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, int cantidadPersonas){
+    public List<Aula> aulasDisponibles(LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, String codigoVar) {
+        CursoExtension curso;
+        curso = getCursoExtension(codigoVar);
+        if (curso == null)
+            throw new NoSuchElementException("El codigo de curso ingresado no existe");
+        else{
         List<Aula> listaAulasDisponibles = new ArrayList<>();
-        for (Aula aula : ListaAulas) {
-            if(aula.estaDisponible(horaInicio,horaFin,fecha) && aula.noSuperaCapacidad(cantidadPersonas))
-                listaAulasDisponibles.add(aula);
+            for (Aula aula : ListaAulas) {
+                if (aula.estaDisponible(horaInicio, horaFin, fecha) && aula.noSuperaCapacidad(curso.getCantidadInscriptos()))
+                    listaAulasDisponibles.add(aula);
+            }
+            return listaAulasDisponibles;
         }
-        return listaAulasDisponibles;
     }
 
     public Reservable getReservable(String codReservable) {

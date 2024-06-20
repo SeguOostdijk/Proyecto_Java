@@ -13,12 +13,14 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.NoSuchElementException;
+import java.util.zip.DataFormatException;
 
 import reservas.logica.*;
 
@@ -414,7 +416,10 @@ public class MainFrame extends JFrame {
         resultado = JOptionPane.showConfirmDialog(null,panel,"Datos del evento externo",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
 
         if(resultado==JOptionPane.OK_OPTION){
+            try{
+                String codigoVar = codigoEventoExterno.getText();
 
+            }
         }
     }
 
@@ -425,7 +430,7 @@ public class MainFrame extends JFrame {
 
         JLabel tituloCurso = new JLabel("Ingrese los datos del curso de extension");
         JLabel codigoCurso = new JLabel("Codigo:");
-        PlaceholderTextField codigoCursoTexto = new PlaceholderTextField("123456");
+        PlaceholderTextField codigoCursoTexto = new PlaceholderTextField("AA123");
         JLabel fechaInicio = new JLabel("Fecha de inicio:");
         PlaceholderTextField fechaInicioTexto = new PlaceholderTextField("00-00-0000");
         JLabel horaInicio = new JLabel("Hora de inicio:");
@@ -446,12 +451,11 @@ public class MainFrame extends JFrame {
         resultado = JOptionPane.showConfirmDialog(null,panel,"Curso de extension",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
         if(resultado == JOptionPane.OK_OPTION){
             try{
-               String codigoVar = (codigoCursoTexto.getText());
+                String codigoVar = (codigoCursoTexto.getText());
                 LocalDate fechaInicioVar = LocalDate.parse(fechaInicioTexto.getText(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
                 LocalTime horaInicioVar = LocalTime.parse(horaInicioTexto.getText(), DateTimeFormatter.ofPattern("HH:mm"));
                 LocalTime horaFinVar = LocalTime.parse(horaFinTexto.getText(), DateTimeFormatter.ofPattern("HH:mm"));
-                int cantidadInscriptos = universidad.getEventoInterno(codigoVar).getCantidadInscriptos();
-                List<Aula> aulasDisponibles = universidad.aulasDisponibles(fechaInicioVar,horaInicioVar,horaFinVar,cantidadInscriptos);
+                List<Aula> aulasDisponibles = universidad.aulasDisponibles(fechaInicioVar,horaInicioVar,horaFinVar,codigoVar);
 
                 JPanel panelAulas = new JPanel();
                 JButton aulaButton;
@@ -467,7 +471,7 @@ public class MainFrame extends JFrame {
                                 aula.agregaReservas(codigoVar,fechaInicioVar,horaInicioVar,horaFinVar);
                                 JOptionPane.showMessageDialog(null,"Reserva realizada con exito para el Aula: " + aula.getNumero(),"Reserva exitosa",JOptionPane.INFORMATION_MESSAGE);
                             }
-                            catch(Exception ex) {
+                            catch(AulaOcupadaException ex) {
                                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Error en la reserva", JOptionPane.ERROR_MESSAGE);
                             }
                         }
@@ -476,7 +480,10 @@ public class MainFrame extends JFrame {
                 }
                 JOptionPane.showMessageDialog(null,panelAulas,"Aulas Disponibles",JOptionPane.INFORMATION_MESSAGE);
             }
-            catch(Exception ex){
+            catch(DateTimeParseException ex){
+                JOptionPane.showMessageDialog(panel,"Error al ingresar datos","Error",JOptionPane.ERROR_MESSAGE);
+            }
+            catch(NoSuchElementException ex){
                 JOptionPane.showMessageDialog(panel,ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
             }
             JOptionPane.showConfirmDialog(null,panel,"Reservar Aula",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);

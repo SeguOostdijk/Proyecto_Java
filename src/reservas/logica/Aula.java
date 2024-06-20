@@ -41,7 +41,7 @@ public class Aula implements Serializable,Comparable<Aula>{
     public boolean estaDisponible(LocalTime horaInicio,LocalTime horaFin, LocalDate dia){
         for (Reserva reserva : listaReservas.values()) {
             if(reserva.getFecha().isEqual(dia))
-                if(horaFin.isBefore(reserva.getHoraFin()) && horaInicio.isAfter(reserva.getHoraInicio()))
+                if(horaFin.isBefore(reserva.getHoraFin()) && horaInicio.isAfter(reserva.getHoraInicio()) || horaInicio==reserva.getHoraInicio())
                     return false;
         }
         return true;
@@ -115,18 +115,18 @@ public class Aula implements Serializable,Comparable<Aula>{
         Persistencia.serializarUniversidad();
     }
 
-    public void agregaReservas(String codigoCurso, LocalDate fechaInicio, LocalTime horaInicio, LocalTime horaFin){
+    public void agregaReservas(String codigoCurso, LocalDate fechaInicio, LocalTime horaInicio, LocalTime horaFin) throws AulaOcupadaException {
         CursoExtension curso = Universidad.getInstance().getCursoExtension(codigoCurso);
         LocalDate fechaActual = fechaInicio;
         int clasesReservadas = 0;
         int cantidadClases = curso.getCantidadClases();
 
         while(clasesReservadas < cantidadClases) {
-            Reserva nuevaReserva = new Reserva(fechaInicio, horaInicio, horaFin, curso);
+            Reserva nuevaReserva = new Reserva(fechaActual, horaInicio, horaFin, curso);
             if (estaDisponible(horaInicio, horaFin, fechaActual) && noSuperaCapacidad(curso.getCantidadInscriptos()))
                 listaReservas.put(nuevaReserva.getCODIGO(), nuevaReserva);
             else
-                throw new NoSuchElementException("No se pudo realizar la reserva");
+                throw new AulaOcupadaException("No se pudo realizar la reserva para el dia" + fechaActual);
             clasesReservadas++;
             fechaActual = fechaActual.plusWeeks(1);
         }
