@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
+import java.io.*;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -515,7 +515,7 @@ public class MainFrame extends JFrame {
         }
     }
 
-    private void generarReportes(){ //Falta generar los reportes en archivos de texto
+    private void generarReportes(){
         JPanel panel=new JPanel(new FlowLayout());
         JTextArea reporte;
         panel.add(new JLabel("Seleccione el tipo de reporte:"));
@@ -529,6 +529,9 @@ public class MainFrame extends JFrame {
                 String itemSeleccionado = (String) comboBox.getSelectedItem();
                 if (itemSeleccionado.equals("Montos")) {
                     Montos reporteMontos = universidad.getMontos();
+                    BufferedWriter writer = new BufferedWriter(new FileWriter("Reporte de Montos.txt")); //Generar el archivo cada vez que se muestra un reporte permite mantener la información actualizada
+                    writer.write(reporteMontos.toString());
+                    writer.close();
                     JOptionPane.showMessageDialog(this, reporteMontos, "Reporte Montos", JOptionPane.INFORMATION_MESSAGE);
                 }
                 else {
@@ -536,13 +539,19 @@ public class MainFrame extends JFrame {
                     reporte = new JTextArea(reporteAulas.toString());
                     JScrollPane scrollPane = new JScrollPane(reporte);
                     scrollPane.setPreferredSize(new Dimension(600, 400));
+                    BufferedWriter writer = new BufferedWriter(new FileWriter("Reporte de Aulas.txt"));
+                    writer.write(reporteAulas.toString());
+                    writer.close();
                     JOptionPane.showMessageDialog(this, scrollPane, "Reporte Aulas", JOptionPane.INFORMATION_MESSAGE);
                 }
 
             }
-              catch (Exception e){
+              catch (IllegalStateException e){
                   JOptionPane.showMessageDialog(panel,e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
               }
+            catch (IOException e){
+                System.out.println("Error al generar archivo de reportes");
+            }
 
         }
     }
