@@ -198,6 +198,12 @@ public class Universidad implements Serializable {
         }
     }
 
+    public List<Aula> aulasDisponibles(LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, String codigoVar,String nombreOrganizacion,float costoAlquiler){
+        EventoExterno eventoExterno = new EventoExterno(codigoVar);
+        eventoExterno.setNombreOrganizacion(nombreOrganizacion);
+        eventoExterno.setCostoAlquiler(costoAlquiler);
+    }
+
     public Reservable getReservable(String codReservable) {
        return listaReservables.get(codReservable);
     }
