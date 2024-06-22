@@ -198,7 +198,23 @@ public class Universidad implements Serializable {
         }
     }
 
-    public List<Aula> aulasDisponibles(String codigoVar){
+    public List<Aula> aulasDisponiblesEventoInterno(String codigo,LocalDate fecha,LocalTime horaInicio,LocalTime horaFin){
+        EventoInterno eventoInterno;
+        eventoInterno = getEventoInterno(codigo);
+
+        if(eventoInterno == null)
+            throw new NoSuchElementException("El codigo que ha ingresado no existe");
+        else {
+            List<Aula> listaAulasDisponibles = new ArrayList<>();
+            for (Aula aula : ListaAulas) {
+                if (aula.estaDisponible(horaInicio, horaFin, fecha) && aula.noSuperaCapacidad(eventoInterno.getCantidadInscriptos()))
+                    listaAulasDisponibles.add(aula);
+            }
+            return listaAulasDisponibles;
+        }
+    }
+
+    public List<Aula> aulasDisponibles(String codigoVar,LocalDate fecha){
         Asignatura asignatura;
         asignatura = getAsignatura(codigoVar);
         if(asignatura == null)
@@ -206,20 +222,37 @@ public class Universidad implements Serializable {
         else{
             List<Aula> listaAulasDisponibles = new ArrayList<>();
             for(Aula aula: ListaAulas){
-                if(aula.estaDisponible(asignatura.getHoraInicio(),asignatura.getHoraFin(),Asignatura.getFechaInicioCursada()) && aula.noSuperaCapacidad(asignatura.getCantidadInscriptos()))
+                if(aula.estaDisponible(asignatura.getHoraInicio(),asignatura.getHoraFin(),fecha) && aula.noSuperaCapacidad(asignatura.getCantidadInscriptos()))
                     listaAulasDisponibles.add(aula);
             }
             return listaAulasDisponibles;
         }
     }
 
-   /* public List<Aula> aulasDisponibles(LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, String codigoVar,String nombreOrganizacion,float costoAlquiler,int cantidadInscriptos,String descripcion){
-        EventoExterno eventoExterno = new EventoExterno(codigoVar,cantidadInscriptos,horaInicio,horaFin,descripcion,fecha,costoAlquiler,nombreOrganizacion);
-        eventoExterno.setNombreOrganizacion(nombreOrganizacion);
-        eventoExterno.setCostoAlquiler(costoAlquiler);
-
+   public List<Aula> aulasDisponibles(LocalDate fecha, LocalTime horaInicio, LocalTime horaFin,int cantidadInscriptos){
+        List<Aula> listaAulasDisponibles = new ArrayList<>();
+        for(Aula aula: ListaAulas){
+            if(aula.estaDisponible(horaInicio,horaFin,fecha) && aula.noSuperaCapacidad(cantidadInscriptos))
+                listaAulasDisponibles.add(aula);
+        }
         return listaAulasDisponibles;
-    }*/
+    }
+
+    public List<Aula> aulasDisponibles(String codigo,LocalDate fechaInicio,LocalTime horaInicio,LocalTime horaFin){
+        EventoExterno eventoExterno;
+        eventoExterno = getEventoExterno(codigo);
+
+        if(eventoExterno == null)
+            throw new NoSuchElementException("El codigo que ha ingresado no existe");
+        else{
+            List<Aula> listaAulasDisponibles = new ArrayList<>();
+            for(Aula aula: ListaAulas){
+                if(aula.estaDisponible(horaInicio,horaFin,fechaInicio) && aula.noSuperaCapacidad(eventoExterno.getCantidadInscriptos()))
+                    listaAulasDisponibles.add(aula);
+            }
+            return listaAulasDisponibles;
+        }
+    }
 
     public Reservable getReservable(String codReservable) {
        return listaReservables.get(codReservable);
