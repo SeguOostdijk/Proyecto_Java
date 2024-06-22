@@ -96,7 +96,7 @@ public class Aula implements Serializable,Comparable<Aula>{
         return numeroAula/100;
     }
 
-    public void agregaReservas(String codigoAsignatura) {  //asignatura o evento interno
+    public void agregaReservas(String codigoAsignatura) throws AulaOcupadaException {  //asignatura o evento interno
         Asignatura asignatura = Universidad.getInstance().getAsignatura(codigoAsignatura);
         LocalDate fechaInicio = Asignatura.getFechaInicioCursada();
         LocalDate fechaFin = Asignatura.getFechaFinCursada();
@@ -108,7 +108,7 @@ public class Aula implements Serializable,Comparable<Aula>{
             if (estaDisponible(asignatura.getHoraInicio(), asignatura.getHoraFin(), fechaActual) && noSuperaCapacidad(asignatura.getCantidadInscriptos()))
                 listaReservas.put(nuevaReserva.getCODIGO(), nuevaReserva);
             else
-                throw new NoSuchElementException("No se pudo realizar la reserva");
+                throw new AulaOcupadaException("No se pudo realizar la reserva para el dia:" + fechaActual);
             fechaActual = fechaActual.plusWeeks(1);
         }
 
