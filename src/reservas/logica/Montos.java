@@ -36,12 +36,12 @@ public class Montos implements Serializable {
         df.setMaximumFractionDigits(0);
         sb.append("Montos por Aula:\n");
         for (Map.Entry<Integer, Float> integerFloatEntry : montosAula.entrySet())
-            sb.append("Aula "+integerFloatEntry.getKey()+": Monto recaudado="+df.format(integerFloatEntry.getValue())+"\n");
+            sb.append("Aula ").append(integerFloatEntry.getKey()).append(": Monto recaudado=").append(df.format(integerFloatEntry.getValue())).append("\n");
         sb.append("\nMontos por piso:\n");
-        sb.append("Planta baja:"+" Monto recaudado="+df.format(montosPiso.get(0))+"\n");
+        sb.append("Planta baja:" + " Monto recaudado=").append(df.format(montosPiso.getFirst())).append("\n");
         for (int i = 1; i < montosPiso.size(); i++)
-            sb.append("Piso "+i+": Monto recaudado="+df.format(montosPiso.get(i))+"\n");
-        sb.append("\nMonto total de la institucion="+df.format(montoTotal));
+            sb.append("Piso ").append(i).append(": Monto recaudado=").append(df.format(montosPiso.get(i))).append("\n");
+        sb.append("\nMonto total de la institucion=").append(df.format(montoTotal));
         return sb.toString();
     }
 
