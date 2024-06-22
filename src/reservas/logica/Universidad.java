@@ -198,11 +198,28 @@ public class Universidad implements Serializable {
         }
     }
 
-    public List<Aula> aulasDisponibles(LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, String codigoVar,String nombreOrganizacion,float costoAlquiler){
-        EventoExterno eventoExterno = new EventoExterno(codigoVar);
+    public List<Aula> aulasDisponibles(String codigoVar){
+        Asignatura asignatura;
+        asignatura = getAsignatura(codigoVar);
+        if(asignatura == null)
+            throw new NoSuchElementException("El codigo que ha ingresado no existe");
+        else{
+            List<Aula> listaAulasDisponibles = new ArrayList<>();
+            for(Aula aula: ListaAulas){
+                if(aula.estaDisponible(asignatura.getHoraInicio(),asignatura.getHoraFin(),Asignatura.getFechaInicioCursada()) && aula.noSuperaCapacidad(asignatura.getCantidadInscriptos()))
+                    listaAulasDisponibles.add(aula);
+            }
+            return listaAulasDisponibles;
+        }
+    }
+
+   /* public List<Aula> aulasDisponibles(LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, String codigoVar,String nombreOrganizacion,float costoAlquiler,int cantidadInscriptos,String descripcion){
+        EventoExterno eventoExterno = new EventoExterno(codigoVar,cantidadInscriptos,horaInicio,horaFin,descripcion,fecha,costoAlquiler,nombreOrganizacion);
         eventoExterno.setNombreOrganizacion(nombreOrganizacion);
         eventoExterno.setCostoAlquiler(costoAlquiler);
-    }
+
+        return listaAulasDisponibles;
+    }*/
 
     public Reservable getReservable(String codReservable) {
        return listaReservables.get(codReservable);
