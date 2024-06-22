@@ -26,13 +26,6 @@ public class MainFrame extends JFrame {
 
     private void initUI() {
         JPanel panel = new JPanel(new GridBagLayout());
-        JPanel paneltitulo=new JPanel();
-        paneltitulo.setBounds(550,100,800,200);
-        JLabel titulo=new JLabel("Gestión de aulas");
-        titulo.setForeground(Color.white);
-        titulo.setFont(new Font("", Font.BOLD, 70));
-        paneltitulo.setBackground(Color.decode("#298a80"));
-        paneltitulo.add(titulo);
         JButton listarAulasButton = new JButton("Listar Aulas");
         JButton reservarAulaButton = new JButton("Agregar Reserva");
         JButton cancelarReservaButton = new JButton("Cancelar Reserva");
@@ -60,7 +53,6 @@ public class MainFrame extends JFrame {
             panel.add(boton,gbc);
             gbc.gridy++;
         }
-        add(paneltitulo);
         add(panel, BorderLayout.CENTER);
 
         /*cargarDatosButton.addActionListener(new ActionListener() {
@@ -182,7 +174,8 @@ public class MainFrame extends JFrame {
         eventoExterno.addActionListener(e -> reservarAulaEventoExterno());
 
         cursoExtension.addActionListener(e -> reservarAulaCursoExtension());
-        JOptionPane.showOptionDialog(null, panel, "Reservar Aula", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{"Cancelar"}, "Cancelar");    }
+        JOptionPane.showOptionDialog(null, panel, "Reservar Aula", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{"Cancelar"}, "Cancelar");
+    }
 
 
 
@@ -213,27 +206,31 @@ public class MainFrame extends JFrame {
             try{
                 String codigoVar = (codigoAsignaturaTexto.getText());
                 LocalDate fechaInicioVar = LocalDate.parse(fechaInicioTexto.getText(),DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-                List<Aula> aulasDisponibles = universidad.aulasDisponibles(codigoVar,fechaInicioVar);
+                List<Aula> aulasDisponibles = universidad.aulasDisponiblesAsignatura(codigoVar,fechaInicioVar);
 
                 JPanel panelAulas = new JPanel();
                 JButton aulaButton;
-
                 panelAulas.setLayout(new GridLayout(0,1));
-                panelAulas.add(new JLabel("Aulas disponibles, seleccione una: "));
-                for(Aula aula : aulasDisponibles){
-                    aulaButton = new JButton("Aula: " + aula.getNumero());
-                    aulaButton.addActionListener(e -> {
-                        try{
-                            aula.agregaReservas(codigoVar,fechaInicioVar);
-                            JOptionPane.showMessageDialog(null,"Reserva realizada con exito para el Aula: " + aula.getNumero(),"Reserva exitosa",JOptionPane.INFORMATION_MESSAGE);
-                        }
-                        catch(AulaOcupadaException ex) {
-                            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error en la reserva", JOptionPane.ERROR_MESSAGE);
-                        }
-                    });
-                    panelAulas.add(aulaButton);
+                if(aulasDisponibles.isEmpty()){
+                    JOptionPane.showMessageDialog(null,"No hay aulas disponibles en este momento","Reservar asignatura",JOptionPane.INFORMATION_MESSAGE);
                 }
-                JOptionPane.showMessageDialog(null,panelAulas,"Aulas Disponibles",JOptionPane.INFORMATION_MESSAGE);
+                else {
+                    panelAulas.add(new JLabel("Aulas disponibles, seleccione una: "));
+                    for(Aula aula : aulasDisponibles){
+                        aulaButton = new JButton("Aula: " + aula.getNumero());
+                        aulaButton.addActionListener(e -> {
+                            try{
+                                aula.agregaReservas(codigoVar,fechaInicioVar);
+                                JOptionPane.showMessageDialog(null,"Reserva realizada con exito para el Aula: " + aula.getNumero(),"Reserva exitosa",JOptionPane.INFORMATION_MESSAGE);
+                            }
+                            catch(AulaOcupadaException ex) {
+                                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error en la reserva", JOptionPane.ERROR_MESSAGE);
+                            }
+                        });
+                        panelAulas.add(aulaButton);
+                    }
+                    JOptionPane.showMessageDialog(null,panelAulas,"Aulas Disponibles",JOptionPane.INFORMATION_MESSAGE);
+                }
             }
             catch(DateTimeParseException ex){
                 JOptionPane.showMessageDialog(panel,"Error al ingresar datos","Error",JOptionPane.ERROR_MESSAGE);
@@ -302,7 +299,7 @@ public class MainFrame extends JFrame {
                     LocalTime horaFinVar = LocalTime.parse(horaFinTexto.getText(), DateTimeFormatter.ofPattern("HH:mm"));
                     int cantidadInscriptosVar = Integer.parseInt(cantidadInscriptosTexto.getText());
                     String descripcionVar = descripcionTexto.getText();
-                    List<Aula> aulasDisponibles = universidad.aulasDisponibles(fechaInicioVar, horaInicioVar, horaFinVar,cantidadInscriptosVar);
+                    List<Aula> aulasDisponibles = universidad.aulasDisponiblesEventoNuevo(fechaInicioVar, horaInicioVar, horaFinVar,cantidadInscriptosVar);
 
                     JPanel panelAulas = new JPanel();
                     JButton aulaButton;
@@ -382,7 +379,7 @@ public class MainFrame extends JFrame {
                     LocalTime horaFinVar = LocalTime.parse(horaFinTexto.getText(), DateTimeFormatter.ofPattern("HH:mm"));
                     int cantidadInscriptosVar = Integer.parseInt(cantidadInscriptosTexto.getText());
 
-                    List<Aula> aulasDisponibles = universidad.aulasDisponibles(fechaInicioVar,horaInicioVar,horaFinVar,cantidadInscriptosVar);
+                    List<Aula> aulasDisponibles = universidad.aulasDisponibles(fechaInicioVar,horaInicioVar,horaFinVar,codigoVar);
 
                     JPanel panelAulas = new JPanel();
                     JButton aulaButton;
@@ -481,7 +478,7 @@ public class MainFrame extends JFrame {
             String nombreOrganizacionVar = nombreOrganizacionTexto.getText();
             int cantidadInscriptosVar = Integer.parseInt(cantidadInscriptosTexto.getText());
             String descripcionVar = descripcionTexto.getText();
-            List<Aula> aulasDisponibles = universidad.aulasDisponibles(fechaInicioVar, horaInicioVar, horaFinVar,cantidadInscriptosVar);
+            List<Aula> aulasDisponibles = universidad.aulasDisponiblesEventoNuevo(fechaInicioVar, horaInicioVar, horaFinVar,cantidadInscriptosVar);
 
             JPanel panelAulas = new JPanel();
             JButton aulaButton;
@@ -559,7 +556,7 @@ public class MainFrame extends JFrame {
             LocalTime horaFinVar = LocalTime.parse(horaFinTexto.getText(), DateTimeFormatter.ofPattern("HH:mm"));
 
 
-            List<Aula> aulasDisponibles = universidad.aulasDisponibles(codigoVar,fechaInicioVar,horaInicioVar,horaFinVar);
+            List<Aula> aulasDisponibles = universidad.aulasDisponibles(fechaInicioVar,horaInicioVar,horaFinVar,codigoVar);
 
             JPanel panelAulas = new JPanel();
             JButton aulaButton;

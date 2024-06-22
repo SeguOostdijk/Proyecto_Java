@@ -6,7 +6,7 @@ import java.time.LocalTime;
 import java.util.Objects;
 
 public class Reserva implements Serializable {
-  private static int numCodigo=0;
+  private static int numCodigo;
   private int CODIGO;
   private LocalDate fecha;
   private LocalTime horaInicio;

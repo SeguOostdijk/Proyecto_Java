@@ -183,38 +183,22 @@ public class Universidad implements Serializable {
         return reporte;
     }
 
-    public List<Aula> aulasDisponibles(LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, String codigoVar) {
-        CursoExtension curso;
-        curso = getCursoExtension(codigoVar);
-        if (curso == null)
-            throw new NoSuchElementException("El codigo de curso ingresado no existe");
+    public List<Aula> aulasDisponibles(LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, String codigoVar) { //Curso, eventos existentes
+        Reservable reservable;
+        reservable=getReservable(codigoVar);
+        if (reservable == null)
+            throw new NoSuchElementException("El codigo ingresado no existe");
         else{
         List<Aula> listaAulasDisponibles = new ArrayList<>();
             for (Aula aula : ListaAulas) {
-                if (aula.estaDisponible(horaInicio, horaFin, fecha) && aula.noSuperaCapacidad(curso.getCantidadInscriptos()))
+                if (aula.estaDisponible(horaInicio, horaFin, fecha) && aula.noSuperaCapacidad(reservable.getCantidadInscriptos()))
                     listaAulasDisponibles.add(aula);
             }
             return listaAulasDisponibles;
         }
     }
 
-    public List<Aula> aulasDisponiblesEventoInterno(String codigo,LocalDate fecha,LocalTime horaInicio,LocalTime horaFin){
-        EventoInterno eventoInterno;
-        eventoInterno = getEventoInterno(codigo);
-
-        if(eventoInterno == null)
-            throw new NoSuchElementException("El codigo que ha ingresado no existe");
-        else {
-            List<Aula> listaAulasDisponibles = new ArrayList<>();
-            for (Aula aula : ListaAulas) {
-                if (aula.estaDisponible(horaInicio, horaFin, fecha) && aula.noSuperaCapacidad(eventoInterno.getCantidadInscriptos()))
-                    listaAulasDisponibles.add(aula);
-            }
-            return listaAulasDisponibles;
-        }
-    }
-
-    public List<Aula> aulasDisponibles(String codigoVar,LocalDate fecha){
+    public List<Aula> aulasDisponiblesAsignatura(String codigoVar,LocalDate fecha){ //asignatura
         Asignatura asignatura;
         asignatura = getAsignatura(codigoVar);
         if(asignatura == null)
@@ -229,7 +213,7 @@ public class Universidad implements Serializable {
         }
     }
 
-   public List<Aula> aulasDisponibles(LocalDate fecha, LocalTime horaInicio, LocalTime horaFin,int cantidadInscriptos){
+   public List<Aula> aulasDisponiblesEventoNuevo(LocalDate fecha, LocalTime horaInicio, LocalTime horaFin,int cantidadInscriptos){ //Evento interno y externo nuevo
         List<Aula> listaAulasDisponibles = new ArrayList<>();
         for(Aula aula: ListaAulas){
             if(aula.estaDisponible(horaInicio,horaFin,fecha) && aula.noSuperaCapacidad(cantidadInscriptos))
@@ -238,21 +222,6 @@ public class Universidad implements Serializable {
         return listaAulasDisponibles;
     }
 
-    public List<Aula> aulasDisponibles(String codigo,LocalDate fechaInicio,LocalTime horaInicio,LocalTime horaFin){
-        EventoExterno eventoExterno;
-        eventoExterno = getEventoExterno(codigo);
-
-        if(eventoExterno == null)
-            throw new NoSuchElementException("El codigo que ha ingresado no existe");
-        else{
-            List<Aula> listaAulasDisponibles = new ArrayList<>();
-            for(Aula aula: ListaAulas){
-                if(aula.estaDisponible(horaInicio,horaFin,fechaInicio) && aula.noSuperaCapacidad(eventoExterno.getCantidadInscriptos()))
-                    listaAulasDisponibles.add(aula);
-            }
-            return listaAulasDisponibles;
-        }
-    }
 
     public Reservable getReservable(String codReservable) {
        return listaReservables.get(codReservable);
