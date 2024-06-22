@@ -2,6 +2,8 @@ package reservas.ui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -35,11 +37,13 @@ public class MainFrame extends JFrame {
         JButton reservarAulaButton = new JButton("Agregar Reserva");
         JButton cancelarReservaButton = new JButton("Cancelar Reserva");
         JButton generaReportesbutton = new JButton("Generar Reportes");
+        JButton listarEntidadesbutton=new JButton("Listar Entidades");
         ArrayList<JButton> botones=new ArrayList<>();
         botones.add(listarAulasButton);
         botones.add(reservarAulaButton);
         botones.add(cancelarReservaButton);
         botones.add(generaReportesbutton);
+        botones.add(listarEntidadesbutton);
         Dimension buttonSize = new Dimension(300, 60);
         panel.setBackground(Color.decode("#298a80"));
         GridBagConstraints gbc = new GridBagConstraints();
@@ -83,6 +87,12 @@ public class MainFrame extends JFrame {
             // implementar cancelar reserva
             cancelarReserva();
 
+        });
+        listarEntidadesbutton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listarEntidades();
+            }
         });
     }
 
@@ -714,6 +724,48 @@ public class MainFrame extends JFrame {
 
         }
     }
+    private void listarEntidades(){
+        JPanel panel=new JPanel(new GridLayout(0,1));
+        JLabel titulo = new JLabel("Elija el tipo de entidad que desea listar");
+        JButton asignatura = new JButton("Asignatura");
+        JButton eventoInterno = new JButton("Evento Interno");
+        JButton eventoExterno = new JButton("Evento Externo");
+        JButton cursoExtension = new JButton("Curso de extension");
+        panel.add(titulo);
+        panel.add(asignatura);
+        panel.add(eventoInterno);
+        panel.add(eventoExterno);
+        panel.add(cursoExtension);
+        add(panel,BorderLayout.CENTER);
+        asignatura.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null,universidad.listaEntidad(Asignatura.class),"Listado de asignaturas",JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
+        eventoInterno.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null,universidad.listaEntidad(EventoInterno.class),"Listado de eventos internos",JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+        eventoExterno.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null,universidad.listaEntidad(EventoInterno.class),"Listado de eventos externos",JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+        cursoExtension.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null,universidad.listaEntidad(CursoExtension.class),"Listado de cursos",JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+        JOptionPane.showOptionDialog(null, panel,"Listar entidades", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,null,new Object[]{"Cancelar"},"Cancelar");
+    }
+
 }
+
 
 
