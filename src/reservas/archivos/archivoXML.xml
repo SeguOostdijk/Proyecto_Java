@@ -51,7 +51,7 @@
         <fechaInicio>2024-05-05</fechaInicio>
         <horaInicio>10:00:00</horaInicio>
         <horaFin>12:00:00</horaFin>
-        <descripcion>Evento de intruduccion a la facultad</descripcion>
+        <descripcion>Evento de introduccion a la facultad</descripcion>
     </eventoInterno>
     <eventoExterno codigo="CN321">
         <cantidadDeInscriptos>20</cantidadDeInscriptos>
