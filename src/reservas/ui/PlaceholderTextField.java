@@ -6,7 +6,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 public class PlaceholderTextField extends JTextField {
-    private String placeholder;
+    private final String placeholder;
     private boolean placeholderVisible;
 
     public PlaceholderTextField(String text) {
