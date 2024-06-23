@@ -185,7 +185,7 @@ public class Universidad implements Serializable {
         }
     }
 
-    public List<Aula> aulasDisponibles(String codigoVar,LocalDate fecha){ //asignatura
+    public List<Aula> aulasDisponibles(String codigoVar,LocalDate fecha){ //Asignatura
         Asignatura asignatura;
         asignatura = getAsignatura(codigoVar);
         if(asignatura == null)
