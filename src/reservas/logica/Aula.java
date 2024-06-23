@@ -105,7 +105,6 @@ public class Aula implements Serializable,Comparable<Aula>{
 
     public void agregaReservas(String codigoAsignatura,LocalDate fecha) throws AulaOcupadaException {  //asignatura
         Asignatura asignatura = Universidad.getInstance().getAsignatura(codigoAsignatura);
-        System.out.println(Asignatura.getFechaInicioCursada());
         LocalDate fechaFin = Asignatura.getFechaFinCursada();
         LocalDate fechaActual = fecha;
         if(fechaFin!=null) {
@@ -118,8 +117,6 @@ public class Aula implements Serializable,Comparable<Aula>{
                 fechaActual = fechaActual.plusWeeks(1);
             }
         }
-        else
-            System.out.println("messi");
         Persistencia.serializarUniversidad();
     }
 
@@ -131,6 +128,7 @@ public class Aula implements Serializable,Comparable<Aula>{
 
         while(clasesReservadas < cantidadClases) {
             Reserva nuevaReserva = new Reserva(fechaActual, horaInicio, horaFin, curso);
+            System.out.println(nuevaReserva.getCODIGO());
             if (estaDisponible(horaInicio, horaFin, fechaActual))
                 listaReservas.put(nuevaReserva.getCODIGO(), nuevaReserva);
             else
@@ -145,6 +143,7 @@ public class Aula implements Serializable,Comparable<Aula>{
     public void agregaReservasEventoInternoNuevo(String codigo, int cantidadInscriptos, LocalTime horaInicio, LocalTime horaFin, String descripcion, LocalDate fecha) throws AulaOcupadaException { //Evento interno nuevo
         EventoInterno eventoInterno = new EventoInterno(codigo,cantidadInscriptos,horaInicio,horaFin,descripcion,fecha);
         Reserva nuevaReserva = new Reserva(fecha,horaInicio,horaFin,eventoInterno);
+        System.out.println(nuevaReserva.getCODIGO());
 
         if(estaDisponible(horaInicio,horaFin,fecha) && noSuperaCapacidad(cantidadInscriptos))
             listaReservas.put(nuevaReserva.getCODIGO(),nuevaReserva);
