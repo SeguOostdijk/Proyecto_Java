@@ -25,6 +25,7 @@ public class Montos implements Serializable {
     public void sumaPiso(int piso,float monto){
         montosPiso.add(piso,monto);
     }
+
     public void agregaMontosAula(int clave,float monto){
         montosAula.put(clave,monto);
     }

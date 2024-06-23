@@ -2,8 +2,6 @@ package reservas.ui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.*;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -504,11 +502,11 @@ public class MainFrame extends JFrame {
 
             JLabel tituloEventoExterno = new JLabel("Ingrese los datos del evento externo");
             JLabel codigoEventoExterno = new JLabel("Codigo:");
-            JTextField codigoEventoExternoTexto = new JTextField();
+            PlaceholderTextField codigoEventoExternoTexto = new PlaceholderTextField("AA123");
             JLabel nombreOrganizacion = new JLabel("Nombre de la organizacion:");
-            JTextField nombreOrganizacionTexto = new JTextField();
+            PlaceholderTextField nombreOrganizacionTexto = new PlaceholderTextField("Por ejemplo caece");
             JLabel costoAlquiler = new JLabel("Costo de alquiler:");
-            JTextField costoALquilerTexto = new JTextField();
+            PlaceholderTextField costoALquilerTexto = new PlaceholderTextField("000.000");
             JLabel fechaInicio = new JLabel("Fecha de inicio:");
             PlaceholderTextField fechaInicioTexto = new PlaceholderTextField("00-00-0000");
             JLabel horaInicio = new JLabel("Hora de inicio:");
@@ -674,7 +672,7 @@ public class MainFrame extends JFrame {
         JTextArea reporte;
         panel.add(new JLabel("Seleccione el tipo de reporte:"));
         String[] vectorItems={"Montos","Aulas"};
-        JComboBox comboBox=new JComboBox(vectorItems);
+        JComboBox<String> comboBox=new JComboBox<>(vectorItems);
         panel.add(comboBox);
         int  result= JOptionPane.showConfirmDialog(this, panel, "Generar Reportes",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);//Muestra el panel
         if(result==JOptionPane.OK_OPTION)
@@ -723,31 +721,15 @@ public class MainFrame extends JFrame {
         panel.add(eventoExterno);
         panel.add(cursoExtension);
         add(panel,BorderLayout.CENTER);
-        asignatura.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null,universidad.listaEntidad(Asignatura.class),"Listado de asignaturas",JOptionPane.INFORMATION_MESSAGE);
-            }
-        });
 
-        eventoInterno.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null,universidad.listaEntidad(EventoInterno.class),"Listado de eventos internos",JOptionPane.INFORMATION_MESSAGE);
-            }
-        });
-        eventoExterno.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null,universidad.listaEntidad(EventoInterno.class),"Listado de eventos externos",JOptionPane.INFORMATION_MESSAGE);
-            }
-        });
-        cursoExtension.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null,universidad.listaEntidad(CursoExtension.class),"Listado de cursos",JOptionPane.INFORMATION_MESSAGE);
-            }
-        });
+        asignatura.addActionListener(e -> JOptionPane.showMessageDialog(null,universidad.listaEntidad(Asignatura.class),"Listado de asignaturas",JOptionPane.INFORMATION_MESSAGE));
+
+        eventoInterno.addActionListener(e -> JOptionPane.showMessageDialog(null,universidad.listaEntidad(EventoInterno.class),"Listado de eventos internos",JOptionPane.INFORMATION_MESSAGE));
+
+        eventoExterno.addActionListener(e -> JOptionPane.showMessageDialog(null,universidad.listaEntidad(EventoInterno.class),"Listado de eventos externos",JOptionPane.INFORMATION_MESSAGE));
+
+        cursoExtension.addActionListener(e -> JOptionPane.showMessageDialog(null,universidad.listaEntidad(CursoExtension.class),"Listado de cursos",JOptionPane.INFORMATION_MESSAGE));
+
         JOptionPane.showOptionDialog(null, panel,"Listar entidades", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,null,new Object[]{"Cancelar"},"Cancelar");
     }
 
