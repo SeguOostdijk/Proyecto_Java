@@ -80,12 +80,7 @@ public class MainFrame extends JFrame {
             cancelarReserva();
 
         });
-        listarEntidadesbutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                listarEntidades();
-            }
-        });
+        listarEntidadesbutton.addActionListener(e -> listarEntidades());
     }
 
     private void listarAulas() {
