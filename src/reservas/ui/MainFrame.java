@@ -213,7 +213,7 @@ public class MainFrame extends JFrame {
             try{
                 String codigoVar = (codigoAsignaturaTexto.getText());
                 LocalDate fechaInicioVar = LocalDate.parse(fechaInicioTexto.getText(),DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-                List<Aula> aulasDisponibles = universidad.aulasDisponiblesAsignatura(codigoVar,fechaInicioVar);
+                List<Aula> aulasDisponibles = universidad.aulasDisponibles(codigoVar,fechaInicioVar);
 
                 JPanel panelAulas = new JPanel();
                 JButton aulaButton;
@@ -295,7 +295,7 @@ public class MainFrame extends JFrame {
                 LocalTime horaFinVar = LocalTime.parse(horaFinTexto.getText(), DateTimeFormatter.ofPattern("HH:mm"));
                 int cantidadInscriptosVar = Integer.parseInt(cantidadInscriptosTexto.getText());
                 String descripcionVar = descripcionTexto.getText();
-                List<Aula> aulasDisponibles = universidad.aulasDisponiblesEventoNuevo(fechaInicioVar, horaInicioVar, horaFinVar,cantidadInscriptosVar);
+                List<Aula> aulasDisponibles = universidad.aulasDisponibles(fechaInicioVar, horaInicioVar, horaFinVar,cantidadInscriptosVar);
 
                 JPanel panelAulas = new JPanel();
                 JButton aulaButton;
@@ -383,7 +383,7 @@ public class MainFrame extends JFrame {
             String nombreOrganizacionVar = nombreOrganizacionTexto.getText();
             int cantidadInscriptosVar = Integer.parseInt(cantidadInscriptosTexto.getText());
             String descripcionVar = descripcionTexto.getText();
-            List<Aula> aulasDisponibles = universidad.aulasDisponiblesEventoNuevo(fechaInicioVar, horaInicioVar, horaFinVar,cantidadInscriptosVar);
+            List<Aula> aulasDisponibles = universidad.aulasDisponibles(fechaInicioVar, horaInicioVar, horaFinVar,cantidadInscriptosVar);
 
             JPanel panelAulas = new JPanel();
             JButton aulaButton;

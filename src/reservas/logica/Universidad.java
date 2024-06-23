@@ -170,7 +170,7 @@ public class Universidad implements Serializable {
         return reporte;
     }
 
-    public List<Aula> aulasDisponibles(LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, String codigoVar) { //Curso, eventos existentes
+    public List<Aula> aulasDisponibles(LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, String codigoVar) { //Curso
         Reservable reservable;
         reservable=getReservable(codigoVar);
         if (reservable == null)
@@ -185,7 +185,7 @@ public class Universidad implements Serializable {
         }
     }
 
-    public List<Aula> aulasDisponiblesAsignatura(String codigoVar,LocalDate fecha){ //asignatura
+    public List<Aula> aulasDisponibles(String codigoVar,LocalDate fecha){ //asignatura
         Asignatura asignatura;
         asignatura = getAsignatura(codigoVar);
         if(asignatura == null)
@@ -200,7 +200,7 @@ public class Universidad implements Serializable {
         }
     }
 
-   public List<Aula> aulasDisponiblesEventoNuevo(LocalDate fecha, LocalTime horaInicio, LocalTime horaFin,int cantidadInscriptos){ //Evento interno y externo nuevo
+   public List<Aula> aulasDisponibles(LocalDate fecha, LocalTime horaInicio, LocalTime horaFin,int cantidadInscriptos){ //Evento interno y externo nuevo
         List<Aula> listaAulasDisponibles = new ArrayList<>();
         for(Aula aula: ListaAulas){
             if(aula.estaDisponible(horaInicio,horaFin,fecha) && aula.noSuperaCapacidad(cantidadInscriptos))
