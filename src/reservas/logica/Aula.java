@@ -39,11 +39,13 @@ public class Aula implements Serializable,Comparable<Aula>{
     }
 
     public boolean estaDisponible(LocalTime horaInicio, LocalTime horaFin, LocalDate fecha) {
-        for (Reserva reserva : listaReservas.values()) {
-            if (reserva.getFecha().isEqual(fecha)) {
-                // Verificar si hay superposición
-                if (horaInicio.isBefore(reserva.getHoraFin()) && horaFin.isAfter(reserva.getHoraInicio())) {
-                    return false; // Hay superposición
+        if(!listaReservas.isEmpty()) {
+            for (Reserva reserva : listaReservas.values()) {
+                if (reserva.getFecha().isEqual(fecha)) {
+                    // Verificar si hay superposición
+                    if (horaInicio.isBefore(reserva.getHoraFin()) && horaFin.isAfter(reserva.getHoraInicio()) || horaInicio.equals(reserva.getHoraInicio())) {
+                        return false; // Hay superposición
+                    }
                 }
             }
         }
@@ -103,13 +105,15 @@ public class Aula implements Serializable,Comparable<Aula>{
         Asignatura asignatura = Universidad.getInstance().getAsignatura(codigoAsignatura);
         LocalDate fechaFin = Asignatura.getFechaFinCursada();
         LocalDate fechaActual = fecha;
-        while(!fechaActual.isAfter(fechaFin)) {
-            Reserva nuevaReserva = new Reserva(fechaActual, asignatura.getHoraInicio(), asignatura.getHoraFin(), asignatura);
-            if (estaDisponible(asignatura.getHoraInicio(), asignatura.getHoraFin(), fechaActual))
-                listaReservas.put(nuevaReserva.getCODIGO(), nuevaReserva);
-            else
-                throw new AulaOcupadaException("No se pudo realizar la reserva para el dia:" + fechaActual);
-            fechaActual = fechaActual.plusWeeks(1);
+        if(fechaFin!=null) {
+            while (!fechaActual.isAfter(fechaFin)) {
+                Reserva nuevaReserva = new Reserva(fechaActual, asignatura.getHoraInicio(), asignatura.getHoraFin(), asignatura);
+                if (estaDisponible(asignatura.getHoraInicio(), asignatura.getHoraFin(), fechaActual))
+                    listaReservas.put(nuevaReserva.getCODIGO(), nuevaReserva);
+                else
+                    throw new AulaOcupadaException("No se pudo realizar la reserva para el dia:" + fechaActual);
+                fechaActual = fechaActual.plusWeeks(1);
+            }
         }
         Persistencia.serializarUniversidad();
     }

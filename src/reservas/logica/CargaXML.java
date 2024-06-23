@@ -7,12 +7,10 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.NoSuchElementException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -57,8 +55,8 @@ public class CargaXML {
                                 Asignatura.setFechaInicioCursada(fic);
                                 uni.poneAsignatura(agregaAsig);
                             } catch (Exception e){
-                                System.out.println("Error " + e.getMessage());
                                 writer.write("Error en la carga de la asignatura con codigo " + cod + "\nDescripcion del error: " + e.getMessage());
+                                writer.newLine();
                             }
                             break;
                         case "curso":
@@ -70,8 +68,8 @@ public class CargaXML {
                                 CursoExtension agregaCurso = new CursoExtension(cod, cantIns, cantclases, desc, cost);
                                 uni.poneCurso(agregaCurso);
                             }catch (Exception e){
-                                System.out.println("Error " + e.getMessage());
                                 writer.write("Error en la carga de la curso con codigo " + cod + "\nDescripcion del error: " + e.getMessage());
+                                writer.newLine();
                             }
 
                             break;
@@ -85,8 +83,8 @@ public class CargaXML {
                                 EventoInterno agregaEventoI = new EventoInterno(cod, cantIns, hie, hfe, dsc, fie);
                                 uni.poneEventoInterno(agregaEventoI);
                             }catch (Exception e){
-                                System.out.println("Error " + e.getMessage());
                                 writer.write("Error en la carga del Envento Interno con codigo " + cod + "\nDescripcion del error: " + e.getMessage());
+                                writer.newLine();
                             }
                             break;
                         case "eventoExterno":
@@ -100,9 +98,9 @@ public class CargaXML {
                                 cantIns = Integer.parseInt(element.getElementsByTagName("cantidadDeInscriptos").item(0).getTextContent());
                                 EventoExterno agregaEventoE = new EventoExterno(cod, cantIns, hieE, hfeE, dscE, fieE, costAlq, nomorg);
                                 uni.poneEventoExterno(agregaEventoE);
-                            }catch (Exception e){
-                                System.out.println("Error " + e.getMessage());
+                            }catch (Exception e) {
                                 writer.write("Error en la carga de la Envento Externo con codigo " + cod + "\nDescripcion del error: " + e.getMessage());
+                                writer.newLine();
                             }
                             break;
                         case "aula":
@@ -114,32 +112,32 @@ public class CargaXML {
 
                                         int numAula = Integer.parseInt(elementoAula.getAttribute("codigo"));
                                         int capacidad = Integer.parseInt(elementoAula.getElementsByTagName("capacidad").item(0).getTextContent());
+                                        if(uni.getAula(numAula)==null) {
+                                            try {
+                                                Aula aula = new Aula(capacidad, numAula);
+                                                uni.poneAula(aula);
+                                                NodeList Reservas = elementoAula.getElementsByTagName("reservas");
+                                                for (int m = 0; m < Reservas.getLength(); m++) {
+                                                    Node nodoReserva = Reservas.item(m);
 
-                                        try {
-                                            Aula aula = new Aula(capacidad, numAula);
-                                            uni.poneAula(aula);
-                                            NodeList Reservas = elementoAula.getElementsByTagName("reservas");
-
-                                            for (int m = 0; m < Reservas.getLength(); m++) {
-                                                Node nodoReserva = Reservas.item(m);
-
-                                                if (nodoReserva.getNodeType() == Node.ELEMENT_NODE) {
-                                                    Element elementoReserva = (Element) nodoReserva;
-                                                    LocalTime horaInicio = LocalTime.parse((elementoReserva.getElementsByTagName("horaInicio").item(0).getTextContent()));
-                                                    LocalTime horaFin = LocalTime.parse(elementoReserva.getElementsByTagName("horaFin").item(0).getTextContent());
-                                                    LocalDate fecha = LocalDate.parse(elementoReserva.getElementsByTagName("fecha").item(0).getTextContent());
-                                                    String reservable = (elementoReserva.getElementsByTagName("reservable").item(0).getTextContent());
-                                                    try {
-                                                        aula.agregaReservaXML(reservable, fecha, horaInicio, horaFin);
-                                                    } catch (Exception e) {
-                                                        System.out.println("Error " + e.getMessage());
-                                                        writer.write("Error en la carga de la reserva con codigo " + reservable + "\nDescripcion del error: " + e.getMessage());
+                                                    if (nodoReserva.getNodeType() == Node.ELEMENT_NODE) {
+                                                        Element elementoReserva = (Element) nodoReserva;
+                                                        LocalTime horaInicio = LocalTime.parse((elementoReserva.getElementsByTagName("horaInicio").item(0).getTextContent()));
+                                                        LocalTime horaFin = LocalTime.parse(elementoReserva.getElementsByTagName("horaFin").item(0).getTextContent());
+                                                        LocalDate fecha = LocalDate.parse(elementoReserva.getElementsByTagName("fecha").item(0).getTextContent());
+                                                        String reservable = (elementoReserva.getElementsByTagName("reservable").item(0).getTextContent());
+                                                        try {
+                                                            aula.agregaReservaXML(reservable, fecha, horaInicio, horaFin);
+                                                        } catch (Exception e) {
+                                                            writer.write("Error en la carga de la reserva con codigo " + reservable + "\nDescripcion del error: " + e.getMessage());
+                                                            writer.newLine();
+                                                        }
                                                     }
                                                 }
+                                            } catch (Exception e) {
+                                                writer.write("Error en la carga del Aula con codigo " + numAula + "\nDescripcion del error: " + e.getMessage());
+                                                writer.newLine();
                                             }
-                                        }catch (Exception e){
-                                            System.out.println("Error " + e.getMessage());
-                                            writer.write("Error en la carga del Aula con codigo " + numAula + "\nDescripcion del error: " + e.getMessage());
                                         }
                                     }
                                 }
@@ -151,10 +149,12 @@ public class CargaXML {
                 }
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
-            System.out.println("Error " + e.getMessage());
             writer.write(e.getMessage());
+            writer.newLine();
         }
-        writer.close();
+        finally {
+            writer.close();
+        }
     }
 
 }
