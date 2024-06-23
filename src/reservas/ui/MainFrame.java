@@ -252,179 +252,83 @@ public class MainFrame extends JFrame {
     private void reservarAulaEventoInterno(){
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0,1));
+        int resultado;
+        JPanel panel1 = new JPanel();
+        panel1.setLayout(new GridLayout(0,1));
 
-        JLabel opcion = new JLabel("Desea crear un nuevo evento o reservar para uno existente");
-        JButton crear = new JButton("Crear");
-        JButton existente = new JButton("Existente");
+        JLabel tituloEventoInterno = new JLabel("Ingrese los datos del evento interno");
+        JLabel codigoEventoInterno = new JLabel("Codigo:");
+        JTextField codigoEventoInternoTexto = new JTextField();
+        JLabel fechaInicio = new JLabel("Fecha de inicio:");
+        PlaceholderTextField fechaInicioTexto = new PlaceholderTextField("00-00-0000");
+        JLabel horaInicio = new JLabel("Hora de inicio:");
+        PlaceholderTextField horaInicioTexto = new PlaceholderTextField("00:00");
+        JLabel horaFin = new JLabel("Hora de fin:");
+        PlaceholderTextField  horaFinTexto= new PlaceholderTextField("00:00");
+        JLabel cantidadInscriptos = new JLabel("Cantidad de inscriptos:");
+        PlaceholderTextField cantidadInscriptosTexto = new PlaceholderTextField("00");
+        JLabel descripcion = new JLabel("Descripcion del curso:");
+        PlaceholderTextField descripcionTexto = new PlaceholderTextField("Por ejemplo curso de cocina");
 
-        panel.add(opcion);
-        panel.add(crear);
-        panel.add(existente);
+        panel1.add(tituloEventoInterno);
+        panel1.add(codigoEventoInterno);
+        panel1.add(codigoEventoInternoTexto);
+        panel1.add(fechaInicio);
+        panel1.add(fechaInicioTexto);
+        panel1.add(horaInicio);
+        panel1.add(horaInicioTexto);
+        panel1.add(horaFin);
+        panel1.add(horaFinTexto);
+        panel1.add(cantidadInscriptos);
+        panel1.add(cantidadInscriptosTexto);
+        panel1.add(descripcion);
+        panel1.add(descripcionTexto);
+        add(panel1,BorderLayout.CENTER);
 
-        crear.addActionListener(e -> {
-            int resultado;
-            JPanel panel1 = new JPanel();
-            panel1.setLayout(new GridLayout(0,1));
+        resultado = JOptionPane.showConfirmDialog(null, panel1,"Datos del evento externo",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
 
-            JLabel tituloEventoInterno = new JLabel("Ingrese los datos del evento interno");
-            JLabel codigoEventoInterno = new JLabel("Codigo:");
-            JTextField codigoEventoInternoTexto = new JTextField();
-            JLabel fechaInicio = new JLabel("Fecha de inicio:");
-            PlaceholderTextField fechaInicioTexto = new PlaceholderTextField("00-00-0000");
-            JLabel horaInicio = new JLabel("Hora de inicio:");
-            PlaceholderTextField horaInicioTexto = new PlaceholderTextField("00:00");
-            JLabel horaFin = new JLabel("Hora de fin:");
-            PlaceholderTextField  horaFinTexto= new PlaceholderTextField("00:00");
-            JLabel cantidadInscriptos = new JLabel("Cantidad de inscriptos:");
-            PlaceholderTextField cantidadInscriptosTexto = new PlaceholderTextField("00");
-            JLabel descripcion = new JLabel("Descripcion del curso:");
-            PlaceholderTextField descripcionTexto = new PlaceholderTextField("Por ejemplo curso de cocina");
+        if(resultado==JOptionPane.OK_OPTION) {
+            try {
+                String codigoVar = (codigoEventoInternoTexto.getText());
+                LocalDate fechaInicioVar = LocalDate.parse(fechaInicioTexto.getText(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+                LocalTime horaInicioVar = LocalTime.parse(horaInicioTexto.getText(), DateTimeFormatter.ofPattern("HH:mm"));
+                LocalTime horaFinVar = LocalTime.parse(horaFinTexto.getText(), DateTimeFormatter.ofPattern("HH:mm"));
+                int cantidadInscriptosVar = Integer.parseInt(cantidadInscriptosTexto.getText());
+                String descripcionVar = descripcionTexto.getText();
+                List<Aula> aulasDisponibles = universidad.aulasDisponiblesEventoNuevo(fechaInicioVar, horaInicioVar, horaFinVar,cantidadInscriptosVar);
 
-            panel1.add(tituloEventoInterno);
-            panel1.add(codigoEventoInterno);
-            panel1.add(codigoEventoInternoTexto);
-            panel1.add(fechaInicio);
-            panel1.add(fechaInicioTexto);
-            panel1.add(horaInicio);
-            panel1.add(horaInicioTexto);
-            panel1.add(horaFin);
-            panel1.add(horaFinTexto);
-            panel1.add(cantidadInscriptos);
-            panel1.add(cantidadInscriptosTexto);
-            panel1.add(descripcion);
-            panel1.add(descripcionTexto);
+                JPanel panelAulas = new JPanel();
+                JButton aulaButton;
 
-            add(panel1,BorderLayout.CENTER);
-
-            resultado = JOptionPane.showConfirmDialog(null, panel1,"Datos del evento externo",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
-
-            if(resultado==JOptionPane.OK_OPTION) {
-                try {
-                    String codigoVar = (codigoEventoInternoTexto.getText());
-                    LocalDate fechaInicioVar = LocalDate.parse(fechaInicioTexto.getText(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-                    LocalTime horaInicioVar = LocalTime.parse(horaInicioTexto.getText(), DateTimeFormatter.ofPattern("HH:mm"));
-                    LocalTime horaFinVar = LocalTime.parse(horaFinTexto.getText(), DateTimeFormatter.ofPattern("HH:mm"));
-                    int cantidadInscriptosVar = Integer.parseInt(cantidadInscriptosTexto.getText());
-                    String descripcionVar = descripcionTexto.getText();
-                    List<Aula> aulasDisponibles = universidad.aulasDisponiblesEventoNuevo(fechaInicioVar, horaInicioVar, horaFinVar,cantidadInscriptosVar);
-
-                    JPanel panelAulas = new JPanel();
-                    JButton aulaButton;
-
-                    panelAulas.setLayout(new GridLayout(0, 1));
-                    panelAulas.add(new JLabel("Aulas disponibles, seleccione una: "));
-                    for (Aula aula : aulasDisponibles) {
-                        aulaButton = new JButton("Aula: " + aula.getNumero());
-                        aulaButton.addActionListener(e1 -> {
-                            try {
-                                aula.agregaReservasEventoInternoNuevo(codigoVar,cantidadInscriptosVar,horaInicioVar,horaFinVar,descripcionVar,fechaInicioVar);
-                                JOptionPane.showMessageDialog(null, "Reserva realizada con exito para el Aula: " + aula.getNumero(), "Reserva exitosa", JOptionPane.INFORMATION_MESSAGE);
-                            } catch (AulaOcupadaException ex) {
-                                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error en la reserva", JOptionPane.ERROR_MESSAGE);
-                            }
-                        });
-                        panelAulas.add(aulaButton);
-                    }
-                    JOptionPane.showMessageDialog(null,panelAulas,"Aulas Disponibles",JOptionPane.INFORMATION_MESSAGE);
+                panelAulas.setLayout(new GridLayout(0, 1));
+                panelAulas.add(new JLabel("Aulas disponibles, seleccione una: "));
+                for (Aula aula : aulasDisponibles) {
+                    aulaButton = new JButton("Aula: " + aula.getNumero());
+                    aulaButton.addActionListener(e1 -> {
+                        try {
+                            aula.agregaReservasEventoInternoNuevo(codigoVar,cantidadInscriptosVar,horaInicioVar,horaFinVar,descripcionVar,fechaInicioVar);
+                            JOptionPane.showMessageDialog(null, "Reserva realizada con exito para el Aula: " + aula.getNumero(), "Reserva exitosa", JOptionPane.INFORMATION_MESSAGE);
+                        } catch (AulaOcupadaException ex) {
+                            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error en la reserva", JOptionPane.ERROR_MESSAGE);
+                        }
+                    });
+                    panelAulas.add(aulaButton);
                 }
-                catch(DateTimeParseException ex){
-                    JOptionPane.showMessageDialog(panel1,"Error al ingresar datos","Error",JOptionPane.ERROR_MESSAGE);
-                }
-                catch(NoSuchElementException ex){
-                    JOptionPane.showMessageDialog(panel1,ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
-                }
+                JOptionPane.showMessageDialog(null,panelAulas,"Aulas Disponibles",JOptionPane.INFORMATION_MESSAGE);
             }
-        });
-
-        existente.addActionListener(e -> {
-            int resultado;
-            JPanel panel12 = new JPanel();
-            panel12.setLayout(new GridLayout(0,1));
-
-            JLabel tituloEventoInterno = new JLabel("Ingrese los datos del evento interno");
-            JLabel codigoEventoInterno = new JLabel("Codigo:");
-            JTextField codigoEventoInternoTexto = new JTextField();
-            JLabel nombreOrganizacion = new JLabel("Nombre de la organizacion:");
-            JTextField nombreOrganizacionTexto = new JTextField();
-            JLabel costoAlquiler = new JLabel("Costo de alquiler:");
-            JTextField costoALquilerTexto = new JTextField();
-            JLabel fechaInicio = new JLabel("Fecha de inicio:");
-            PlaceholderTextField fechaInicioTexto = new PlaceholderTextField("00-00-0000");
-            JLabel horaInicio = new JLabel("Hora de inicio:");
-            PlaceholderTextField horaInicioTexto = new PlaceholderTextField("00:00");
-            JLabel horaFin = new JLabel("Hora de fin:");
-            PlaceholderTextField  horaFinTexto= new PlaceholderTextField("00:00");
-
-            panel12.add(tituloEventoInterno);
-            panel12.add(codigoEventoInterno);
-            panel12.add(codigoEventoInternoTexto);
-            panel12.add(nombreOrganizacion);
-            panel12.add(nombreOrganizacionTexto);
-            panel12.add(costoAlquiler);
-            panel12.add(costoALquilerTexto);
-            panel12.add(fechaInicio);
-            panel12.add(fechaInicioTexto);
-            panel12.add(horaInicio);
-            panel12.add(horaInicioTexto);
-            panel12.add(horaFin);
-            panel12.add(horaFinTexto);
-
-            add(panel12,BorderLayout.CENTER);
-
-            resultado = JOptionPane.showConfirmDialog(null, panel12,"Datos del evento externo",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
-
-            if(resultado==JOptionPane.OK_OPTION) {
-                try {
-                    String codigoVar = (codigoEventoInternoTexto.getText());
-                    LocalDate fechaInicioVar = LocalDate.parse(fechaInicioTexto.getText(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-                    LocalTime horaInicioVar = LocalTime.parse(horaInicioTexto.getText(), DateTimeFormatter.ofPattern("HH:mm"));
-                    LocalTime horaFinVar = LocalTime.parse(horaFinTexto.getText(), DateTimeFormatter.ofPattern("HH:mm"));
-
-                    List<Aula> aulasDisponibles = universidad.aulasDisponibles(fechaInicioVar,horaInicioVar,horaFinVar,codigoVar);
-
-                    JPanel panelAulas = new JPanel();
-                    JButton aulaButton;
-
-                    panelAulas.setLayout(new GridLayout(0, 1));
-                    panelAulas.add(new JLabel("Aulas disponibles, seleccione una: "));
-                    for (Aula aula : aulasDisponibles) {
-                        aulaButton = new JButton("Aula: " + aula.getNumero());
-                        aulaButton.addActionListener(e12 -> {
-                            try {
-                                aula.agregaReservasEventoInterno(codigoVar);
-                                JOptionPane.showMessageDialog(null, "Reserva realizada con exito para el Aula: " + aula.getNumero(), "Reserva exitosa", JOptionPane.INFORMATION_MESSAGE);
-                            } catch (AulaOcupadaException ex) {
-                                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error en la reserva", JOptionPane.ERROR_MESSAGE);
-                            }
-                        });
-                        panelAulas.add(aulaButton);
-                    }
-                    JOptionPane.showMessageDialog(null,panelAulas,"Aulas Disponibles",JOptionPane.INFORMATION_MESSAGE);
-                }
-                catch(DateTimeParseException ex){
-                    JOptionPane.showMessageDialog(panel12,"Error al ingresar datos","Error",JOptionPane.ERROR_MESSAGE);
-                }
-                catch(NoSuchElementException ex){
-                    JOptionPane.showMessageDialog(panel12,ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
-                }
+            catch(DateTimeParseException ex){
+                JOptionPane.showMessageDialog(panel1,"Error al ingresar datos","Error",JOptionPane.ERROR_MESSAGE);
             }
-        });
-        JOptionPane.showOptionDialog(null, panel, "Reservar Aula", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{"Cancelar"}, "Cancelar");
+            catch(NoSuchElementException ex){
+                JOptionPane.showMessageDialog(panel1,ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
     private void reservarAulaEventoExterno(){
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0,1));
 
-        JLabel opcion = new JLabel("Desea crear un nuevo evento o reservar para uno existente");
-        JButton crear = new JButton("Crear");
-        JButton existente = new JButton("Existente");
-
-        panel.add(opcion);
-        panel.add(crear);
-        panel.add(existente);
-
-        crear.addActionListener(e -> {
             int resultado;
             JPanel panel1 = new JPanel();
             panel1.setLayout(new GridLayout(0,1));
@@ -507,86 +411,6 @@ public class MainFrame extends JFrame {
             JOptionPane.showMessageDialog(panel1,ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
         }
     }
-        });
-
-        existente.addActionListener(e -> {
-            int resultado;
-            JPanel panel12 = new JPanel();
-            panel12.setLayout(new GridLayout(0,1));
-
-            JLabel tituloEventoExterno = new JLabel("Ingrese los datos del evento externo");
-            JLabel codigoEventoExterno = new JLabel("Codigo:");
-            PlaceholderTextField codigoEventoExternoTexto = new PlaceholderTextField("AA123");
-            JLabel nombreOrganizacion = new JLabel("Nombre de la organizacion:");
-            PlaceholderTextField nombreOrganizacionTexto = new PlaceholderTextField("Por ejemplo caece");
-            JLabel costoAlquiler = new JLabel("Costo de alquiler:");
-            PlaceholderTextField costoALquilerTexto = new PlaceholderTextField("000.000");
-            JLabel fechaInicio = new JLabel("Fecha de inicio:");
-            PlaceholderTextField fechaInicioTexto = new PlaceholderTextField("00-00-0000");
-            JLabel horaInicio = new JLabel("Hora de inicio:");
-            PlaceholderTextField horaInicioTexto = new PlaceholderTextField("00:00");
-            JLabel horaFin = new JLabel("Hora de fin:");
-            PlaceholderTextField  horaFinTexto= new PlaceholderTextField("00:00");
-
-            panel12.add(tituloEventoExterno);
-            panel12.add(codigoEventoExterno);
-            panel12.add(codigoEventoExternoTexto);
-            panel12.add(nombreOrganizacion);
-            panel12.add(nombreOrganizacionTexto);
-            panel12.add(costoAlquiler);
-            panel12.add(costoALquilerTexto);
-            panel12.add(fechaInicio);
-            panel12.add(fechaInicioTexto);
-            panel12.add(horaInicio);
-            panel12.add(horaInicioTexto);
-            panel12.add(horaFin);
-            panel12.add(horaFinTexto);
-
-
-            add(panel12,BorderLayout.CENTER);
-
-            resultado = JOptionPane.showConfirmDialog(null, panel12,"Datos del evento externo",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
-
-    if(resultado==JOptionPane.OK_OPTION) {
-        try {
-            String codigoVar = (codigoEventoExternoTexto.getText());
-            double costoAlquilerVar = Double.parseDouble(costoALquilerTexto.getText());
-            String nombreOrganizacionVar = nombreOrganizacionTexto.getText();
-            LocalDate fechaInicioVar = LocalDate.parse(fechaInicioTexto.getText(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-            LocalTime horaInicioVar = LocalTime.parse(horaInicioTexto.getText(), DateTimeFormatter.ofPattern("HH:mm"));
-            LocalTime horaFinVar = LocalTime.parse(horaFinTexto.getText(), DateTimeFormatter.ofPattern("HH:mm"));
-
-
-            List<Aula> aulasDisponibles = universidad.aulasDisponibles(fechaInicioVar,horaInicioVar,horaFinVar,codigoVar);
-
-            JPanel panelAulas = new JPanel();
-            JButton aulaButton;
-
-            panelAulas.setLayout(new GridLayout(0, 1));
-            panelAulas.add(new JLabel("Aulas disponibles, seleccione una: "));
-            for (Aula aula : aulasDisponibles) {
-                aulaButton = new JButton("Aula: " + aula.getNumero());
-                aulaButton.addActionListener(e12 -> {
-                    try {
-                        aula.agregaReservasEventoExterno(codigoVar,nombreOrganizacionVar,costoAlquilerVar);
-                        JOptionPane.showMessageDialog(null, "Reserva realizada con exito para el Aula: " + aula.getNumero(), "Reserva exitosa", JOptionPane.INFORMATION_MESSAGE);
-                    } catch (AulaOcupadaException ex) {
-                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Error en la reserva", JOptionPane.ERROR_MESSAGE);
-                    }
-                });
-                panelAulas.add(aulaButton);
-            }
-            JOptionPane.showMessageDialog(null,panelAulas,"Aulas Disponibles",JOptionPane.INFORMATION_MESSAGE);
-        }
-        catch(DateTimeParseException ex){
-            JOptionPane.showMessageDialog(panel12,"Error al ingresar datos","Error",JOptionPane.ERROR_MESSAGE);
-        }
-        catch(NoSuchElementException ex){
-            JOptionPane.showMessageDialog(panel12,ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
-        }
-    }
-        });
-        JOptionPane.showOptionDialog(null, panel, "Reservar Aula", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{"Cancelar"}, "Cancelar");
     }
 
     private void reservarAulaCursoExtension(){
