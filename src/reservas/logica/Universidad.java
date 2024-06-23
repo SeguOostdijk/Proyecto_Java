@@ -50,12 +50,19 @@ public class Universidad implements Serializable {
     }
 
     public Aula getAula(int codigoAula) {
-        for (Aula aula : ListaAulas) {
+        Aula aulaEncontrada = null;
+        Iterator<Aula> iterator = ListaAulas.iterator();
+        boolean encontrada = false;
+
+        while (iterator.hasNext() && !encontrada) {
+            Aula aula = iterator.next();
             if (aula.getNumero() == codigoAula) {
-                return aula;
+                aulaEncontrada = aula;
+                encontrada = true;  // Marcamos que hemos encontrado la aula buscada
             }
         }
-        return null;
+
+        return aulaEncontrada;
     }
 
     public void poneAula(Aula nuevaAula) {

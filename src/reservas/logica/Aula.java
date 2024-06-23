@@ -40,17 +40,18 @@ public class Aula implements Serializable,Comparable<Aula>{
     }
 
     public boolean estaDisponible(LocalTime horaInicio, LocalTime horaFin, LocalDate fecha) {
-        if(!listaReservas.isEmpty()) {
-            for (Reserva reserva : listaReservas.values()) {
-                if (reserva.getFecha().isEqual(fecha)) {
-                    // Verificar si hay superposición
-                    if (horaInicio.isBefore(reserva.getHoraFin()) && horaFin.isAfter(reserva.getHoraInicio()) || horaInicio.equals(reserva.getHoraInicio())) {
-                        return false; // Hay superposición
-                    }
+        boolean disponible = true;
+
+        Iterator<Reserva> iterator = listaReservas.values().iterator();
+        while (iterator.hasNext() && disponible) {
+            Reserva reserva = iterator.next();
+            if (reserva.getFecha().isEqual(fecha)) {// Verificar si hay superposición
+                if (horaInicio.isBefore(reserva.getHoraFin()) && horaFin.isAfter(reserva.getHoraInicio()) || horaInicio.equals(reserva.getHoraInicio())) {
+                    disponible = false; // Hay superposición
                 }
             }
         }
-        return true; // No hay superposición
+        return disponible; // No hay superposición
     }
 
     public Reserva cancelaReserva(int codigoEntidad){
