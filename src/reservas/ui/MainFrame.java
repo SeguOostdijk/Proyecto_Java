@@ -347,8 +347,6 @@ public class MainFrame extends JFrame {
             PlaceholderTextField horaInicioTexto = new PlaceholderTextField("00:00");
             JLabel horaFin = new JLabel("Hora de fin:");
             PlaceholderTextField  horaFinTexto= new PlaceholderTextField("00:00");
-            JLabel cantidadInscriptos = new JLabel("Cantidad de inscriptos:");
-            PlaceholderTextField cantidadInscriptosTexto = new PlaceholderTextField("00");
 
             panel12.add(tituloEventoInterno);
             panel12.add(codigoEventoInterno);
@@ -363,9 +361,6 @@ public class MainFrame extends JFrame {
             panel12.add(horaInicioTexto);
             panel12.add(horaFin);
             panel12.add(horaFinTexto);
-            panel12.add(cantidadInscriptos);
-            panel12.add(cantidadInscriptosTexto);
-
 
             add(panel12,BorderLayout.CENTER);
 
@@ -377,7 +372,6 @@ public class MainFrame extends JFrame {
                     LocalDate fechaInicioVar = LocalDate.parse(fechaInicioTexto.getText(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
                     LocalTime horaInicioVar = LocalTime.parse(horaInicioTexto.getText(), DateTimeFormatter.ofPattern("HH:mm"));
                     LocalTime horaFinVar = LocalTime.parse(horaFinTexto.getText(), DateTimeFormatter.ofPattern("HH:mm"));
-                    int cantidadInscriptosVar = Integer.parseInt(cantidadInscriptosTexto.getText());
 
                     List<Aula> aulasDisponibles = universidad.aulasDisponibles(fechaInicioVar,horaInicioVar,horaFinVar,codigoVar);
 
