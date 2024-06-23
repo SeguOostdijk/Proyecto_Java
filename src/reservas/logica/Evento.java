@@ -8,7 +8,6 @@ public abstract class Evento extends Reservable{
     private LocalTime horaInicio;
     private LocalTime horaFin;
     private String descripcion;
-    private float costoAlquiler;
 
     public Evento(String codigoIdentificador, int cantidadInscriptos, LocalTime horaInicio, LocalTime horaFin, String descripcion,LocalDate fechaInicio) {
         super(codigoIdentificador, cantidadInscriptos);
@@ -57,7 +56,6 @@ public abstract class Evento extends Reservable{
                 ", hora de inicio='" + horaInicio + '\'' +
                 ", hora de finalizacion='" + horaFin + '\'' +
                 ", descripcion='" + descripcion + '\'' +
-                ", costoAlquiler=" + costoAlquiler +
                  super.toString();
     }
 }

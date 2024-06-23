@@ -17,7 +17,7 @@ public class EventoExterno extends Evento {
         return costoAlquiler;
     }
 
-    public void setCostoAlquiler(double costoAlquiler) {
+    public void setCostoAlquiler(float costoAlquiler) {
         this.costoAlquiler = costoAlquiler;
     }
 
