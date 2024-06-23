@@ -1,5 +1,6 @@
 package reservas.logica;
 
+import reservas.excepciones.AulaOcupadaException;
 import reservas.persistencia.Persistencia;
 
 import java.io.Serializable;
@@ -103,6 +104,7 @@ public class Aula implements Serializable,Comparable<Aula>{
 
     public void agregaReservas(String codigoAsignatura,LocalDate fecha) throws AulaOcupadaException {  //asignatura
         Asignatura asignatura = Universidad.getInstance().getAsignatura(codigoAsignatura);
+        System.out.println(Asignatura.getFechaInicioCursada());
         LocalDate fechaFin = Asignatura.getFechaFinCursada();
         LocalDate fechaActual = fecha;
         if(fechaFin!=null) {
@@ -115,6 +117,8 @@ public class Aula implements Serializable,Comparable<Aula>{
                 fechaActual = fechaActual.plusWeeks(1);
             }
         }
+        else
+            System.out.println("messi");
         Persistencia.serializarUniversidad();
     }
 

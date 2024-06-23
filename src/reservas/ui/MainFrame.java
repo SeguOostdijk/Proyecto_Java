@@ -10,6 +10,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.NoSuchElementException;
+
+import reservas.excepciones.AulaOcupadaException;
 import reservas.logica.*;
 
 public class MainFrame extends JFrame {
@@ -258,7 +260,7 @@ public class MainFrame extends JFrame {
 
         JLabel tituloEventoInterno = new JLabel("Ingrese los datos del evento interno");
         JLabel codigoEventoInterno = new JLabel("Codigo:");
-        JTextField codigoEventoInternoTexto = new JTextField();
+        PlaceholderTextField codigoEventoInternoTexto = new PlaceholderTextField("AA123");
         JLabel fechaInicio = new JLabel("Fecha de inicio:");
         PlaceholderTextField fechaInicioTexto = new PlaceholderTextField("00-00-0000");
         JLabel horaInicio = new JLabel("Hora de inicio:");
@@ -267,8 +269,8 @@ public class MainFrame extends JFrame {
         PlaceholderTextField  horaFinTexto= new PlaceholderTextField("00:00");
         JLabel cantidadInscriptos = new JLabel("Cantidad de inscriptos:");
         PlaceholderTextField cantidadInscriptosTexto = new PlaceholderTextField("00");
-        JLabel descripcion = new JLabel("Descripcion del curso:");
-        PlaceholderTextField descripcionTexto = new PlaceholderTextField("Por ejemplo curso de cocina");
+        JLabel descripcion = new JLabel("Descripcion del evento:");
+        PlaceholderTextField descripcionTexto = new PlaceholderTextField("Por ejemplo: evento de peluqeria");
 
         panel1.add(tituloEventoInterno);
         panel1.add(codigoEventoInterno);
@@ -301,20 +303,25 @@ public class MainFrame extends JFrame {
                 JButton aulaButton;
 
                 panelAulas.setLayout(new GridLayout(0, 1));
-                panelAulas.add(new JLabel("Aulas disponibles, seleccione una: "));
-                for (Aula aula : aulasDisponibles) {
-                    aulaButton = new JButton("Aula: " + aula.getNumero());
-                    aulaButton.addActionListener(e1 -> {
-                        try {
-                            aula.agregaReservasEventoInternoNuevo(codigoVar,cantidadInscriptosVar,horaInicioVar,horaFinVar,descripcionVar,fechaInicioVar);
-                            JOptionPane.showMessageDialog(null, "Reserva realizada con exito para el Aula: " + aula.getNumero(), "Reserva exitosa", JOptionPane.INFORMATION_MESSAGE);
-                        } catch (AulaOcupadaException ex) {
-                            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error en la reserva", JOptionPane.ERROR_MESSAGE);
-                        }
-                    });
-                    panelAulas.add(aulaButton);
+                if(aulasDisponibles.isEmpty()){
+                    JOptionPane.showMessageDialog(null,"No hay aulas disponibles en este momento","Reservar evento interno",JOptionPane.INFORMATION_MESSAGE);
                 }
-                JOptionPane.showMessageDialog(null,panelAulas,"Aulas Disponibles",JOptionPane.INFORMATION_MESSAGE);
+                else {
+                    panelAulas.add(new JLabel("Aulas disponibles, seleccione una: "));
+                    for (Aula aula : aulasDisponibles) {
+                        aulaButton = new JButton("Aula: " + aula.getNumero());
+                        aulaButton.addActionListener(e1 -> {
+                            try {
+                                aula.agregaReservasEventoInternoNuevo(codigoVar, cantidadInscriptosVar, horaInicioVar, horaFinVar, descripcionVar, fechaInicioVar);
+                                JOptionPane.showMessageDialog(null, "Reserva realizada con exito para el Aula: " + aula.getNumero(), "Reserva exitosa", JOptionPane.INFORMATION_MESSAGE);
+                            } catch (AulaOcupadaException ex) {
+                                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error en la reserva", JOptionPane.ERROR_MESSAGE);
+                            }
+                        });
+                        panelAulas.add(aulaButton);
+                    }
+                    JOptionPane.showMessageDialog(null, panelAulas, "Aulas Disponibles", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
             catch(DateTimeParseException ex){
                 JOptionPane.showMessageDialog(panel1,"Error al ingresar datos","Error",JOptionPane.ERROR_MESSAGE);
@@ -349,7 +356,7 @@ public class MainFrame extends JFrame {
             JLabel cantidadInscriptos = new JLabel("Cantidad de inscriptos:");
             PlaceholderTextField cantidadInscriptosTexto = new PlaceholderTextField("00");
             JLabel descripcion = new JLabel("Descripcion del evento:");
-            PlaceholderTextField descripcionTexto = new PlaceholderTextField("Por ejemplo curso de cocina");
+            PlaceholderTextField descripcionTexto = new PlaceholderTextField("Por ejemplo: evento de cocina");
 
             panel1.add(tituloEventoExterno);
             panel1.add(codigoEventoExterno);
@@ -389,20 +396,25 @@ public class MainFrame extends JFrame {
             JButton aulaButton;
 
             panelAulas.setLayout(new GridLayout(0, 1));
-            panelAulas.add(new JLabel("Aulas disponibles, seleccione una: "));
-            for (Aula aula : aulasDisponibles) {
-                aulaButton = new JButton("Aula: " + aula.getNumero());
-                aulaButton.addActionListener(e1 -> {
-                    try {
-                        aula.agregaReservasEventoExternoNuevo(fechaInicioVar,horaInicioVar,horaFinVar,codigoVar,nombreOrganizacionVar,costoAlquilerVar,cantidadInscriptosVar,descripcionVar);
-                        JOptionPane.showMessageDialog(null, "Reserva realizada con exito para el Aula: " + aula.getNumero(), "Reserva exitosa", JOptionPane.INFORMATION_MESSAGE);
-                    } catch (AulaOcupadaException ex) {
-                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Error en la reserva", JOptionPane.ERROR_MESSAGE);
-                    }
-                });
-                panelAulas.add(aulaButton);
+            if(aulasDisponibles.isEmpty()){
+                JOptionPane.showMessageDialog(null,"No hay aulas disponibles en este momento","Reservar evento externo",JOptionPane.INFORMATION_MESSAGE);
             }
-            JOptionPane.showMessageDialog(null,panelAulas,"Aulas Disponibles",JOptionPane.INFORMATION_MESSAGE);
+            else {
+                panelAulas.add(new JLabel("Aulas disponibles, seleccione una: "));
+                for (Aula aula : aulasDisponibles) {
+                    aulaButton = new JButton("Aula: " + aula.getNumero());
+                    aulaButton.addActionListener(e1 -> {
+                        try {
+                            aula.agregaReservasEventoExternoNuevo(fechaInicioVar, horaInicioVar, horaFinVar, codigoVar, nombreOrganizacionVar, costoAlquilerVar, cantidadInscriptosVar, descripcionVar);
+                            JOptionPane.showMessageDialog(null, "Reserva realizada con exito para el Aula: " + aula.getNumero(), "Reserva exitosa", JOptionPane.INFORMATION_MESSAGE);
+                        } catch (AulaOcupadaException ex) {
+                            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error en la reserva", JOptionPane.ERROR_MESSAGE);
+                        }
+                    });
+                    panelAulas.add(aulaButton);
+                }
+                JOptionPane.showMessageDialog(null, panelAulas, "Aulas Disponibles", JOptionPane.INFORMATION_MESSAGE);
+            }
         }
         catch(DateTimeParseException ex){
             JOptionPane.showMessageDialog(panel1,"Error al ingresar datos","Error",JOptionPane.ERROR_MESSAGE);
@@ -451,21 +463,25 @@ public class MainFrame extends JFrame {
                 JButton aulaButton;
 
                 panelAulas.setLayout(new GridLayout(0,1));
-                panelAulas.add(new JLabel("Aulas disponibles, seleccione una: "));
-                for(Aula aula : aulasDisponibles){
-                    aulaButton = new JButton("Aula: " + aula.getNumero());
-                    aulaButton.addActionListener(e -> {
-                        try{
-                            aula.agregaReservas(codigoVar,fechaInicioVar,horaInicioVar,horaFinVar);
-                            JOptionPane.showMessageDialog(null,"Reserva realizada con exito para el Aula: " + aula.getNumero(),"Reserva exitosa",JOptionPane.INFORMATION_MESSAGE);
-                        }
-                        catch(AulaOcupadaException ex) {
-                            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error en la reserva", JOptionPane.ERROR_MESSAGE);
-                        }
-                    });
-                    panelAulas.add(aulaButton);
+                if(aulasDisponibles.isEmpty()){
+                    JOptionPane.showMessageDialog(null,"No hay aulas disponibles en este momento","Reservar curso de extensión",JOptionPane.INFORMATION_MESSAGE);
                 }
-                JOptionPane.showMessageDialog(null,panelAulas,"Aulas Disponibles",JOptionPane.INFORMATION_MESSAGE);
+                else {
+                    panelAulas.add(new JLabel("Aulas disponibles, seleccione una: "));
+                    for (Aula aula : aulasDisponibles) {
+                        aulaButton = new JButton("Aula: " + aula.getNumero());
+                        aulaButton.addActionListener(e -> {
+                            try {
+                                aula.agregaReservas(codigoVar, fechaInicioVar, horaInicioVar, horaFinVar);
+                                JOptionPane.showMessageDialog(null, "Reserva realizada con exito para el Aula: " + aula.getNumero(), "Reserva exitosa", JOptionPane.INFORMATION_MESSAGE);
+                            } catch (AulaOcupadaException ex) {
+                                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error en la reserva", JOptionPane.ERROR_MESSAGE);
+                            }
+                        });
+                        panelAulas.add(aulaButton);
+                    }
+                    JOptionPane.showMessageDialog(null, panelAulas, "Aulas Disponibles", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
             catch(DateTimeParseException ex){
                 JOptionPane.showMessageDialog(panel,"Error al ingresar datos","Error",JOptionPane.ERROR_MESSAGE);
