@@ -116,23 +116,36 @@ public class MainFrame extends JFrame {
 
             if (resultadoConsulta == JOptionPane.OK_OPTION) {
                 try {
+                    StringBuilder aulasInfo = new StringBuilder();
                     if (itemSeleccionado.equals("Numero de piso")) {
                         int numpiso = Integer.parseInt(input.getText());
                         List<Aula> listaAulasPiso = universidad.consultarAula(numpiso);
-                        StringBuilder aulasInfo = new StringBuilder("Aulas en el piso " + numpiso + ":\n");
+                        aulasInfo.append("Aulas en el piso ").append(numpiso).append(":\n");
                         for (Aula aula : listaAulasPiso) {
                             aulasInfo.append(aula.toString()).append("\n");
                         }
-                        JOptionPane.showMessageDialog(this, aulasInfo.toString(), "Listado de piso", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         String codreserva = input.getText();
                         List<Aula> listaAulasReserva = universidad.consultarAula(codreserva);
-                        StringBuilder aulasInfo = new StringBuilder("Aulas para el código de reserva " + codreserva + ":\n");
+                        aulasInfo.append("Aulas para el código de reserva ").append(codreserva).append(":\n");
                         for (Aula aula : listaAulasReserva) {
                             aulasInfo.append(aula.toString()).append("\n");
                         }
-                        JOptionPane.showMessageDialog(this, aulasInfo.toString(), "Listado de tipo de reserva", JOptionPane.INFORMATION_MESSAGE);
                     }
+
+                    // Crear un JTextArea para mostrar la información de las aulas
+                    JTextArea textArea = new JTextArea(aulasInfo.toString());
+                    textArea.setEditable(false); // No editable
+                    textArea.setLineWrap(true); // Ajuste de línea
+                    textArea.setWrapStyleWord(true); // Ajuste de palabra
+
+                    // Agregar el JTextArea a un JScrollPane
+                    JScrollPane scrollPane = new JScrollPane(textArea);
+                    scrollPane.setPreferredSize(new Dimension(400, 300)); // Tamaño preferido
+
+                    // Mostrar el cuadro de diálogo con el JScrollPane
+                    JOptionPane.showMessageDialog(this, scrollPane, "Listado de aulas", JOptionPane.INFORMATION_MESSAGE);
+
                 } catch (NumberFormatException e) {
                     JOptionPane.showMessageDialog(this, "Entrada inválida. Por favor, ingrese un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
                 } catch (NoSuchElementException e) {
@@ -141,6 +154,7 @@ public class MainFrame extends JFrame {
             }
         }
     }
+
 
     private void reservarAula() {
         JPanel panel = new JPanel();
