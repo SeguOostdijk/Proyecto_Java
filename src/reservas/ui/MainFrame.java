@@ -431,11 +431,11 @@ public class MainFrame extends JFrame {
 
             JLabel tituloEventoExterno = new JLabel("Ingrese los datos del evento externo");
             JLabel codigoEventoExterno = new JLabel("Codigo:");
-            JTextField codigoEventoExternoTexto = new JTextField();
+            PlaceholderTextField codigoEventoExternoTexto = new PlaceholderTextField("AA123");
             JLabel nombreOrganizacion = new JLabel("Nombre de la organizacion:");
-            JTextField nombreOrganizacionTexto = new JTextField();
+            PlaceholderTextField nombreOrganizacionTexto = new PlaceholderTextField("Por ejemplo caece");
             JLabel costoAlquiler = new JLabel("Costo de alquiler:");
-            JTextField costoALquilerTexto = new JTextField();
+            PlaceholderTextField costoALquilerTexto = new PlaceholderTextField("000.000");
             JLabel fechaInicio = new JLabel("Fecha de inicio:");
             PlaceholderTextField fechaInicioTexto = new PlaceholderTextField("00-00-0000");
             JLabel horaInicio = new JLabel("Hora de inicio:");
@@ -444,7 +444,7 @@ public class MainFrame extends JFrame {
             PlaceholderTextField  horaFinTexto= new PlaceholderTextField("00:00");
             JLabel cantidadInscriptos = new JLabel("Cantidad de inscriptos:");
             PlaceholderTextField cantidadInscriptosTexto = new PlaceholderTextField("00");
-            JLabel descripcion = new JLabel("Descripcion del curso:");
+            JLabel descripcion = new JLabel("Descripcion del evento:");
             PlaceholderTextField descripcionTexto = new PlaceholderTextField("Por ejemplo curso de cocina");
 
             panel1.add(tituloEventoExterno);
@@ -475,7 +475,7 @@ public class MainFrame extends JFrame {
             LocalDate fechaInicioVar = LocalDate.parse(fechaInicioTexto.getText(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
             LocalTime horaInicioVar = LocalTime.parse(horaInicioTexto.getText(), DateTimeFormatter.ofPattern("HH:mm"));
             LocalTime horaFinVar = LocalTime.parse(horaFinTexto.getText(), DateTimeFormatter.ofPattern("HH:mm"));
-            float costoAlquilerVar = Float.parseFloat(costoALquilerTexto.getText());
+            double costoAlquilerVar = Double.parseDouble(costoALquilerTexto.getText());
             String nombreOrganizacionVar = nombreOrganizacionTexto.getText();
             int cantidadInscriptosVar = Integer.parseInt(cantidadInscriptosTexto.getText());
             String descripcionVar = descripcionTexto.getText();
@@ -550,7 +550,7 @@ public class MainFrame extends JFrame {
     if(resultado==JOptionPane.OK_OPTION) {
         try {
             String codigoVar = (codigoEventoExternoTexto.getText());
-            float costoAlquilerVar = Float.parseFloat(costoALquilerTexto.getText());
+            double costoAlquilerVar = Double.parseDouble(costoALquilerTexto.getText());
             String nombreOrganizacionVar = nombreOrganizacionTexto.getText();
             LocalDate fechaInicioVar = LocalDate.parse(fechaInicioTexto.getText(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
             LocalTime horaInicioVar = LocalTime.parse(horaInicioTexto.getText(), DateTimeFormatter.ofPattern("HH:mm"));

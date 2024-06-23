@@ -4,20 +4,20 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class EventoExterno extends Evento {
-    private float costoAlquiler;
+    private double costoAlquiler;
     String nombreOrganizacion;
 
-    public EventoExterno(String codigoIdentificador, int cantidadInscriptos, LocalTime horaInicio, LocalTime horaFin, String descripcion, LocalDate fechaInicio, float costoAlquiler, String nombreOrganizacion) {
+    public EventoExterno(String codigoIdentificador, int cantidadInscriptos, LocalTime horaInicio, LocalTime horaFin, String descripcion, LocalDate fechaInicio, double costoAlquiler, String nombreOrganizacion) {
         super(codigoIdentificador, cantidadInscriptos, horaInicio, horaFin, descripcion, fechaInicio);
         this.costoAlquiler = costoAlquiler;
         this.nombreOrganizacion = nombreOrganizacion;
     }
 
-    public float getCostoAlquiler() {
+    public double getCostoAlquiler() {
         return costoAlquiler;
     }
 
-    public void setCostoAlquiler(float costoAlquiler) {
+    public void setCostoAlquiler(double costoAlquiler) {
         this.costoAlquiler = costoAlquiler;
     }
 

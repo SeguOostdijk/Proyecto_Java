@@ -163,7 +163,7 @@ public class Aula implements Serializable,Comparable<Aula>{
         Persistencia.serializarUniversidad();
     }
 
-    public void agregaReservasEventoExterno(String codigoEventoExterno, String nombreOrganizacion, float costoAlquiler) throws AulaOcupadaException {
+    public void agregaReservasEventoExterno(String codigoEventoExterno, String nombreOrganizacion, double costoAlquiler) throws AulaOcupadaException {
         EventoExterno eventoExterno = Universidad.getInstance().getEventoExterno(codigoEventoExterno);
         LocalDate fechaInicio = eventoExterno.getFechaInicio();
         LocalTime horaInicio = eventoExterno.getHoraInicio();
@@ -180,7 +180,7 @@ public class Aula implements Serializable,Comparable<Aula>{
       Persistencia.serializarUniversidad();
     }
 
-    public void agregaReservasEventoExternoNuevo(LocalDate fechaInicio,LocalTime horaInicio,LocalTime horaFin,String codigo,String nombreOrganizacion,float costoAlquiler,int cantidadInscriptos,String descripcion) throws AulaOcupadaException {
+    public void agregaReservasEventoExternoNuevo(LocalDate fechaInicio,LocalTime horaInicio,LocalTime horaFin,String codigo,String nombreOrganizacion,double costoAlquiler,int cantidadInscriptos,String descripcion) throws AulaOcupadaException {
         EventoExterno eventoExterno = new EventoExterno(codigo,cantidadInscriptos,horaInicio,horaFin,descripcion,fechaInicio,costoAlquiler,nombreOrganizacion);
         Reserva nuevaReserva = new Reserva(fechaInicio,horaInicio,horaFin,eventoExterno);
 
