@@ -115,6 +115,7 @@ public class Aula implements Serializable,Comparable<Aula>{
                 fechaActual = fechaActual.plusWeeks(1);
             }
         }
+        Persistencia.serializarUniversidad();
     }
 
     public void agregaReservas(String codigoCurso, LocalDate fechaInicio, LocalTime horaInicio, LocalTime horaFin) throws AulaOcupadaException { //Curso de extension
@@ -132,6 +133,7 @@ public class Aula implements Serializable,Comparable<Aula>{
             clasesReservadas++;
             fechaActual = fechaActual.plusWeeks(1);
         }
+        Persistencia.serializarUniversidad();
     }
 
 
@@ -144,6 +146,7 @@ public class Aula implements Serializable,Comparable<Aula>{
         else
             throw new AulaOcupadaException("No se pudo realizar la reserva para el dia:" + fecha);
 
+        Persistencia.serializarUniversidad();
     }
 
 
@@ -157,9 +160,10 @@ public class Aula implements Serializable,Comparable<Aula>{
         else
             throw new AulaOcupadaException("No se pudo realizar la reserva para el dia:" + fechaInicio);
 
+        Persistencia.serializarUniversidad();
     }
 
-    public void agregaReservaXML(String codReservable,LocalDate fecha,LocalTime horaInicio,LocalTime horaFin) throws AulaOcupadaException { //Reservas cargadas desde XML
+    public void agregaReservaXML(String codReservable,LocalDate fecha,LocalTime horaInicio,LocalTime horaFin) throws AulaOcupadaException { //Reservas cargada
         Reservable tipoReservable= Universidad.getInstance().getReservable(codReservable);
         if(tipoReservable!=null) {
 
@@ -177,6 +181,7 @@ public class Aula implements Serializable,Comparable<Aula>{
         }
         else
             throw new NoSuchElementException("ERROR.Codigo de reservable inexistente");
+       Persistencia.serializarUniversidad();
     }
 
     @Override
