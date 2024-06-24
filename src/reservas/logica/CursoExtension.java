@@ -1,5 +1,7 @@
 package reservas.logica;
-
+/**
+ Define atributos y metodos de Curso de Extensión
+ */
 public class CursoExtension extends Reservable{
     private String descripcion;
     private int cantidadClases;

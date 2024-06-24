@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
-
+/**
+ Define atributos y métodos necesarios para generar una reserva
+ */
 public class Reserva implements Serializable {
   private static int numCodigo;
   private int CODIGO;

@@ -2,7 +2,9 @@ package reservas.logica;
 
 import java.io.Serializable;
 import java.util.Objects;
-
+/**
+ * Es una clase abstracta que define atributos y metodos comunes a todos los tipos de reserva (asignatura,curso,eventos)
+ */
 public abstract class Reservable implements Serializable {
     private final String codigoIdentificador;
     private int cantidadInscriptos;

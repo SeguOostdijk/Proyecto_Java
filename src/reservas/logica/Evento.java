@@ -2,7 +2,9 @@ package reservas.logica;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-
+/**
+ * Es una clase abstracta que define los atributos y metodos comunes entre eventos internos y externos
+ */
 public abstract class Evento extends Reservable{
     private LocalDate fechaInicio;
     private LocalTime horaInicio;

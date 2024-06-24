@@ -11,7 +11,9 @@ import java.time.LocalTime;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-
+/**
+ *Esta clase se usa para cargar los datos desde el archivo XML
+ */
 public class CargaXML {
     public static void CargaDatosXML() throws IOException {
         Universidad uni = Universidad.getInstance();

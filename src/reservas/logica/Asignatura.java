@@ -2,7 +2,9 @@ package reservas.logica;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-
+/**
+        * define atributos y metodos de asignatura
+ */
 public class Asignatura extends Reservable{
     private String nombre;
     private static LocalDate fechaInicioCursada;

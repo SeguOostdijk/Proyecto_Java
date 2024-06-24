@@ -3,7 +3,9 @@ package reservas.logica;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
-
+/**
+ * Define metodos y atributos necesarios para generar un reporte de las reservas de cada aula y el promedio de reservas por aula
+ */
 public class ReporteAulasReserva implements Serializable {
     private ArrayList<Aula> listaAulasReservas;
     private float promReservasAula;
@@ -28,8 +30,9 @@ public class ReporteAulasReserva implements Serializable {
         listaAulasReservas.add(a);
     }
 
+    /** Para mostrar el reporte directamente invocando a la funcion */
     @Override
-    public String toString() {  //Para mostrar el reporte directamente invocando a la funcion
+    public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Reporte de Aulas ordenadas por cantidad de reservas:\n");
         listaAulasReservas.sort(Comparator.comparingInt(Aula::cantidadReservas).reversed());

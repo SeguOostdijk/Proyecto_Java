@@ -2,7 +2,9 @@ package reservas.logica;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-
+/**
+ * Define los atributos y metodos de eventos internos
+ */
 public class EventoExterno extends Evento {
     private double costoAlquiler;
     String nombreOrganizacion;

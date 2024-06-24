@@ -9,7 +9,9 @@ import java.time.LocalTime;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.TreeMap;
-
+/**
+        * Esta clase agrega las reservas a cada aula
+ */
 public class Aula implements Serializable,Comparable<Aula>{
     private int numeroAula;
     private int capacidadMaxima;
@@ -21,7 +23,9 @@ public class Aula implements Serializable,Comparable<Aula>{
         this.numeroAula = numeroAula;
         listaReservas = new TreeMap<>();
     }
-
+    /**
+     * Devuelve el monto recaudado por aula
+     */
     public float montoRecaudado(){
         float sumadorCostos=0;
         for (Reserva reserva : listaReservas.values()) {
@@ -34,11 +38,15 @@ public class Aula implements Serializable,Comparable<Aula>{
         }
         return sumadorCostos;
     }
-
+    /**
+     * Chequea que el aula no supere la capacidad requerida
+     */
     public boolean noSuperaCapacidad(int cantidadPersonas){
         return cantidadPersonas<=capacidadMaxima;
     }
-
+/**
+        *Chequea que el aula este disponible en determinado horario
+     */
     public boolean estaDisponible(LocalTime horaInicio, LocalTime horaFin, LocalDate fecha) {
         boolean disponible = true;
 
@@ -53,7 +61,9 @@ public class Aula implements Serializable,Comparable<Aula>{
         }
         return disponible; // No hay superposición
     }
-
+    /**
+     * Cancela una reserva determinada
+     */
     public Reserva cancelaReserva(int codigoEntidad){
         Reserva reservaCancelada;
         if(listaReservas.containsKey(codigoEntidad)) {
@@ -66,7 +76,9 @@ public class Aula implements Serializable,Comparable<Aula>{
        Persistencia.serializarUniversidad();
         return reservaCancelada;
     }
-
+    /**
+     * Devuelve la cantidad de reservas que hayan en el aula
+     */
     public int cantidadReservas(){
         if(listaReservas.isEmpty())
             return 0;
@@ -74,7 +86,9 @@ public class Aula implements Serializable,Comparable<Aula>{
             return listaReservas.size();
 
     }
-
+    /**
+     * Comprueba si un reservable hizo una reserva
+     */
     public boolean hizoReserva(String codigoId) {
         boolean bandera = false;
         Iterator<Reserva> iterator = listaReservas.values().iterator();
@@ -102,7 +116,9 @@ public class Aula implements Serializable,Comparable<Aula>{
     public int getPiso(){
         return numeroAula/100;
     }
-
+    /**
+     * Agrega reserva para una asignatura
+     */
     public void agregaReservas(String codigoAsignatura,LocalDate fecha) throws AulaOcupadaException {  //asignatura
         Asignatura asignatura = Universidad.getInstance().getAsignatura(codigoAsignatura);
         LocalDate fechaFin = Asignatura.getFechaFinCursada();
@@ -119,7 +135,9 @@ public class Aula implements Serializable,Comparable<Aula>{
         }
         Persistencia.serializarUniversidad();
     }
-
+    /**
+     *Agrega reserva para curso de extension
+     */
     public void agregaReservas(String codigoCurso, LocalDate fechaInicio, LocalTime horaInicio, LocalTime horaFin) throws AulaOcupadaException { //Curso de extension
         CursoExtension curso = Universidad.getInstance().getCursoExtension(codigoCurso);
         LocalDate fechaActual = fechaInicio;
@@ -139,7 +157,9 @@ public class Aula implements Serializable,Comparable<Aula>{
         Persistencia.serializarUniversidad();
     }
 
-
+    /**
+     *Agrega reserva para evento interno
+     */
     public void agregaReservasEventoInternoNuevo(String codigo, int cantidadInscriptos, LocalTime horaInicio, LocalTime horaFin, String descripcion, LocalDate fecha) throws AulaOcupadaException { //Evento interno nuevo
         EventoInterno eventoInterno = new EventoInterno(codigo,cantidadInscriptos,horaInicio,horaFin,descripcion,fecha);
         Reserva nuevaReserva = new Reserva(fecha,horaInicio,horaFin,eventoInterno);
@@ -154,7 +174,9 @@ public class Aula implements Serializable,Comparable<Aula>{
     }
 
 
-
+    /**
+     *Agrega reserva para evento externo
+     */
     public void agregaReservasEventoExternoNuevo(LocalDate fechaInicio,LocalTime horaInicio,LocalTime horaFin,String codigo,String nombreOrganizacion,double costoAlquiler,int cantidadInscriptos,String descripcion) throws AulaOcupadaException { //Evento externo nuevo
         EventoExterno eventoExterno = new EventoExterno(codigo,cantidadInscriptos,horaInicio,horaFin,descripcion,fechaInicio,costoAlquiler,nombreOrganizacion);
         Reserva nuevaReserva = new Reserva(fechaInicio,horaInicio,horaFin,eventoExterno);
@@ -166,7 +188,9 @@ public class Aula implements Serializable,Comparable<Aula>{
 
         Persistencia.serializarUniversidad();
     }
-
+    /**
+     *Agrega reserva del archivo XML
+     */
     public void agregaReservaXML(String codReservable,LocalDate fecha,LocalTime horaInicio,LocalTime horaFin) throws AulaOcupadaException { //Reservas cargada
         Reservable tipoReservable= Universidad.getInstance().getReservable(codReservable);
         if(tipoReservable!=null) {

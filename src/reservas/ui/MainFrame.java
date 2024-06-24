@@ -13,6 +13,9 @@ import java.util.NoSuchElementException;
 
 import reservas.excepciones.AulaOcupadaException;
 import reservas.logica.*;
+/**
+ * Esta clase se encarga de la interfaz del proyecto
+ */
 
 public class MainFrame extends JFrame {
 
@@ -55,34 +58,25 @@ public class MainFrame extends JFrame {
         }
         add(panel, BorderLayout.CENTER);
 
-        /*cargarDatosButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // implementar cargar datos
-                cargarDatos();
-            }
-        });*/
-
         listarAulasButton.addActionListener(e -> {
-            // implementar listar aulas
             listarAulas();
         });
 
         reservarAulaButton.addActionListener(e -> {
-            // implementar reservar aula
             reservarAula();
         });
 
         generaReportesbutton.addActionListener(e -> generarReportes());
 
         cancelarReservaButton.addActionListener(e -> {
-            // implementar cancelar reserva
             cancelarReserva();
 
         });
         listarEntidadesbutton.addActionListener(e -> listarEntidades());
     }
-
+    /**
+     * Crea la interfaz para la que el usuario pueda elegir entre el listado de aulas filtrado por piso o por codigo de reservable
+     */
     private void listarAulas() {
         // Crear panel y componentes para la selección del filtro
         JPanel panel = new JPanel(new FlowLayout());
@@ -157,7 +151,9 @@ public class MainFrame extends JFrame {
         }
     }
 
-
+    /**
+     * Crea la interfaz para la que el usuario pueda reservar un aula para cada tipo de reservable (asignatura, curso, eventos)
+     */
     private void reservarAula() {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0,1));
@@ -191,7 +187,9 @@ public class MainFrame extends JFrame {
     ////////////////////////////////////RESERVAS/////////////////////////////////////
 
 
-
+    /**
+     * Crea la interfaz para la que el usuario pueda reservar un aula para una asignatura
+     */
     private void reservarAulaAsignatura(){
         int resultado;
         JPanel panel = new JPanel();
@@ -250,7 +248,9 @@ public class MainFrame extends JFrame {
             JOptionPane.showConfirmDialog(null,panel,"Reservar Aula",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
         }
     }
-
+    /**
+     * Crea la interfaz para la que el usuario pueda reservar un aula para un evento interno
+     */
     private void reservarAulaEventoInterno(){
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0,1));
@@ -331,7 +331,9 @@ public class MainFrame extends JFrame {
             }
         }
     }
-
+    /**
+     * Crea la interfaz para la que el usuario pueda reservar un aula para una evento externo
+     */
     private void reservarAulaEventoExterno(){
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0,1));
@@ -424,7 +426,9 @@ public class MainFrame extends JFrame {
         }
     }
     }
-
+    /**
+     * Crea la interfaz para la que el usuario pueda reservar un aula para un curso de extension
+     */
     private void reservarAulaCursoExtension(){
         int resultado;
         JPanel panel = new JPanel();
@@ -494,7 +498,9 @@ public class MainFrame extends JFrame {
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    /**
+     * Crea la interfaz para la que el usuario pueda cancelar la reserva de un aula
+     */
     private void cancelarReserva() {
         JPanel panel = new JPanel();
         JTextField numeroAulaField = new JTextField(5);
@@ -520,7 +526,9 @@ public class MainFrame extends JFrame {
             }
         }
     }
-
+    /**
+     * Crea la interfaz para la que el usuario pueda elegir entre generar y mostrar el reporte por montos o por aulas
+     */
     private void generarReportes(){
         JPanel panel=new JPanel(new FlowLayout());
         JTextArea reporte;
@@ -562,6 +570,9 @@ public class MainFrame extends JFrame {
 
         }
     }
+    /**
+     * Crea la interfaz para la que el usuario pueda ver la informacion de cada entidad cargada desde el archivo XML (asignatura, eventos, curso)
+     */
     private void listarEntidades(){
         JPanel panel=new JPanel(new GridLayout(0,1));
         JLabel titulo = new JLabel("Elija el tipo de entidad que desea listar");

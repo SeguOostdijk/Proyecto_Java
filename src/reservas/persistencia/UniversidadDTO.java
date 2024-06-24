@@ -7,7 +7,7 @@ import reservas.logica.Reservable;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.TreeSet;
-
+/** Patron de diseño DTO*/
 public class UniversidadDTO implements Serializable {
     private TreeSet<Aula> ListaAulas;
     private HashMap<String, Reservable> listaReservables;

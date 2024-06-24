@@ -1,9 +1,10 @@
 package reservas.logica;
-
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.*;
-
+/**
+ Define atributos y metodos necesarios para almacenar los montos generados por la universidad
+ */
 public class Montos implements Serializable {
     private ArrayList<Float> montosPiso;
     private TreeMap<Integer,Float> montosAula;

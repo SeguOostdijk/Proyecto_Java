@@ -3,7 +3,7 @@ package reservas.persistencia;
 import reservas.logica.Universidad;
 
 import java.io.*;
-
+/** Permite que el proyecto sea persistente */
 public class Persistencia {
 
     private static final String FILE_NAME = "universidad.dat";

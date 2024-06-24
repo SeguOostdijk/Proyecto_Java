@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-
+/** Permite agregar letras en gris en las casillas de texto como ejemplo que desaparecen al escribir*/
 public class PlaceholderTextField extends JTextField {
     private final String placeholder;
     private boolean placeholderVisible;
